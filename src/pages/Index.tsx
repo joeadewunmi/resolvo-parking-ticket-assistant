@@ -33,7 +33,11 @@ const Index = () => {
               </div>
             </div>
             <div className="hidden md:block">
-              <img src="/lovable-uploads/87df45ef-e423-470a-823a-2ca1ee555384.png" alt="Parking ticket illustration" className="w-full h-auto" />
+              <img 
+                src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
+                alt='Photo by Caspar Rae on Unsplash - A parking enforcement officer in a high-visibility yellow jacket issuing a ticket to a white Volkswagen car in a parking lot' 
+                className="w-full h-auto rounded-lg shadow-xl" 
+              />
             </div>
           </div>
         </div>
