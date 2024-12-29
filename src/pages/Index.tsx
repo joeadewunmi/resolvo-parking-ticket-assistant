@@ -24,12 +24,14 @@ const Index = () => {
                 Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
               </p>
               <div className="mt-8">
-                <Link
-                  to="/get-started"
+                <a
+                  href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Appeal now →
-                </Link>
+                </a>
               </div>
             </div>
             <div className="hidden md:block">
@@ -112,12 +114,14 @@ const Index = () => {
             ))}
           </div>
           <div className="text-center mt-16">
-            <Link
-              to="/get-started"
+            <a
+              href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Appeal now →
-            </Link>
+            </a>
           </div>
         </div>
       </div>

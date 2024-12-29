@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ const Navbar = () => {
           </div>
           
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 items-center">
               <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 Home
               </Link>
@@ -28,6 +29,13 @@ const Navbar = () => {
               <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 FAQs
               </Link>
+              <a
+                href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button>Appeal now</Button>
+              </a>
             </div>
           </div>
 
@@ -66,6 +74,15 @@ const Navbar = () => {
             >
               FAQs
             </Link>
+            <a
+              href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-3 py-2"
+              onClick={toggleMenu}
+            >
+              <Button className="w-full">Appeal now</Button>
+            </a>
           </div>
         </div>
       )}
