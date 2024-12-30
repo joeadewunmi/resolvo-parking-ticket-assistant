@@ -52,9 +52,10 @@ const Index = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
               <img 
-                src="/lovable-uploads/87df45ef-e423-470a-823a-2ca1ee555384.png" 
-                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge" 
-                className="relative rounded-lg shadow-2xl w-full h-auto"
+                src="/lovable-uploads/d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.png" 
+                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
+                className="relative rounded-lg shadow-2xl w-full h-auto object-cover object-top"
+                style={{ maxHeight: "600px" }}
               />
             </div>
             <div>
