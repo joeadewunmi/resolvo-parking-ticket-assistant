@@ -1,8 +1,8 @@
 import { createClient } from 'contentful';
 
 export const contentfulClient = createClient({
-  space: 'your-space-id',
-  accessToken: 'your-access-token',
+  space: '0rf1pho85xtc',
+  accessToken: 'Zi5MpchIJf8j3I-hkOORC9MOLdLAJi8mJ4tXjbJjsZk',
 });
 
 export type BlogPost = {
@@ -10,6 +10,11 @@ export type BlogPost = {
     id: string;
     createdAt: string;
     updatedAt: string;
+    contentType: {
+      sys: {
+        id: string;
+      };
+    };
   };
   fields: {
     title: string;
