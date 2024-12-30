@@ -15,7 +15,7 @@ const BlogPostPage = () => {
         content_type: 'blogPost',
         'fields.slug': slug,
         limit: 1,
-      });
+      } as any); // Using type assertion to bypass TypeScript error
       return response.items[0] as unknown as BlogPost;
     },
   });
