@@ -60,7 +60,7 @@ const Index = () => {
             </div>
             <div>
               <h2 className="text-3xl font-extrabold text-primary">
-                Leveraging AI to generate customised appeal statements.
+                Don't let a parking ticket ruin your day
               </h2>
               <p className="mt-4 text-lg text-gray-600">
                 Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
