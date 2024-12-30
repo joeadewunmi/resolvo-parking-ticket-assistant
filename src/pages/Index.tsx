@@ -32,6 +32,7 @@ const Index = () => {
                 >
                   Appeal now →
                 </a>
+                <p className="mt-4 text-sm text-primary/70">Used by over 500 users</p>
               </div>
             </div>
             <div className="hidden md:block">
