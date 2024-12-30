@@ -70,7 +70,7 @@ const Index = () => {
                   to="/get-started"
                   className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300"
                 >
-                  Start an appeal →
+                  Appeal now →
                 </Link>
               </div>
             </div>
