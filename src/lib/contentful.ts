@@ -29,5 +29,8 @@ export type BlogPost = {
       };
     };
   };
-  contentTypeId?: string;
+  contentTypeId: string;
+  metadata: {
+    tags: []
+  };
 };
