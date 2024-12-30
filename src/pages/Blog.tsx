@@ -9,7 +9,7 @@ const Blog = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        order: '-sys.createdAt',
+        order: ['-sys.createdAt'],
       });
       return response.items as unknown as BlogPost[];
     },

@@ -13,7 +13,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug,
         limit: 1,
       });
       return response.items[0] as unknown as BlogPost;
@@ -54,18 +54,18 @@ const BlogPostPage = () => {
       </Button>
 
       <article className="prose prose-lg mx-auto">
-        {post.fields.featuredImage && (
+        {post?.fields.featuredImage && (
           <img
             src={`https:${post.fields.featuredImage.fields.file.url}`}
             alt={post.fields.title}
             className="w-full h-64 object-cover rounded-lg mb-8"
           />
         )}
-        <h1>{post.fields.title}</h1>
+        <h1>{post?.fields.title}</h1>
         <div className="text-gray-500 mb-8">
-          {new Date(post.sys.createdAt).toLocaleDateString()}
+          {post && new Date(post.sys.createdAt).toLocaleDateString()}
         </div>
-        <div dangerouslySetInnerHTML={{ __html: post.fields.content }} />
+        <div dangerouslySetInnerHTML={{ __html: post?.fields.content || '' }} />
       </article>
     </div>
   );
