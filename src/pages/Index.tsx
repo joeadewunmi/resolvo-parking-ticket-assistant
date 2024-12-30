@@ -51,7 +51,11 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
-              <img src="/placeholder.svg" alt="AI Appeal Example" className="relative rounded-lg shadow-2xl" />
+              <img 
+                src="/lovable-uploads/380030ea-2053-4fd2-8d3e-d8525915d7a7.png" 
+                alt="Example of an AI-generated parking ticket appeal letter" 
+                className="relative rounded-lg shadow-2xl w-full h-auto"
+              />
             </div>
             <div>
               <h2 className="text-3xl font-extrabold text-primary">
