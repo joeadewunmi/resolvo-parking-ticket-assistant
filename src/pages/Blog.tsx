@@ -1,62 +1,78 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "Fighting Parking Tickets: A Simple Guide to Appealing",
-    excerpt: "Learn the basics of appealing parking tickets and increase your chances of success.",
-    image: "/placeholder.svg",
-    slug: "fighting-parking-tickets",
-  },
-  {
-    id: 2,
-    title: "Navigating Police Parking Ticket FAQs",
-    excerpt: "Common questions about police-issued parking tickets and how to handle them.",
-    image: "/placeholder.svg",
-    slug: "police-parking-tickets-faq",
-  },
-  {
-    id: 3,
-    title: "Understanding Parking Ticket Appeals",
-    excerpt: "A comprehensive guide to the parking ticket appeal process.",
-    image: "/placeholder.svg",
-    slug: "understanding-appeals",
-  },
-];
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { contentfulClient, BlogPost } from "@/lib/contentful";
 
 const Blog = () => {
-  return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">The Resolvo Blog</h1>
-          <p className="text-gray-600">
-            Expert insights and tips for handling parking tickets
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
-            <div key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-primary mb-2">
-                  {post.title}
-                </h2>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <Link
-                  to={`/blog/${post.slug}`}
-                  className="text-primary hover:text-accent font-medium"
-                >
-                  Read More →
-                </Link>
-              </div>
-            </div>
+  const { data: posts, isLoading, error } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: async () => {
+      const response = await contentfulClient.getEntries<BlogPost>({
+        content_type: 'blogPost',
+        order: '-sys.createdAt',
+      });
+      return response.items;
+    },
+  });
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-12">
+        <div className="space-y-4">
+          {[1, 2, 3].map((i) => (
+            <Card key={i} className="animate-pulse">
+              <CardHeader>
+                <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2 mt-2"></div>
+              </CardHeader>
+              <CardContent>
+                <div className="h-4 bg-gray-200 rounded w-full"></div>
+              </CardContent>
+            </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto py-12">
+        <div className="text-center text-red-500">
+          Failed to load blog posts. Please try again later.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto py-12">
+      <h1 className="text-4xl font-bold mb-8">Blog</h1>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts?.map((post) => (
+          <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
+            <Card className="h-full hover:shadow-lg transition-shadow">
+              {post.fields.featuredImage && (
+                <img
+                  src={post.fields.featuredImage.fields.file.url}
+                  alt={post.fields.title}
+                  className="w-full h-48 object-cover rounded-t-lg"
+                />
+              )}
+              <CardHeader>
+                <CardTitle>{post.fields.title}</CardTitle>
+                <CardDescription>
+                  {new Date(post.sys.createdAt).toLocaleDateString()}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 line-clamp-3">
+                  {post.fields.excerpt || post.fields.content.substring(0, 150) + '...'}
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
       </div>
     </div>
   );
