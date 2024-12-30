@@ -2,7 +2,8 @@ import { createClient } from 'contentful';
 
 export const contentfulClient = createClient({
   space: '0rf1pho85xtc',
-  accessToken: 'Zi5MpchIJf8j3I-hkOORC9MOLdLAJi8mJ4tXjbJjsZk',
+  accessToken: '-waCZTYOEOmS1YQxo6kDk8BV4tCgJTwlDCOJiPVD1VM',
+  host: 'preview.contentful.com'
 });
 
 export type BlogPost = {
