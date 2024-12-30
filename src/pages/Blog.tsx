@@ -11,7 +11,7 @@ const Blog = () => {
         content_type: 'blogPost',
         order: '-sys.createdAt',
       });
-      return response.items;
+      return response.items as unknown as BlogPost[];
     },
   });
 
@@ -54,7 +54,7 @@ const Blog = () => {
             <Card className="h-full hover:shadow-lg transition-shadow">
               {post.fields.featuredImage && (
                 <img
-                  src={post.fields.featuredImage.fields.file.url}
+                  src={`https:${post.fields.featuredImage.fields.file.url}`}
                   alt={post.fields.title}
                   className="w-full h-48 object-cover rounded-t-lg"
                 />

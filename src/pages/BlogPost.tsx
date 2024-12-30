@@ -16,7 +16,7 @@ const BlogPostPage = () => {
         'fields.slug': slug,
         limit: 1,
       });
-      return response.items[0];
+      return response.items[0] as unknown as BlogPost;
     },
   });
 
@@ -56,7 +56,7 @@ const BlogPostPage = () => {
       <article className="prose prose-lg mx-auto">
         {post.fields.featuredImage && (
           <img
-            src={post.fields.featuredImage.fields.file.url}
+            src={`https:${post.fields.featuredImage.fields.file.url}`}
             alt={post.fields.title}
             className="w-full h-64 object-cover rounded-lg mb-8"
           />

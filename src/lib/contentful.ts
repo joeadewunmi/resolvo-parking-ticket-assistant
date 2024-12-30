@@ -29,4 +29,5 @@ export type BlogPost = {
       };
     };
   };
+  contentTypeId?: string;
 };
