@@ -52,7 +52,7 @@ const Index = () => {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
               <img 
-                src="/lovable-uploads/e8ad0a3f-7389-4720-9e3d-f7f46a895cde.png" 
+                src="/lovable-uploads/87df45ef-e423-470a-823a-2ca1ee555384.png" 
                 alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge" 
                 className="relative rounded-lg shadow-2xl w-full h-auto"
               />

@@ -13,7 +13,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug[in]': slug,
+        'fields.slug': slug,
         limit: 1,
       });
       return response.items[0] as unknown as BlogPost;
