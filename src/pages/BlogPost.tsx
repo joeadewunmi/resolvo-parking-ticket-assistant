@@ -8,7 +8,6 @@ import { contentfulClient, BlogPost } from "@/lib/contentful";
 import { Card, CardContent } from "@/components/ui/card";
 import { Suspense, lazy } from 'react';
 
-// Lazy load the rich text renderer component
 const RichTextContent = lazy(() => 
   import('@contentful/rich-text-react-renderer').then(module => ({
     default: ({ content }: { content: any }) => documentToReactComponents(content)
@@ -95,40 +94,30 @@ const BlogPostPage = () => {
             {post.fields.tags.map((tag) => (
               <Link
                 key={tag.sys.id}
-                to={`/blog/tag/${tag.fields.slug}`}
+                to={`/blog/tag/${tag.fields.tagSlug}`}
                 className="bg-secondary px-3 py-1 rounded-full text-sm hover:bg-secondary/80"
               >
-                {tag.fields.name}
+                {tag.fields.tagName}
               </Link>
             ))}
           </div>
         )}
 
-        {post.fields.author && (
+        {post.fields.authorName && (
           <div className="border-t border-gray-200 mt-8 pt-8">
             <div className="flex items-start gap-4">
               <Avatar className="h-16 w-16">
-                {post.fields.author.fields.profilePicture && (
-                  <AvatarImage
-                    src={`https:${post.fields.author.fields.profilePicture.fields.file.url}`}
-                    alt={post.fields.author.fields.name}
-                    loading="lazy"
-                  />
-                )}
                 <AvatarFallback>
-                  {post.fields.author.fields.name.charAt(0)}
+                  {post.fields.authorName.fields.authorName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="font-semibold text-lg">
-                  {post.fields.author.fields.name}
+                  {post.fields.authorName.fields.authorName}
                 </h3>
-                <p className="text-gray-600 mt-1">
-                  {post.fields.author.fields.bio}
-                </p>
-                {post.fields.author.fields.socialLinks && (
+                {post.fields.authorName.fields.socialLinks && (
                   <a
-                    href={post.fields.author.fields.socialLinks}
+                    href={post.fields.authorName.fields.socialLinks}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline mt-2 inline-block"
@@ -141,11 +130,11 @@ const BlogPostPage = () => {
           </div>
         )}
 
-        {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 && (
+        {post.fields.relatedPost && post.fields.relatedPost.length > 0 && (
           <div className="border-t border-gray-200 mt-8 pt-8">
             <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
             <div className="grid gap-6 md:grid-cols-2">
-              {post.fields.relatedPosts.map((relatedPost) => (
+              {post.fields.relatedPost.map((relatedPost) => (
                 <Link
                   key={relatedPost.sys.id}
                   to={`/blog/${relatedPost.fields.slug}`}

@@ -10,7 +10,7 @@ const Blog = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        order: ['-sys.createdAt'], // Changed from '-fields.publishDate' to '-sys.createdAt'
+        order: ['-sys.createdAt'],
       });
       return response.items as unknown as BlogPost[];
     },
@@ -58,6 +58,7 @@ const Blog = () => {
                   src={`https:${post.fields.featuredImage.fields.file.url}`}
                   alt={post.fields.title}
                   className="w-full h-48 object-cover rounded-t-lg"
+                  loading="lazy"
                 />
               )}
               <CardHeader>
@@ -68,7 +69,7 @@ const Blog = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 line-clamp-3">
-                  {post.fields.seoDescription || post.fields.excerpt || ''}
+                  {post.fields.seoDescription || ''}
                 </p>
                 <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
                   Read More

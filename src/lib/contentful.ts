@@ -10,15 +10,7 @@ export type Author = {
     id: string;
   };
   fields: {
-    name: string;
-    bio: string;
-    profilePicture: {
-      fields: {
-        file: {
-          url: string;
-        };
-      };
-    };
+    authorName: string;
     socialLinks: string;
   };
 };
@@ -28,8 +20,8 @@ export type Tag = {
     id: string;
   };
   fields: {
-    name: string;
-    slug: string;
+    tagName: string;
+    tagSlug: string;
   };
 };
 
@@ -37,34 +29,23 @@ export type BlogPost = {
   sys: {
     id: string;
     createdAt: string;
-    updatedAt: string;
-    contentType: {
-      sys: {
-        id: string;
-      };
-    };
   };
   fields: {
     title: string;
     slug: string;
     publishDate: string;
-    featuredImage?: {
+    featuredImage: {
       fields: {
         file: {
           url: string;
         };
       };
     };
-    content: string;
-    relatedPosts?: BlogPost[];
+    content: any; // Rich text content from Contentful
+    relatedPost?: BlogPost[];
     seoTitle?: string;
     seoDescription?: string;
     tags?: Tag[];
-    author?: Author;
-    excerpt?: string;
-  };
-  contentTypeId: string;
-  metadata: {
-    tags: []
+    authorName?: Author;
   };
 };
