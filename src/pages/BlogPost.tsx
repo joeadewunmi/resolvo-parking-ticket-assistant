@@ -1,4 +1,3 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -8,11 +7,7 @@ import { contentfulClient, BlogPost } from "@/lib/contentful";
 import { Card, CardContent } from "@/components/ui/card";
 import { Suspense, lazy } from 'react';
 
-const RichTextContent = lazy(() => 
-  import('@contentful/rich-text-react-renderer').then(module => ({
-    default: ({ content }: { content: any }) => documentToReactComponents(content)
-  }))
-);
+const RichTextContent = lazy(() => import('@/components/RichTextContent'));
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -85,7 +80,9 @@ const BlogPostPage = () => {
 
         <div className="prose max-w-none">
           <Suspense fallback={<div className="animate-pulse h-96 bg-gray-100 rounded-lg"></div>}>
-            <RichTextContent content={post.fields.content} />
+            {post.fields.content && (
+              <RichTextContent content={post.fields.content} />
+            )}
           </Suspense>
         </div>
 
@@ -116,7 +113,7 @@ const BlogPostPage = () => {
                   {post.fields.authorName.fields.authorName}
                 </h3>
                 {post.fields.authorName.fields.socialLinks && (
-                  <a
+                  
                     href={post.fields.authorName.fields.socialLinks}
                     target="_blank"
                     rel="noopener noreferrer"
