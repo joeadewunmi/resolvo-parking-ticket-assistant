@@ -6,6 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { contentfulClient, BlogPost } from "@/lib/contentful";
 import { Card, CardContent } from "@/components/ui/card";
+import { Suspense, lazy } from 'react';
+
+// Lazy load the rich text renderer component
+const RichTextContent = lazy(() => 
+  import('@contentful/rich-text-react-renderer').then(module => ({
+    default: ({ content }: { content: any }) => documentToReactComponents(content)
+  }))
+);
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -72,11 +80,14 @@ const BlogPostPage = () => {
             src={`https:${post.fields.featuredImage.fields.file.url}`}
             alt={post.fields.title}
             className="w-full h-64 object-cover rounded-lg mb-8"
+            loading="lazy"
           />
         )}
 
         <div className="prose max-w-none">
-          {documentToReactComponents(post.fields.content)}
+          <Suspense fallback={<div className="animate-pulse h-96 bg-gray-100 rounded-lg"></div>}>
+            <RichTextContent content={post.fields.content} />
+          </Suspense>
         </div>
 
         {post.fields.tags && post.fields.tags.length > 0 && (
@@ -101,6 +112,7 @@ const BlogPostPage = () => {
                   <AvatarImage
                     src={`https:${post.fields.author.fields.profilePicture.fields.file.url}`}
                     alt={post.fields.author.fields.name}
+                    loading="lazy"
                   />
                 )}
                 <AvatarFallback>
@@ -144,6 +156,7 @@ const BlogPostPage = () => {
                         src={`https:${relatedPost.fields.featuredImage.fields.file.url}`}
                         alt={relatedPost.fields.title}
                         className="w-full h-32 object-cover rounded-t-lg"
+                        loading="lazy"
                       />
                     )}
                     <CardContent className="p-4">
