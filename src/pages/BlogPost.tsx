@@ -15,7 +15,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug[in]': slug,
+        'fields.slug': slug,
         limit: 1,
         include: 2,
       });
@@ -73,9 +73,9 @@ const BlogPostPage = () => {
 
         <div dangerouslySetInnerHTML={{ __html: post.fields.content }} />
 
-        {post.fields.tags && post.fields.tags.length > 0 && (
+        {post.fields.tags && Array.isArray(post.fields.tags) && post.fields.tags.length > 0 && (
           <div className="flex gap-2 mt-8">
-            {Array.isArray(post.fields.tags) && post.fields.tags.map((tag) => (
+            {post.fields.tags.map((tag) => (
               <Link
                 key={tag.sys.id}
                 to={`/blog/tag/${tag.fields.slug}`}
