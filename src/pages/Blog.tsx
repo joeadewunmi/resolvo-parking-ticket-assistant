@@ -10,7 +10,7 @@ const Blog = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        order: ['-fields.publishDate'],
+        order: ['-sys.createdAt'], // Changed from '-fields.publishDate' to '-sys.createdAt'
       });
       return response.items as unknown as BlogPost[];
     },

@@ -15,9 +15,9 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug, // Updated query parameter syntax
         limit: 1,
-        include: 2, // Include related posts and author data
+        include: 2,
       });
       return response.items[0] as unknown as BlogPost;
     },
