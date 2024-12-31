@@ -13,8 +13,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
+            <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
               <span className="text-2xl font-bold text-primary">Resolvo</span>
+              <img 
+                src="/lovable-uploads/de7ac283-e809-42cf-a7a3-b92c9a12a975.png" 
+                alt="Resolvo Logo" 
+                className="h-8 w-8"
+              />
             </Link>
           </div>
           
