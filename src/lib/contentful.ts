@@ -5,6 +5,34 @@ export const contentfulClient = createClient({
   accessToken: 'Zi5MpchIJf8j3I-hkOORC9MOLdLAJi8mJ4tXjbJjsZk'
 });
 
+export type Author = {
+  sys: {
+    id: string;
+  };
+  fields: {
+    name: string;
+    bio: string;
+    profilePicture: {
+      fields: {
+        file: {
+          url: string;
+        };
+      };
+    };
+    socialLinks: string;
+  };
+};
+
+export type Tag = {
+  sys: {
+    id: string;
+  };
+  fields: {
+    name: string;
+    slug: string;
+  };
+};
+
 export type BlogPost = {
   sys: {
     id: string;
@@ -19,8 +47,7 @@ export type BlogPost = {
   fields: {
     title: string;
     slug: string;
-    content: string;
-    excerpt?: string;
+    publishDate: string;
     featuredImage?: {
       fields: {
         file: {
@@ -28,6 +55,13 @@ export type BlogPost = {
         };
       };
     };
+    content: string;
+    relatedPosts?: BlogPost[];
+    seoTitle?: string;
+    seoDescription?: string;
+    tags?: Tag[];
+    author?: Author;
+    excerpt?: string;
   };
   contentTypeId: string;
   metadata: {
