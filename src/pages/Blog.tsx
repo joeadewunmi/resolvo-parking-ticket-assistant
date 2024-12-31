@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { contentfulClient, BlogPost } from "@/lib/contentful";
 
 const Blog = () => {
@@ -9,7 +10,7 @@ const Blog = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        order: ['-sys.createdAt'],
+        order: ['-fields.publishDate'],
       });
       return response.items as unknown as BlogPost[];
     },
@@ -62,13 +63,16 @@ const Blog = () => {
               <CardHeader>
                 <CardTitle>{post.fields.title}</CardTitle>
                 <CardDescription>
-                  {new Date(post.sys.createdAt).toLocaleDateString()}
+                  {new Date(post.fields.publishDate).toLocaleDateString()}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 line-clamp-3">
-                  {post.fields.excerpt || post.fields.content.substring(0, 150) + '...'}
+                  {post.fields.seoDescription || post.fields.excerpt || ''}
                 </p>
+                <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
+                  Read More
+                </Button>
               </CardContent>
             </Card>
           </Link>

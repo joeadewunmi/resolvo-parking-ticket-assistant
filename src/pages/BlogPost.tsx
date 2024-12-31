@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, useNavigate } from "react-router-dom";
-import { contentfulClient, BlogPost } from "@/lib/contentful";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { contentfulClient, BlogPost } from "@/lib/contentful";
+import { Card, CardContent } from "@/components/ui/card";
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -15,7 +17,8 @@ const BlogPostPage = () => {
         content_type: 'blogPost',
         'fields.slug': slug,
         limit: 1,
-      } as any); // Using type assertion to bypass TypeScript error
+        include: 2, // Include related posts and author data
+      });
       return response.items[0] as unknown as BlogPost;
     },
   });
@@ -54,18 +57,90 @@ const BlogPostPage = () => {
       </Button>
 
       <article className="prose prose-lg mx-auto">
-        {post?.fields.featuredImage && (
+        <h1 className="text-4xl font-bold mb-4">{post.fields.title}</h1>
+        
+        <div className="text-gray-500 mb-6">
+          {new Date(post.fields.publishDate).toLocaleDateString()}
+        </div>
+
+        {post.fields.featuredImage && (
           <img
             src={`https:${post.fields.featuredImage.fields.file.url}`}
             alt={post.fields.title}
             className="w-full h-64 object-cover rounded-lg mb-8"
           />
         )}
-        <h1>{post?.fields.title}</h1>
-        <div className="text-gray-500 mb-8">
-          {post && new Date(post.sys.createdAt).toLocaleDateString()}
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: post?.fields.content || '' }} />
+
+        <div dangerouslySetInnerHTML={{ __html: post.fields.content }} />
+
+        {post.fields.tags && post.fields.tags.length > 0 && (
+          <div className="flex gap-2 mt-8">
+            {post.fields.tags.map((tag) => (
+              <Link
+                key={tag.sys.id}
+                to={`/blog/tag/${tag.fields.slug}`}
+                className="bg-secondary px-3 py-1 rounded-full text-sm hover:bg-secondary/80"
+              >
+                {tag.fields.name}
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {post.fields.author && (
+          <div className="border-t border-gray-200 mt-8 pt-8">
+            <div className="flex items-start gap-4">
+              <Avatar className="h-16 w-16">
+                {post.fields.author.fields.profilePicture && (
+                  <AvatarImage
+                    src={`https:${post.fields.author.fields.profilePicture.fields.file.url}`}
+                    alt={post.fields.author.fields.name}
+                  />
+                )}
+                <AvatarFallback>
+                  {post.fields.author.fields.name.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-semibold text-lg">
+                  {post.fields.author.fields.name}
+                </h3>
+                <p className="text-gray-600 mt-1">
+                  {post.fields.author.fields.bio}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {post.fields.relatedPosts && post.fields.relatedPosts.length > 0 && (
+          <div className="border-t border-gray-200 mt-8 pt-8">
+            <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {post.fields.relatedPosts.map((relatedPost) => (
+                <Link
+                  key={relatedPost.sys.id}
+                  to={`/blog/${relatedPost.fields.slug}`}
+                >
+                  <Card className="h-full hover:shadow-lg transition-shadow">
+                    {relatedPost.fields.featuredImage && (
+                      <img
+                        src={`https:${relatedPost.fields.featuredImage.fields.file.url}`}
+                        alt={relatedPost.fields.title}
+                        className="w-full h-32 object-cover rounded-t-lg"
+                      />
+                    )}
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold line-clamp-2">
+                        {relatedPost.fields.title}
+                      </h3>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </article>
     </div>
   );
