@@ -5,30 +5,57 @@ export const contentfulClient = createClient({
   accessToken: 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw'
 });
 
-export type Author = {
+export interface Author {
+  metadata: { tags: [] };
   sys: {
     id: string;
+    type: string;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
   };
   fields: {
     authorName: string;
     socialLinks: string;
   };
-};
+}
 
-export type Tag = {
+export interface Tag {
+  metadata: { tags: [] };
   sys: {
     id: string;
+    type: string;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
   };
   fields: {
     tagName: string;
     tagSlug: string;
   };
-};
+}
 
-export type BlogPost = {
+export interface BlogPost {
+  metadata: { tags: [] };
   sys: {
     id: string;
+    type: string;
     createdAt: string;
+    contentType: {
+      sys: {
+        type: string;
+        linkType: string;
+        id: string;
+      };
+    };
   };
   fields: {
     title: string;
@@ -41,11 +68,11 @@ export type BlogPost = {
         };
       };
     };
-    content: any; // Rich text content from Contentful
+    content: any;
     relatedPost?: BlogPost[];
     seoTitle?: string;
     seoDescription?: string;
     tags?: Tag[];
     authorName?: Author;
   };
-};
+}
