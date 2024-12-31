@@ -1,8 +1,8 @@
 import { createClient } from 'contentful';
 
 export const contentfulClient = createClient({
-  space: '0rf1pho85xtc',
-  accessToken: 'Zi5MpchIJf8j3I-hkOORC9MOLdLAJi8mJ4tXjbJjsZk'
+  space: 'fal2hauaxrft',
+  accessToken: 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw'
 });
 
 export type Author = {
