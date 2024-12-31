@@ -1,4 +1,5 @@
 import { createClient } from 'contentful';
+import { Document } from '@contentful/rich-text-types';
 
 export const contentfulClient = createClient({
   space: 'fal2hauaxrft',
@@ -43,6 +44,29 @@ export interface Tag {
   };
 }
 
+export interface Asset {
+  metadata: { tags: [] };
+  sys: {
+    id: string;
+    type: string;
+  };
+  fields: {
+    title: string;
+    file: {
+      url: string;
+      details: {
+        size: number;
+        image?: {
+          width: number;
+          height: number;
+        };
+      };
+      fileName: string;
+      contentType: string;
+    };
+  };
+}
+
 export interface BlogPost {
   metadata: { tags: [] };
   sys: {
@@ -68,11 +92,18 @@ export interface BlogPost {
         };
       };
     };
-    content: any;
+    content: Document; // Changed from 'any' to 'Document'
     relatedPost?: BlogPost[];
     seoTitle?: string;
     seoDescription?: string;
     tags?: Tag[];
     authorName?: Author;
   };
+}
+
+export interface ContentfulResponse<T> {
+  total: number;
+  skip: number;
+  limit: number;
+  items: T[];
 }
