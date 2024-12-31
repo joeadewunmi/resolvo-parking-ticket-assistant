@@ -1,3 +1,4 @@
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -28,8 +29,11 @@ const BlogPostPage = () => {
       <div className="container mx-auto py-12">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-          <div className="h-64 bg-gray-200 rounded w-full mt-8"></div>
+          <div className="h-64 bg-gray-200 rounded"></div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+          </div>
         </div>
       </div>
     );
@@ -71,9 +75,11 @@ const BlogPostPage = () => {
           />
         )}
 
-        <div dangerouslySetInnerHTML={{ __html: post.fields.content }} />
+        <div className="prose max-w-none">
+          {documentToReactComponents(post.fields.content)}
+        </div>
 
-        {post.fields.tags && Array.isArray(post.fields.tags) && post.fields.tags.length > 0 && (
+        {post.fields.tags && post.fields.tags.length > 0 && (
           <div className="flex gap-2 mt-8">
             {post.fields.tags.map((tag) => (
               <Link
@@ -108,6 +114,16 @@ const BlogPostPage = () => {
                 <p className="text-gray-600 mt-1">
                   {post.fields.author.fields.bio}
                 </p>
+                {post.fields.author.fields.socialLinks && (
+                  <a
+                    href={post.fields.author.fields.socialLinks}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline mt-2 inline-block"
+                  >
+                    Social Links
+                  </a>
+                )}
               </div>
             </div>
           </div>
