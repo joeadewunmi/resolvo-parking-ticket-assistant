@@ -14,7 +14,7 @@ const BlogPostPage = () => {
     queryKey: ['blog-post', slug],
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
-        'sys.contentType.sys.id': 'blogPost',
+        content_type: 'blogPost',
         'fields.slug': slug,
         limit: 1,
         include: 2,
