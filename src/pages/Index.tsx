@@ -50,17 +50,19 @@ const Index = () => {
       <div className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
-              <img 
-                src="/lovable-uploads/d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.png" 
-                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
-                className="relative rounded-lg shadow-2xl w-full h-auto object-cover object-top"
-                style={{ maxHeight: "600px" }}
-              />
+            <div className="md:order-2 order-2">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
+                <img 
+                  src="/lovable-uploads/d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.png" 
+                  alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
+                  className="relative rounded-lg shadow-2xl w-full h-auto object-cover object-top"
+                  style={{ maxHeight: "600px" }}
+                />
+              </div>
             </div>
-            <div>
-              <h2 className="text-3xl font-extrabold text-primary">
+            <div className="md:order-1 order-1">
+              <h2 className="text-3xl font-extrabold text-primary mb-6 md:mb-0">
                 Don't let a parking ticket ruin your day
               </h2>
               <p className="mt-4 text-lg text-gray-600">
