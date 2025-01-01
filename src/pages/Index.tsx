@@ -18,10 +18,10 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Fight greedy parking pirates with Resolvo
+                Fight Unfair Parking Fines with Resolvo
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
+                 Got a parking ticket? Don't wait - get an appeal written in minutes- start now!.
               </p>
               <div className="mt-8">
                 <a
