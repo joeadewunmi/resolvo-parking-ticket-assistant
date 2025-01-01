@@ -21,7 +21,7 @@ const Index = () => {
                 Fight Unfair Parking Fines with Resolvo
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                 Got a parking ticket? Don't wait - get an appeal written in minutes- start now!
+                 Got a parking ticket? Don't wait - get a free appeal written in minutes- start now!
               </p>
               <div className="mt-8">
                 <a
