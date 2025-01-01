@@ -28,11 +28,11 @@ const Index = () => {
                   href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Appeal now →
                 </a>
-                <p className="mt-2 text-sm text-primary/70">Used by 500+ users</p>
+                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 500+ users</p>
               </div>
             </div>
             <div className="hidden md:block">
