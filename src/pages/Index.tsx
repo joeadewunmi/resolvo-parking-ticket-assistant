@@ -18,10 +18,10 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Fight Unfair Parking Fines with Resolvo
+                Fight greedy parking pirates with Resolvo
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                 Got a parking ticket? Don't wait - get a free appeal written in minutes- start now!
+                Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
               </p>
               <div className="mt-8">
                 <a
@@ -49,30 +49,24 @@ const Index = () => {
       {/* AI Features Section */}
       <div className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:grid md:grid-cols-2 gap-12 items-center">
-            <div className="order-1 md:order-1">
-              <h2 className="text-3xl font-extrabold text-primary mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
+              <img 
+                src="/lovable-uploads/d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.png" 
+                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
+                className="relative rounded-lg shadow-2xl w-full h-auto object-cover object-top"
+                style={{ maxHeight: "600px" }}
+              />
+            </div>
+            <div>
+              <h2 className="text-3xl font-extrabold text-primary">
                 Don't let a parking ticket ruin your day
               </h2>
-            </div>
-            
-            <div className="order-2 md:order-2 w-full">
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
-                <img 
-                  src="/lovable-uploads/d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.png" 
-                  alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
-                  className="relative rounded-lg shadow-2xl w-full h-auto object-cover object-top"
-                  style={{ maxHeight: "600px" }}
-                />
-              </div>
-            </div>
-
-            <div className="order-3 md:order-1 col-span-2 md:col-span-1">
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="mt-4 text-lg text-gray-600">
                 Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
               </p>
-              <div>
+              <div className="mt-8">
                 <Link
                   to="/get-started"
                   className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300"
