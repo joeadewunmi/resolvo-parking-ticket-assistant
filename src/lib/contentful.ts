@@ -43,3 +43,12 @@ export const contentfulClient = createClient({
   space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || '',
   accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || '',
 });
+
+// Add type for query parameters
+export type ContentfulQueryParams = {
+  content_type: string;
+  'fields.slug'?: string;
+  limit?: number;
+  include?: number;
+  order?: string[];
+};
