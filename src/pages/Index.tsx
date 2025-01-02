@@ -18,7 +18,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Fight Unfair Parking Fines
+                Fight Your Unfair Parking Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
                 Just got a parking ticket? Resolvo helps you write an appeal in minutes - quick,easy and stress-free.
@@ -32,7 +32,7 @@ const Index = () => {
                 >
                   Appeal now
                 </a>
-                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 500+ users</p>
+                <p className="mt-2 text-sm text-primary/70 font-bold"> Used by 500+ people to sort out their parking tickets effectively  </p>
               </div>
             </div>
             <div className="block">
