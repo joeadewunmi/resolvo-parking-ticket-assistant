@@ -35,7 +35,7 @@ const Index = () => {
                 <p className="mt-2 text-sm text-primary/70 font-bold">Used by 500+ users</p>
               </div>
             </div>
-            <div className="hidden md:block">
+            <div className="block">
               <img 
                 src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
                 alt='Photo by Caspar Rae on Unsplash - A parking enforcement officer in a high-visibility yellow jacket issuing a ticket to a white Volkswagen car in a parking lot' 
