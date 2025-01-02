@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -33,10 +34,19 @@ const Footer = () => {
           </div>
           <div>
             <h3 className="text-xl font-bold mb-4">Contact</h3>
-            <p className="text-sm">
+            <p className="text-sm mb-4">
               Questions? Reach out to us at<br />
-              support@resolvo.com
+              resolvoparking@gmail.com
             </p>
+            <a
+              href="https://x.com/resolvoparking"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-sm hover:text-accent"
+            >
+              <Twitter className="h-5 w-5 mr-2" />
+              Follow us on Twitter
+            </a>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-700">
