@@ -32,7 +32,7 @@ const Index = () => {
                 >
                   Appeal now
                 </a>
-                <p className="mt-2 text-sm text-primary/70 font-bold"> Used by 500+ people to sort out their parking tickets effectively  </p>
+                <p className="mt-2 text-sm text-primary/70 font-bold"> Used by 500+ people to sort out their parking tickets.</p>
               </div>
             </div>
             <div className="block">
