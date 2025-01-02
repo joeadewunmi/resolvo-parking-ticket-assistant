@@ -18,10 +18,10 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Fight greedy parking pirates with Resolvo
+                Fight Unfair Parking Tickets with Resolvo
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
+                Just got a parking ticket? Resolvo helps you write an appeal in minutes - quick,easy and stress-free.
               </p>
               <div className="mt-8">
                 <a
@@ -30,7 +30,7 @@ const Index = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
-                  Appeal now →
+                  Appeal now
                 </a>
                 <p className="mt-2 text-sm text-primary/70 font-bold">Used by 500+ users</p>
               </div>
@@ -64,14 +64,14 @@ const Index = () => {
                 Don't let a parking ticket ruin your day
               </h2>
               <p className="mt-4 text-lg text-gray-600">
-                Recently got a parking ticket? Resolvo will immediately help you write an appeal based on your specific circumstances.
+                Just got a parking ticket? Resolvo helps you write an appeal in minutes - quick, easy and stress free.
               </p>
               <div className="mt-8">
                 <Link
                   to="/get-started"
                   className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300"
                 >
-                  Appeal now →
+                  Appeal now
                 </Link>
               </div>
             </div>
@@ -86,25 +86,22 @@ const Index = () => {
             <h2 className="text-3xl font-extrabold text-primary">
               Don't let a parking ticket ruin your day
             </h2>
-            <p className="mt-4 text-lg text-primary/80 max-w-2xl mx-auto">
-              We're here to help you fight unfair parking tickets with our AI-powered appeal system.
-            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: <MessageSquare className="h-8 w-8" />,
-                title: "Chat.",
+                title: "Chat",
                 description: "Simply start a conversation with Resolvo. Tell it about your parking ticket conditions."
               },
               {
                 icon: <Brain className="h-8 w-8" />,
-                title: "Understand.",
+                title: "Understand",
                 description: "Resolvo will ask a few quick questions to understand your situation better."
               },
               {
                 icon: <CheckCircle className="h-8 w-8" />,
-                title: "Resolve.",
+                title: "Resolve",
                 description: "Your letter will be written and ready for you to present with your appeal."
               }
             ].map((step, index) => (
@@ -126,7 +123,7 @@ const Index = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Appeal now →
+              Appeal now
             </a>
           </div>
         </div>
