@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { contentfulClient, BlogPost, ContentfulQueryParams } from "@/lib/contentful";
+import { contentfulClient, BlogPost } from "@/lib/contentful";
 import { Card, CardContent } from "@/components/ui/card";
 import { Suspense, lazy } from 'react';
 
@@ -16,13 +16,12 @@ const BlogPostPage = () => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
-      const queryParams: ContentfulQueryParams = {
+      const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
         'fields.slug': slug,
         limit: 1,
         include: 2,
-      };
-      const response = await contentfulClient.getEntries<BlogPost>(queryParams);
+      });
       return response.items[0] as unknown as BlogPost;
     },
   });
