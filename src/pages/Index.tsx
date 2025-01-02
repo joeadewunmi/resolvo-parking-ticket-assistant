@@ -21,7 +21,7 @@ const Index = () => {
                 Fight Your Unfair Parking Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                Just got a parking ticket? Resolvo helps you write an appeal in minutes - quick,easy and stress-free.
+                Got a parking ticket? Resolvo will write an appeal for you in minutes - quick,easy and stress-free.
               </p>
               <div className="mt-8">
                 <a
@@ -32,7 +32,7 @@ const Index = () => {
                 >
                   Appeal now
                 </a>
-                <p className="mt-2 text-sm text-primary/70"> Used by 500+ people to sort out their parking tickets.</p>
+                <p className="mt-2 text-sm text-primary/70"> Used by 500+ people to sort out their tickets.</p>
               </div>
             </div>
             <div className="block">
@@ -82,13 +82,6 @@ const Index = () => {
       </div>
 
       {/* Three-Step Process */}
-      <div className="py-24 bg-[#FFD700]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-primary">
-              Don't let a parking ticket ruin your day
-            </h2>
-          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
