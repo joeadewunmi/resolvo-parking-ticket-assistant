@@ -80,8 +80,10 @@ const Index = () => {
           </div>
         </div>
       </div>
-
-      {/* Three-Step Process */}
+      
+         {/* Three-Step Process */}
+      <div className="py-24 bg-[#FFD700]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
@@ -112,7 +114,7 @@ const Index = () => {
             ))}
           </div>
           <div className="text-center mt-16">
-            <a
+            
               href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
               target="_blank"
               rel="noopener noreferrer"
@@ -123,7 +125,6 @@ const Index = () => {
           </div>
         </div>
       </div>
-
       {/* FAQ Section */}
       <div className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
