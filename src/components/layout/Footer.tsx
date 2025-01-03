@@ -45,7 +45,7 @@ const Footer = () => {
               Questions? Reach out to us at<br />
               resolvoparking@gmail.com
             </p>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col space-y-4">
               <a
                 href="https://x.com/resolvoparking"
                 target="_blank"
