@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Twitter } from "lucide-react";
 
 const Footer = () => {
   const handleWhatsAppShare = () => {
@@ -52,8 +51,12 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <Twitter className="h-5 w-5 mr-2" />
-                Follow us on Twitter
+                <img 
+                  src="/lovable-uploads/76879f59-e256-4234-8300-d7fab3ddca78.png"
+                  alt="X (formerly Twitter)"
+                  className="h-5 w-5 mr-2 brightness-0 invert"
+                />
+                Follow us on X
               </a>
               <button
                 onClick={handleWhatsAppShare}
