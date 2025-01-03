@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Twitter, Share2 } from "lucide-react";
+import { Twitter, Whatsapp } from "lucide-react";
 
 const Footer = () => {
   const handleWhatsAppShare = () => {
@@ -59,7 +59,7 @@ const Footer = () => {
                 onClick={handleWhatsAppShare}
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <Share2 className="h-5 w-5 mr-2" />
+                <Whatsapp className="h-5 w-5 mr-2" />
                 Share on WhatsApp
               </button>
             </div>
