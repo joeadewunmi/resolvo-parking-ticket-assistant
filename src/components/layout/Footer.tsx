@@ -62,7 +62,7 @@ const Footer = () => {
                 <img 
                   src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
                   alt="WhatsApp"
-                  className="h-5 w-5 mr-2"
+                  className="h-5 w-5 mr-2 brightness-0 invert"
                 />
                 Share on WhatsApp
               </button>
