@@ -52,7 +52,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/76879f59-e256-4234-8300-d7fab3ddca78.png"
+                  src="/lovable-uploads/dfb95952-35ad-4573-9664-053dd71b8d12.png"
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
