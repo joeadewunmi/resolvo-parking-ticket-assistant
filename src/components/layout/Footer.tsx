@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
-import { Twitter } from "lucide-react";
+import { Twitter, Share2 } from "lucide-react";
 
 const Footer = () => {
+  const handleWhatsAppShare = () => {
+    const message = "Check out Resolvo - Fight unfair parking tickets with AI-powered appeals!";
+    const url = window.location.href;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message + " " + url)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <footer className="bg-primary text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -38,15 +45,24 @@ const Footer = () => {
               Questions? Reach out to us at<br />
               resolvoparking@gmail.com
             </p>
-            <a
-              href="https://x.com/resolvoparking"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-sm hover:text-accent"
-            >
-              <Twitter className="h-5 w-5 mr-2" />
-              Follow us on Twitter
-            </a>
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://x.com/resolvoparking"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <Twitter className="h-5 w-5 mr-2" />
+                Follow us on Twitter
+              </a>
+              <button
+                onClick={handleWhatsAppShare}
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <Share2 className="h-5 w-5 mr-2" />
+                Share on WhatsApp
+              </button>
+            </div>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-700">
