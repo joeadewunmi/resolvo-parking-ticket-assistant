@@ -56,7 +56,7 @@ const Footer = () => {
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
-                Follow us on X
+                Follow us on Twitter
               </a>
               <button
                 onClick={handleWhatsAppShare}
