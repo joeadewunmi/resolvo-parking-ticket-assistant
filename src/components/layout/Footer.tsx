@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Twitter, WhatsApp } from "lucide-react";
+import { Twitter } from "lucide-react";
 
 const Footer = () => {
   const handleWhatsAppShare = () => {
@@ -59,7 +59,11 @@ const Footer = () => {
                 onClick={handleWhatsAppShare}
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <WhatsApp className="h-5 w-5 mr-2" />
+                <img 
+                  src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
+                  alt="WhatsApp"
+                  className="h-5 w-5 mr-2"
+                />
                 Share on WhatsApp
               </button>
             </div>
