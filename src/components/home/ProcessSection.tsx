@@ -9,12 +9,12 @@ const ProcessSection = () => {
             {
               icon: <MessageSquare className="h-8 w-8" />,
               title: "Chat",
-              description: "Tell us what happened with how you got your ticket - every detail helps. You can even upload a photo of the ticket –and we’ll pull out key information automatically"
+              description: "Tell us what happened with how you got your ticket, every detail helps. You can even upload a photo of the ticket –and we’ll pull out key information automatically"
             },
             {
               icon: <Brain className="h-8 w-8" />,
               title: "Understand",
-              description: "We look at everything you've told us.You might get a few questions to understand what happened. Did you have a permit? Was there a sign? "
+              description: "We look at everything you've told us. You might get a few questions to understand what happened. Did you have a permit? Was there a sign? "
             },
             {
               icon: <CheckCircle className="h-8 w-8" />,
