@@ -22,7 +22,7 @@ const AppealSection = () => {
               Don't let a parking ticket ruin your day
             </h2>
             <p className="mt-4 text-lg text-gray-600">
-              Just got a parking ticket? Resolvo helps you write an appeal in minutes - quick, easy and stress free.
+              Resolvo is trained on the latest parking regulations such as the British Parking Association Code of Practice and Civil Enforcement of Parking Contraventions. We use these rules to help you write an appeal in minutes.
             </p>
             <div className="mt-8">
               <Link
