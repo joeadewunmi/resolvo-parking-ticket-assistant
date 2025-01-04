@@ -1,6 +1,34 @@
 import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
+// Define interfaces for nested types
+interface FileFields {
+  file: {
+    url: string;
+  };
+}
+
+interface ImageAsset {
+  fields: FileFields;
+}
+
+interface Tag {
+  sys: {
+    id: string;
+  };
+  fields: {
+    tagName: string;
+    tagSlug: string;
+  };
+}
+
+interface Author {
+  fields: {
+    authorName: string;
+    socialLinks?: string;
+  };
+}
+
 export interface BlogPost {
   contentTypeId: string;
   sys: {
@@ -13,17 +41,21 @@ export interface BlogPost {
     publishDate: string;
     content: Document;
     seoDescription?: string;
-    featuredImage?: {
-      fields: {
-        file: {
-          url: string;
-        };
-      };
-    };
+    featuredImage?: ImageAsset;
+    tags?: Tag[];
+    authorName?: Author;
+    relatedPost?: BlogPost[];
   };
 }
 
+const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
+const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
+
+if (!spaceId || !accessToken) {
+  console.error('Missing required Contentful environment variables');
+}
+
 export const contentfulClient = createClient({
-  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID as string,
-  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN as string,
+  space: spaceId || '',
+  accessToken: accessToken || '',
 });

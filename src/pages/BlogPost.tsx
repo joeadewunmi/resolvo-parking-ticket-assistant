@@ -86,7 +86,7 @@ const BlogPostPage = () => {
           </Suspense>
         </div>
 
-        {post.fields.tags && Array.isArray(post.fields.tags) && post.fields.tags.length > 0 && (
+        {post.fields.tags && post.fields.tags.length > 0 && (
           <div className="flex gap-2 mt-8">
             {post.fields.tags.map((tag) => (
               <Link
