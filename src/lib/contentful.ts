@@ -48,9 +48,9 @@ export interface BlogPost {
   };
 }
 
-// Use default values for development if environment variables are not set
-const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID || 'development_space_id';
-const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || 'development_access_token';
+// Use provided Contentful credentials
+const spaceId = 'fal2hauaxrft';
+const accessToken = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
 
 export const contentfulClient = createClient({
   space: spaceId,
