@@ -17,7 +17,7 @@ const HeroSection = () => {
               Fight Your Unfair Parking Fine
             </h1>
             <p className="mt-6 text-lg text-primary/80">
-              Got a parking ticket? Get an appeal written in minutes to help you challenge it.
+              Got a parking ticket? Get an appeal written in minutes to help you challenge your ticket.
             </p>
             <div className="mt-8">
               <a
