@@ -4,7 +4,7 @@ const FAQSection = () => {
   const faqs = [
     {
       question: "What is Resolvo?",
-      answer: "Resolvo is designed to help people challenge parking tickets using the latest UK parking laws. Each year, millions of tickets are issued, often due to unclear signs or confusing rules. Resolvo matches your situation with the correct laws to create a strong appeal.\n\nEach year, millions of tickets are issued, often due to unclear signs or confusing rules. Resolvo matches your situation with the correct laws to create a strong appeal.\n\nNote: Resolvo works for private parking tickets and council-issued Penalty Charge Notices (PCNs) but not Fixed Penalty Notices (FPNs) which are usually appealed in court"
+      answer: "Resolvo is designed to help people challenge parking tickets using the latest UK parking laws. Each year, millions of tickets are issued, often due to unclear signs or confusing rules. Resolvo matches your situation with the correct laws to create a strong appeal.\n\nEach year, millions of tickets are issued, often due to unclear signs or confusing rules. Resolvo matches your situation with the correct laws to create a strong appeal.\n\n\nNote: Resolvo works for private parking tickets and council-issued Penalty Charge Notices (PCNs) but not Fixed Penalty Notices (FPNs) which are usually appealed in court"
     },
     {
       question: "How do I access Resolvo?",
