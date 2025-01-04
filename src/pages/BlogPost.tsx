@@ -78,7 +78,7 @@ const BlogPostPage = () => {
           />
         )}
 
-        <div className="prose max-w-none">
+        <div className="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-gray-500">
           <Suspense fallback={<div className="animate-pulse h-96 bg-gray-100 rounded-lg"></div>}>
             {post.fields.content && (
               <RichTextContent content={post.fields.content} />
