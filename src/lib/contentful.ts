@@ -52,10 +52,10 @@ const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
 const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
 
 if (!spaceId || !accessToken) {
-  console.error('Missing required Contentful environment variables');
+  throw new Error('Missing required Contentful environment variables. Please set VITE_CONTENTFUL_SPACE_ID and VITE_CONTENTFUL_ACCESS_TOKEN in your .env file.');
 }
 
 export const contentfulClient = createClient({
-  space: spaceId || '',
-  accessToken: accessToken || '',
+  space: spaceId,
+  accessToken: accessToken,
 });
