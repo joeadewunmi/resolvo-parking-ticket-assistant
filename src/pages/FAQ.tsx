@@ -1,28 +1,6 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const faqs = [
-  {
-    question: "What is Resolvo ?",
-    answer: "Resolvo is a tool anyone can use to challenge parking tickets. In the UK, parking tickets are a big problem. Last year, over 11 million parking tickets were issued on private land—that's around 30,000 every day! Most people aren't trying to break rules; they're just caught out by unclear signs or confusing parking rules. That's why we built Resolvo. It matches your situation with the correct rules to create a strong appeal. Resolvo uses the latest UK parking laws to help you write a solid appeal. Note: Resolvo works with private parking tickets and council-issued Penalty Charge Notices (PCNs), but it cannot help with Fixed Penalty Notices (FPNs), as these usually need to be appealed in court.",
-  },
-  {
-    question: "How does the appeal process work?",
-    answer: "Our process is simple: you tell us about your ticket, our AI analyzes your case and relevant laws, and then generates a personalized appeal letter that you can submit to the authorities.",
-  },
-  {
-    question: "What are my chances of winning an appeal?",
-    answer: "Success rates vary depending on the specific circumstances of your case. However, our AI-powered system learns from successful appeals to maximize your chances of getting your ticket dismissed or reduced.",
-  },
-  {
-    question: "How long does the process take?",
-    answer: "Generating your appeal letter typically takes just a few minutes. The official review process by authorities can take 2-4 weeks, depending on your location.",
-  },
-];
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { faqs } from "@/data/faqs";
 
 const FAQ = () => {
   return (
@@ -35,16 +13,28 @@ const FAQ = () => {
           </p>
         </div>
         
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full space-y-4">
           {faqs.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left">
+            <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-4">
+              <AccordionTrigger className="text-left font-medium py-4">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent>{faq.answer}</AccordionContent>
+              <AccordionContent className="pb-4 text-gray-600">
+                {faq.answer}
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
+
+        <div className="mt-12 text-center">
+          <Button 
+            size="lg"
+            onClick={() => window.open("https://chat.openai.com/g/g-2tFgbECaJ-resolvo", "_blank")}
+            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+          >
+            Appeal now
+          </Button>
+        </div>
       </div>
     </div>
   );
