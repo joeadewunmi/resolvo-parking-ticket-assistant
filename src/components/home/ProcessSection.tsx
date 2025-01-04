@@ -19,7 +19,7 @@ const ProcessSection = () => {
             {
               icon: <CheckCircle className="h-8 w-8" />,
               title: "Resolve",
-              description: " We will instantly generate an appeal letter tailored to your specific situation, ready to send . You can review it, make any changes, and then use it to fight your ticket."
+              description: " We will instantly generate an appeal letter tailored to your specific situation, ready to send. You can review it, make any changes, and then use it to fight your ticket."
             }
           ].map((step, index) => (
             <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
