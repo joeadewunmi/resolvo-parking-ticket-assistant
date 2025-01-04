@@ -9,17 +9,17 @@ const ProcessSection = () => {
             {
               icon: <MessageSquare className="h-8 w-8" />,
               title: "Chat",
-              description: "Simply start a conversation with Resolvo. Tell it about your parking ticket conditions."
+              description: "Tell us what happened with how you got your ticket - every detail helps. You can even upload a photo of the ticket –and we’ll pull out key information automatically"
             },
             {
               icon: <Brain className="h-8 w-8" />,
               title: "Understand",
-              description: "Resolvo will ask a few quick questions to understand your situation better."
+              description: "We look at everything you've told us and match it with the right parking laws. You might get a few questions to understand what happened. Did you have a permit? Was there a sign? "
             },
             {
               icon: <CheckCircle className="h-8 w-8" />,
               title: "Resolve",
-              description: "Your letter will be written and ready for you to present with your appeal."
+              description: "You’ll instantly get an appeal letter ready to send. We include all the important details from your ticket, plus the relevant laws to explain why your ticket should be cancelled. You can review it, make any changes, and then use it to fight your ticket."
             }
           ].map((step, index) => (
             <div key={index} className="bg-white p-8 rounded-lg shadow-lg">
