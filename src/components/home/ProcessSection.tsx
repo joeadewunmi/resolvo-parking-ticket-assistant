@@ -9,7 +9,7 @@ const ProcessSection = () => {
             {
               icon: <MessageSquare className="h-8 w-8" />,
               title: "Chat",
-              description: "Tell us how you got your ticket – every detail helps. You can even upload a photo of the ticket –and we’ll pull out key information automatically "
+              description: "Tell us how you got your ticket – every detail helps. You can even upload a photo of the ticket and we’ll pull out key information automatically "
             },
             {
               icon: <Brain className="h-8 w-8" />,
