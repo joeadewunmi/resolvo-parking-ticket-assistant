@@ -48,12 +48,9 @@ export interface BlogPost {
   };
 }
 
-const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID;
-const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN;
-
-if (!spaceId || !accessToken) {
-  throw new Error('Missing required Contentful environment variables. Please set VITE_CONTENTFUL_SPACE_ID and VITE_CONTENTFUL_ACCESS_TOKEN in your .env file.');
-}
+// Use default values for development if environment variables are not set
+const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID || 'development_space_id';
+const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || 'development_access_token';
 
 export const contentfulClient = createClient({
   space: spaceId,
