@@ -1,5 +1,4 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { faqs } from "@/data/faqs";
 
 const FAQ = () => {
@@ -27,13 +26,14 @@ const FAQ = () => {
         </Accordion>
 
         <div className="mt-12 text-center">
-          <Button 
-            size="lg"
-            onClick={() => window.open("https://chat.openai.com/g/g-2tFgbECaJ-resolvo", "_blank")}
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+          <a
+            href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-4 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Appeal now
-          </Button>
+          </a>
         </div>
       </div>
     </div>
