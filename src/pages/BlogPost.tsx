@@ -9,6 +9,7 @@ import BlogPostContent from '@/components/blog/BlogPostContent';
 import BlogPostTags from '@/components/blog/BlogPostTags';
 import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
 import RelatedPosts from '@/components/blog/RelatedPosts';
+import FAQSection from '@/components/home/FAQSection';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -19,7 +20,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug,
         limit: 1,
         include: 2,
       });
@@ -86,6 +87,10 @@ const BlogPostPage = () => {
           <RelatedPosts posts={post.fields.relatedPost} />
         )}
       </article>
+
+      <div className="mt-16">
+        <FAQSection />
+      </div>
     </div>
   );
 };
