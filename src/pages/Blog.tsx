@@ -18,7 +18,7 @@ const Blog = () => {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-12">
+      <div className="container mx-auto py-12 bg-white">
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
             <Card key={i} className="animate-pulse">
@@ -38,7 +38,7 @@ const Blog = () => {
 
   if (error) {
     return (
-      <div className="container mx-auto py-12">
+      <div className="container mx-auto py-12 bg-white">
         <div className="text-center text-red-500">
           Failed to load blog posts. Please try again later.
         </div>
@@ -47,7 +47,7 @@ const Blog = () => {
   }
 
   return (
-    <div className="container mx-auto py-12">
+    <div className="container mx-auto py-12 bg-white">
       <h1 className="text-4xl font-bold mb-8">Blog</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts?.map((post) => (
