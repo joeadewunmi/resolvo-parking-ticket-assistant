@@ -15,7 +15,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Resolvo</h3>
             <p className="text-sm">
-              Fight your unfair parking fine for free in minutes
+              Fight Your Unfair Parking Fine For Free In Minutes
             </p>
           </div>
           <div>
