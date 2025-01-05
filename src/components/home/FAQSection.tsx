@@ -14,7 +14,7 @@ const FAQSection = () => {
               <AccordionTrigger className="text-left font-medium py-4">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="pb-4 text-gray-600">
+              <AccordionContent className="pb-4 text-gray-600 whitespace-pre-line">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>
