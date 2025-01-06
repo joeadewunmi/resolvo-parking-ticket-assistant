@@ -79,12 +79,12 @@ const BlogPostPage = () => {
           <BlogPostTags tags={post.fields.tags} />
         )}
 
-        {post.fields.authorName && (
-          <BlogPostAuthor author={post.fields.authorName} />
+        {post.fields.author && (
+          <BlogPostAuthor author={post.fields.author} />
         )}
 
-        {post.fields.relatedPost && (
-          <RelatedPosts posts={post.fields.relatedPost} />
+        {post.fields.relatedPosts && (
+          <RelatedPosts posts={post.fields.relatedPosts} />
         )}
       </article>
 
