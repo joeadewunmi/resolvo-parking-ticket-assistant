@@ -25,16 +25,18 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
       <div className="flex items-start gap-4 mb-6">
         {author && (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <Avatar className="h-8 w-8">
+              <Avatar className="h-12 w-12">
                 <AvatarImage src="/lovable-uploads/e86293c4-e08e-4db1-8f84-11e643c653ff.png" alt={author.fields.authorName} />
                 <AvatarFallback>
                   {author.fields.authorName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium">{author.fields.authorName}</span>
-              {author.fields.socialLinks && (
+              <span className="font-medium text-lg">{author.fields.authorName}</span>
+            </div>
+            {author.fields.socialLinks && (
+              <div className="ml-14">
                 <a
                   href={author.fields.socialLinks}
                   target="_blank"
@@ -47,9 +49,9 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
                     className="h-5 w-5"
                   />
                 </a>
-              )}
-            </div>
-            <div className="text-gray-500 mt-1 ml-11">
+              </div>
+            )}
+            <div className="text-gray-500 ml-14">
               {new Date(publishDate).toLocaleDateString()}
             </div>
           </div>
