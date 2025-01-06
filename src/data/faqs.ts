@@ -34,5 +34,9 @@ export const faqs = [
   {
     question: "When can I use Resolvo?",
     answer: "Anytime! Resolvo works 24/7."
+  },
+  {
+    question: "Is Resolvo Different from ChatGPT?",
+    answer: "Yes, Resolvo is different. Resolvo is specifically trained on the latest UK parking regulations to help with parking ticket appeals, while ChatGPT's training data stops at a certain point and isn't updated regularly.  Resolvo gives you accurate, tailored guidance for your appeal."
   }
 ];
