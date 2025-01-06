@@ -37,6 +37,6 @@ export const faqs = [
   },
   {
     question: "Is Resolvo Different from ChatGPT?",
-    answer: "Yes, Resolvo is different. Resolvo is specifically trained on the latest UK parking regulations to help with parking ticket appeals, while ChatGPT's training data stops at a certain point and isn't updated regularly.  Resolvo gives you accurate, tailored guidance for your appeal."
+    answer: "Yes, Resolvo is different. Resolvo is specifically trained on the latest UK parking regulations to help with parking ticket appeals, while ChatGPT's training data stops at a certain point and isn't updated regularly.  Resolvo is updated regularly on the latest laws to give you an accurate and tailored guidance for your appeal."
   }
 ];
