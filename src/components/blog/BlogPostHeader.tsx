@@ -23,38 +23,34 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
   return (
     <header>
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
-      <div className="flex items-start gap-4 mb-6">
+      <div className="flex items-center gap-6 mb-6">
         {author && (
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-12 w-12">
-                <AvatarImage src="/lovable-uploads/e86293c4-e08e-4db1-8f84-11e643c653ff.png" alt={author.fields.authorName} />
-                <AvatarFallback>
-                  {author.fields.authorName.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <span className="font-medium text-lg">{author.fields.authorName}</span>
-            </div>
-            {author.fields.socialLinks && (
-              <div className="ml-14">
-                <a
-                  href={author.fields.socialLinks}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  <img 
-                    src="/lovable-uploads/2fb2af2b-2d34-4a65-9161-a91b25335025.png" 
-                    alt="X (formerly Twitter)" 
-                    className="h-5 w-5"
-                  />
-                </a>
-              </div>
-            )}
-            <div className="text-gray-500 ml-14">
+          <>
+            <Avatar className="h-12 w-12">
+              <AvatarImage src="/lovable-uploads/e86293c4-e08e-4db1-8f84-11e643c653ff.png" alt={author.fields.authorName} />
+              <AvatarFallback>
+                {author.fields.authorName.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <span className="font-medium text-lg">{author.fields.authorName}</span>
+            <span className="text-gray-500">
               {new Date(publishDate).toLocaleDateString()}
-            </div>
-          </div>
+            </span>
+            {author.fields.socialLinks && (
+              <a
+                href={author.fields.socialLinks}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-gray-800"
+              >
+                <img 
+                  src="/lovable-uploads/2fb2af2b-2d34-4a65-9161-a91b25335025.png" 
+                  alt="X (formerly Twitter)" 
+                  className="h-5 w-5"
+                />
+              </a>
+            )}
+          </>
         )}
       </div>
       {featuredImage && (
