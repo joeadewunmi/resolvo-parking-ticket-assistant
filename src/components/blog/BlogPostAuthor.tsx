@@ -1,6 +1,5 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Twitter } from 'lucide-react';
 
 interface Author {
   fields: {
@@ -36,7 +35,11 @@ const BlogPostAuthor = ({ author }: BlogPostAuthorProps) => {
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 mt-2 inline-flex items-center gap-1"
             >
-              <Twitter className="h-5 w-5" />
+              <img 
+                src="/lovable-uploads/a7b9ce5c-5785-4072-a8ef-a3bffc3c78dc.png" 
+                alt="X (formerly Twitter)" 
+                className="h-5 w-5"
+              />
             </a>
           )}
         </div>
