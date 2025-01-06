@@ -36,20 +36,6 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
             <span className="text-gray-500">
               {new Date(publishDate).toLocaleDateString()}
             </span>
-            {author.fields.socialLinks && (
-              <a
-                href={author.fields.socialLinks}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-800"
-              >
-                <img 
-                  src="/lovable-uploads/2fb2af2b-2d34-4a65-9161-a91b25335025.png" 
-                  alt="X (formerly Twitter)" 
-                  className="h-5 w-5"
-                />
-              </a>
-            )}
           </>
         )}
       </div>

@@ -20,7 +20,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug,
         limit: 1,
         include: 2,
       });
@@ -64,30 +64,51 @@ const BlogPostPage = () => {
         Back to Blog
       </Button>
 
-      <article className="prose prose-lg mx-auto">
-        <BlogPostHeader
-          title={post.fields.title}
-          publishDate={post.fields.publishDate}
-          featuredImage={post.fields.featuredImage}
-          author={post.fields.authorName}
-        />
+      <div className="relative">
+        <article className="prose prose-lg mx-auto">
+          <BlogPostHeader
+            title={post.fields.title}
+            publishDate={post.fields.publishDate}
+            featuredImage={post.fields.featuredImage}
+            author={post.fields.authorName}
+          />
 
-        {post.fields.content && (
-          <BlogPostContent content={post.fields.content} />
-        )}
+          <div className="relative">
+            {post.fields.authorName?.fields.socialLinks && (
+              <div className="sticky top-4 left-0 float-left -ml-16">
+                <a
+                  href={post.fields.authorName.fields.socialLinks}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-gray-800 block"
+                >
+                  <img 
+                    src="/lovable-uploads/2fb2af2b-2d34-4a65-9161-a91b25335025.png" 
+                    alt="X (formerly Twitter)" 
+                    className="h-6 w-6"
+                  />
+                </a>
+              </div>
+            )}
+            
+            {post.fields.content && (
+              <BlogPostContent content={post.fields.content} />
+            )}
+          </div>
 
-        {post.fields.tags && (
-          <BlogPostTags tags={post.fields.tags} />
-        )}
+          {post.fields.tags && (
+            <BlogPostTags tags={post.fields.tags} />
+          )}
 
-        {post.fields.authorName && (
-          <BlogPostAuthor author={post.fields.authorName} />
-        )}
+          {post.fields.authorName && (
+            <BlogPostAuthor author={post.fields.authorName} />
+          )}
 
-        {post.fields.relatedPost && (
-          <RelatedPosts posts={post.fields.relatedPost} />
-        )}
-      </article>
+          {post.fields.relatedPost && (
+            <RelatedPosts posts={post.fields.relatedPost} />
+          )}
+        </article>
+      </div>
 
       <div className="mt-16">
         <FAQSection limit={4} />
