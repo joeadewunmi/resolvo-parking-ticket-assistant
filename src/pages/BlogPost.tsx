@@ -30,7 +30,7 @@ const BlogPostPage = () => {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-12 bg-white">
+      <div className="container mx-auto py-12 bg-[#FFFFFF]">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-gray-200 rounded w-3/4"></div>
           <div className="h-64 bg-gray-200 rounded"></div>
@@ -45,7 +45,7 @@ const BlogPostPage = () => {
 
   if (error || !post) {
     return (
-      <div className="container mx-auto py-12 bg-white">
+      <div className="container mx-auto py-12 bg-[#FFFFFF]">
         <div className="text-center text-red-500">
           Failed to load blog post. Please try again later.
         </div>
@@ -54,7 +54,7 @@ const BlogPostPage = () => {
   }
 
   return (
-    <div className="container mx-auto py-12 bg-white">
+    <div className="container mx-auto py-12 bg-[#FFFFFF]">
       <Button
         variant="ghost"
         className="mb-8"
