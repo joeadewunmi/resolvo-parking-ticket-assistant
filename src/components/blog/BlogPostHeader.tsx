@@ -33,8 +33,8 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
                   {author.fields.authorName.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <span className="font-medium text-lg">{author.fields.authorName}</span>
-              <span className="text-gray-500">
+              <span className="text-xl font-medium">{author.fields.authorName}</span>
+              <span className="text-lg text-gray-500">
                 {new Date(publishDate).toLocaleDateString()}
               </span>
             </>
