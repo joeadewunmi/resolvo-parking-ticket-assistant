@@ -20,11 +20,11 @@ const BlogPostPage = () => {
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug,
         limit: 1,
         include: 2,
       });
-      return response.items[0] as unknown as BlogPost;
+      return response.items[0];
     },
   });
 
@@ -69,6 +69,7 @@ const BlogPostPage = () => {
           title={post.fields.title}
           publishDate={post.fields.publishDate}
           featuredImage={post.fields.featuredImage}
+          author={post.fields.authorName}
         />
 
         {post.fields.content && (
