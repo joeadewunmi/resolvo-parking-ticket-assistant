@@ -1,20 +1,10 @@
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 
 interface Author {
-  sys: {
-    id: string;
-  };
   fields: {
-    entryTitle: string;
-    twitterHandle?: string;
-    profilePicture?: {
-      fields: {
-        file: {
-          url: string;
-        };
-      };
-    };
+    authorName: string;
+    socialLinks?: string;
   };
 }
 
@@ -29,29 +19,22 @@ const BlogPostAuthor = ({ author }: BlogPostAuthorProps) => {
     <div className="border-t border-gray-200 mt-8 pt-8">
       <div className="flex items-start gap-4">
         <Avatar className="h-16 w-16">
-          {author.fields.profilePicture ? (
-            <AvatarImage
-              src={`https:${author.fields.profilePicture.fields.file.url}`}
-              alt={author.fields.entryTitle}
-            />
-          ) : (
-            <AvatarFallback>
-              {author.fields.entryTitle.charAt(0)}
-            </AvatarFallback>
-          )}
+          <AvatarFallback>
+            {author.fields.authorName.charAt(0)}
+          </AvatarFallback>
         </Avatar>
         <div>
           <h3 className="font-semibold text-lg">
-            {author.fields.entryTitle}
+            {author.fields.authorName}
           </h3>
-          {author.fields.twitterHandle && (
+          {author.fields.socialLinks && (
             <a
-              href={`https://twitter.com/${author.fields.twitterHandle.replace('@', '')}`}
+              href={author.fields.socialLinks}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline mt-2 inline-block"
             >
-              {author.fields.twitterHandle}
+              Social Links
             </a>
           )}
         </div>

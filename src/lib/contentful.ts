@@ -12,14 +12,20 @@ interface ImageAsset {
   fields: FileFields;
 }
 
-interface Author {
+interface Tag {
   sys: {
     id: string;
   };
   fields: {
-    entryTitle: string;
-    twitterHandle?: string;
-    profilePicture?: ImageAsset;
+    tagName: string;
+    tagSlug: string;
+  };
+}
+
+interface Author {
+  fields: {
+    authorName: string;
+    socialLinks?: string;
   };
 }
 
@@ -33,13 +39,12 @@ export interface BlogPost {
     title: string;
     slug: string;
     publishDate: string;
-    featuredImage?: ImageAsset;
     content: Document;
-    relatedPosts?: BlogPost[];
-    seoTitle?: string;
     seoDescription?: string;
-    tags?: string[];
-    author?: Author;
+    featuredImage?: ImageAsset;
+    tags?: Tag[];
+    authorName?: Author;
+    relatedPost?: BlogPost[];
   };
 }
 
