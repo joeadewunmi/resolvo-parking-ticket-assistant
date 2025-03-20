@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
         {/* Content will be added here when provided */}
         <p>
           <h1>Privacy Policy for Resolvo.uk</h1>
-    <p><strong>Effective Date:</strong> [Insert Date]</p>
+    <p><strong>Effective Date:</strong> 20/03/2025</p>
 
     <h2>1. Introduction</h2>
     <p>Welcome to <strong>Resolvo.uk</strong> ("we," "our," or "us"). Your privacy is important to us, and we are committed to protecting it. This Privacy Policy explains what information we collect, how we use it, and your rights regarding your data.</p>
