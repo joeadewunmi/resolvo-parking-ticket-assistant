@@ -28,7 +28,7 @@ const HeroSection = () => {
               >
                 Appeal now
               </a>
-              <p className="mt-2 text-sm text-primary/70 font-bold">Used by 700+ users</p>
+              <p className="mt-2 text-sm text-primary/70 font-bold">Used by 800+ users and counting </p>
               <p className="mt-1 text-sm text-primary/70">Requires ChatGPT login</p>
             </div>
           </div>
