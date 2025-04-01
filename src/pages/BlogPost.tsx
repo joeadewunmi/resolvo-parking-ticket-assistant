@@ -19,12 +19,20 @@ const BlogPostPage = () => {
   const { data: post, isLoading, error } = useQuery({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
+      if (!slug) return null;
+      
+      // Use the correct parameter format for Contentful queries
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        'fields.slug[match]': slug,
         limit: 1,
         include: 2,
       });
+      
+      if (response.items.length === 0) {
+        return null;
+      }
+      
       return response.items[0];
     },
   });

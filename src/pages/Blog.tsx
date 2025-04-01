@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -13,8 +14,26 @@ const Blog = () => {
         content_type: 'blogPost',
         order: ['-sys.createdAt'],
       });
-      return response.items as unknown as BlogPost[];
+      
+      // Return only the necessary data to avoid circular references
+      return response.items.map(item => ({
+        sys: { id: item.sys.id },
+        fields: {
+          title: item.fields.title,
+          slug: item.fields.slug,
+          publishDate: item.fields.publishDate,
+          seoDescription: item.fields.seoDescription,
+          featuredImage: item.fields.featuredImage ? {
+            fields: {
+              file: {
+                url: item.fields.featuredImage.fields.file.url
+              }
+            }
+          } : undefined
+        }
+      }));
     },
+    structuralSharing: false, // Disable structural sharing to prevent the circular reference error
   });
 
   useEffect(() => {
