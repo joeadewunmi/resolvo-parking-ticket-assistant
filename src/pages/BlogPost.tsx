@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getBlogPostBySlug } from '@/lib/contentful';
+import { getBlogPostBySlug, BlogPostSkeleton } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import BlogPostTags from '@/components/blog/BlogPostTags';
@@ -14,7 +14,7 @@ import FAQSection from '@/components/home/FAQSection';
 import { Entry } from 'contentful';
 
 const BlogPostPage = () => {
-  const { slug } = useParams();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
   const { data: post, isLoading, error } = useQuery({
@@ -75,7 +75,7 @@ const BlogPostPage = () => {
               <BlogPostContent content={post.fields.content} />
             )}
 
-            {/* Since tags is a string field in the content model, we need to handle it differently */}
+            {/* Handle tags as a string field in the content model */}
             {post.fields.tags && (
               <div className="flex gap-2 mt-8">
                 <span className="bg-secondary px-3 py-1 rounded-full text-sm">
