@@ -21,10 +21,10 @@ const BlogPostPage = () => {
     queryFn: async () => {
       if (!slug) return null;
       
-      // Use the correct parameter format for Contentful queries
+      // Use a TypeScript-compatible query format
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug[match]': slug,
+        'fields.slug': slug,
         limit: 1,
         include: 2,
       });
