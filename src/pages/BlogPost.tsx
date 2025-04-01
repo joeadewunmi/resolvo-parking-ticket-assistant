@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { contentfulClient, BlogPost } from '@/lib/contentful';
+import { contentfulClient, BlogPostFields } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import BlogPostTags from '@/components/blog/BlogPostTags';
@@ -21,14 +21,13 @@ const BlogPostPage = () => {
     queryFn: async () => {
       if (!slug) return null;
       
-      // Use a TypeScript-compatible query format with proper typing
-      const response = await contentfulClient.getEntries<BlogPost>({
+      // Use a TypeScript-compatible query format
+      const response = await contentfulClient.getEntries<BlogPostFields>({
         content_type: 'blogPost',
-        // Use the correct format for field filtering
         'fields.slug': slug,
         limit: 1,
         include: 2,
-      } as any); // Type assertion to bypass TypeScript error
+      });
       
       if (response.items.length === 0) {
         return null;
@@ -75,27 +74,31 @@ const BlogPostPage = () => {
       </Button>
 
       <article className="prose prose-lg mx-auto">
-        <BlogPostHeader
-          title={post.fields.title}
-          publishDate={post.fields.publishDate}
-          featuredImage={post.fields.featuredImage}
-          author={post.fields.authorName}
-        />
+        {post && (
+          <>
+            <BlogPostHeader
+              title={post.fields.title}
+              publishDate={post.fields.publishDate}
+              featuredImage={post.fields.featuredImage}
+              author={post.fields.authorName}
+            />
 
-        {post.fields.content && (
-          <BlogPostContent content={post.fields.content} />
-        )}
+            {post.fields.content && (
+              <BlogPostContent content={post.fields.content} />
+            )}
 
-        {post.fields.tags && (
-          <BlogPostTags tags={post.fields.tags} />
-        )}
+            {post.fields.tags && (
+              <BlogPostTags tags={post.fields.tags} />
+            )}
 
-        {post.fields.authorName && (
-          <BlogPostAuthor author={post.fields.authorName} />
-        )}
+            {post.fields.authorName && (
+              <BlogPostAuthor author={post.fields.authorName} />
+            )}
 
-        {post.fields.relatedPost && (
-          <RelatedPosts posts={post.fields.relatedPost} />
+            {post.fields.relatedPost && (
+              <RelatedPosts posts={post.fields.relatedPost} />
+            )}
+          </>
         )}
       </article>
 
