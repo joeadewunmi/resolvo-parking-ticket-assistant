@@ -1,19 +1,17 @@
-
-import { createClient } from 'contentful';
+import { createClient, Asset, Entry, EntrySkeletonType } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
-import { Asset, EntrySkeletonType, Entry, EntryCollection } from 'contentful';
 
 // Define the blog post fields based on the actual Contentful model
 export interface BlogPostFields {
   title: string;
   slug: string;
   publishDate: string;
-  featuredImage?: Asset;
+  featuredImage?: Asset; // Use SDK Asset type
   content: Document;
   relatedPost?: Entry<BlogPostSkeleton>[];
   seoTitle?: string;
   seoDescription?: string;
-  tags?: string; // Short text field in Contentful
+  tags?: string; // Or string[] if changed in model
   authorName?: Entry<AuthorSkeleton>;
 }
 
@@ -46,7 +44,7 @@ export interface TagSkeleton extends EntrySkeletonType {
   fields: TagFields;
 }
 
-// Use provided Contentful credentials
+// Contentful client setup
 const spaceId = 'fal2hauaxrft';
 const accessToken = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
 
@@ -55,28 +53,26 @@ export const contentfulClient = createClient({
   accessToken: accessToken,
 });
 
-// Helper function to get blog post by slug
-export const getBlogPostBySlug = async (slug: string): Promise<Entry<BlogPostSkeleton> | null> => {
+// Get a single blog post by slug
+export const getBlogPostBySlug = async (
+  slug: string
+): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug,
+    'fields.slug': slug as any, // OK to assert due to dynamic field access
     limit: 1,
     include: 2,
-  } as any); // Type assertion to avoid strict typing issues with dynamic field queries
+  });
 
-  if (response.items.length === 0) {
-    return null;
-  }
-  
-  return response.items[0];
+  return response.items[0] ?? null;
 };
 
-// Helper function to get all blog posts
+// Get all blog posts
 export const getAllBlogPosts = async (): Promise<Entry<BlogPostSkeleton>[]> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
     order: ['-sys.createdAt'],
   });
-  
+
   return response.items;
 };
