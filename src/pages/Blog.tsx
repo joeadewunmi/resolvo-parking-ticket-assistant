@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { contentfulClient, BlogPost } from "@/lib/contentful";
 
 const Blog = () => {
-  const { data: posts, isLoading, error } = useQuery({
+  const { data: posts, isLoading, error, refetch } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
       const response = await contentfulClient.getEntries<BlogPost>({
@@ -15,6 +16,10 @@ const Blog = () => {
       return response.items as unknown as BlogPost[];
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   if (isLoading) {
     return (
