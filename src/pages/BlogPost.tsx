@@ -22,9 +22,11 @@ const BlogPostPage = () => {
   const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
-      if (!slug) return null;
-      return getBlogPostBySlug(slug);
+      return getBlogPostBySlug(slug!);
     },
+    enabled: !!slug, // ✅ Wait until slug is available
+    refetchOnWindowFocus: false, // ✅ Optional: avoid refetch on tab switch
+    staleTime: 0, // ✅ Optional: always fetch fresh data on route change
   });
 
   if (isLoading) {
