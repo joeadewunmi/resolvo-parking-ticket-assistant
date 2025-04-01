@@ -75,15 +75,20 @@ const BlogPostPage = () => {
               <BlogPostContent content={post.fields.content} />
             )}
 
+            {/* Since tags is a string field in the content model, we need to handle it differently */}
             {post.fields.tags && (
-              <BlogPostTags tags={post.fields.tags} />
+              <div className="flex gap-2 mt-8">
+                <span className="bg-secondary px-3 py-1 rounded-full text-sm">
+                  {post.fields.tags}
+                </span>
+              </div>
             )}
 
             {post.fields.authorName && (
               <BlogPostAuthor author={post.fields.authorName} />
             )}
 
-            {post.fields.relatedPost && (
+            {post.fields.relatedPost && post.fields.relatedPost.length > 0 && (
               <RelatedPosts posts={post.fields.relatedPost} />
             )}
           </>

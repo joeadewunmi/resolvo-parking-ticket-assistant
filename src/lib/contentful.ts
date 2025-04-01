@@ -3,73 +3,70 @@ import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 import { EntrySkeletonType, Entry, EntryCollection } from 'contentful';
 
-// Define interfaces for nested types
-interface FileFields {
-  file: {
-    url: string;
-  };
-}
-
-interface ImageAsset {
-  fields: FileFields;
-}
-
-export interface Tag {
+// Define interfaces for Asset types
+export interface Asset {
   sys: {
     id: string;
   };
   fields: {
-    tagName: string;
-    tagSlug: string;
+    file: {
+      url: string;
+      details?: {
+        size?: number;
+        image?: {
+          width: number;
+          height: number;
+        };
+      };
+      fileName?: string;
+      contentType?: string;
+    };
+    title?: string;
+    description?: string;
   };
 }
 
-export interface Author {
-  fields: {
-    authorName: string;
-    socialLinks?: string;
-  };
-}
-
-// Define the blog post fields
+// Define the blog post fields based on the actual Contentful model
 export interface BlogPostFields {
   title: string;
   slug: string;
   publishDate: string;
+  featuredImage?: Asset;
   content: Document;
-  seoDescription?: string;
-  featuredImage?: {
-    fields: {
-      file: {
-        url: string;
-      };
-    };
-  };
-  tags?: Entry<TagSkeleton>[];
-  authorName?: Entry<AuthorSkeleton>;
   relatedPost?: Entry<BlogPostSkeleton>[];
+  seoTitle?: string;
+  seoDescription?: string;
+  tags?: string; // Short text field in Contentful
+  authorName?: Entry<AuthorSkeleton>;
 }
 
-// Create proper skeleton types
+// Define the author fields
+export interface AuthorFields {
+  authorName: string;
+  twitter?: string;
+  profilePicture?: Asset;
+}
+
+// Define the tag fields
+export interface TagFields {
+  tagName: string;
+  tagSlug: string;
+}
+
+// Create proper skeleton types for each content type
 export interface BlogPostSkeleton extends EntrySkeletonType {
   contentTypeId: 'blogPost';
   fields: BlogPostFields;
 }
 
-export interface TagSkeleton extends EntrySkeletonType {
-  contentTypeId: 'tag';
-  fields: {
-    tagName: string;
-    tagSlug: string;
-  };
-}
-
 export interface AuthorSkeleton extends EntrySkeletonType {
   contentTypeId: 'author';
-  fields: {
-    authorName: string;
-    socialLinks?: string;
-  };
+  fields: AuthorFields;
+}
+
+export interface TagSkeleton extends EntrySkeletonType {
+  contentTypeId: 'tag';
+  fields: TagFields;
 }
 
 // Type for Contentful response
@@ -96,7 +93,7 @@ export const getBlogPostBySlug = async (slug: string): Promise<Entry<BlogPostSke
     'fields.slug': slug,
     limit: 1,
     include: 2,
-  } as any); // Type assertion to bypass the strict typing
+  });
 
   if (response.items.length === 0) {
     return null;
@@ -110,7 +107,7 @@ export const getAllBlogPosts = async (): Promise<Entry<BlogPostSkeleton>[]> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
     order: ['-sys.createdAt'],
-  } as any); // Type assertion to bypass the strict typing
+  });
   
   return response.items;
 };

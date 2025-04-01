@@ -2,18 +2,12 @@
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Entry } from 'contentful';
-import { AuthorSkeleton } from '@/lib/contentful';
+import { AuthorSkeleton, Asset } from '@/lib/contentful';
 
 interface BlogPostHeaderProps {
   title: string;
   publishDate: string;
-  featuredImage?: {
-    fields: {
-      file: {
-        url: string;
-      };
-    };
-  };
+  featuredImage?: Asset;
   author?: Entry<AuthorSkeleton>;
 }
 
@@ -26,7 +20,14 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <>
               <Avatar className="h-12 w-12">
-                <AvatarImage src="/lovable-uploads/e86293c4-e08e-4db1-8f84-11e643c653ff.png" alt={author.fields.authorName} />
+                {author.fields.profilePicture ? (
+                  <AvatarImage 
+                    src={`https:${author.fields.profilePicture.fields.file.url}`} 
+                    alt={author.fields.authorName} 
+                  />
+                ) : (
+                  <AvatarImage src="/lovable-uploads/e86293c4-e08e-4db1-8f84-11e643c653ff.png" alt={author.fields.authorName} />
+                )}
                 <AvatarFallback>
                   {author.fields.authorName.charAt(0)}
                 </AvatarFallback>
@@ -38,9 +39,9 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
             </>
           )}
         </div>
-        {author?.fields.socialLinks && (
+        {author?.fields.twitter && (
           <a
-            href={author.fields.socialLinks}
+            href={author.fields.twitter}
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-600 hover:text-gray-800"
