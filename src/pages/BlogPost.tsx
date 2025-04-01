@@ -24,6 +24,7 @@ const BlogPostPage = () => {
       // Use a TypeScript-compatible query format with proper field names
       const response = await contentfulClient.getEntries<BlogPostSkeleton>({
         content_type: 'blogPost',
+        // Use the correct query format for field filtering
         'fields.slug': slug,
         limit: 1,
         include: 2,

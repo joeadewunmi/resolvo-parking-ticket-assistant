@@ -1,7 +1,7 @@
 
 import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
-import { EntrySkeletonType } from 'contentful';
+import { EntrySkeletonType, Entry } from 'contentful';
 
 // Define interfaces for nested types
 interface FileFields {
@@ -41,7 +41,7 @@ export interface BlogPostFields {
   featuredImage?: ImageAsset;
   tags?: Tag[];
   authorName?: Author;
-  relatedPost?: BlogPostSkeleton[];
+  relatedPost?: Entry<BlogPostSkeleton>[];
 }
 
 // Create a proper skeleton type that extends EntrySkeletonType
