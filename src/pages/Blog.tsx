@@ -1,36 +1,16 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { contentfulClient, BlogPostSkeleton } from "@/lib/contentful";
+import { getAllBlogPosts, Entry, BlogPostSkeleton } from "@/lib/contentful";
 
 const Blog = () => {
   const { data: posts, isLoading, error, refetch } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      const response = await contentfulClient.getEntries<BlogPostSkeleton>({
-        content_type: 'blogPost',
-        order: ['-sys.createdAt'],
-      });
-      
-      // Transform the response to avoid circular references
-      return response.items.map(item => ({
-        sys: { id: item.sys.id, createdAt: item.sys.createdAt },
-        fields: {
-          title: item.fields.title,
-          slug: item.fields.slug,
-          publishDate: item.fields.publishDate,
-          seoDescription: item.fields.seoDescription,
-          featuredImage: item.fields.featuredImage ? {
-            fields: {
-              file: {
-                url: item.fields.featuredImage.fields.file.url
-              }
-            }
-          } : undefined
-        }
-      }));
+      return getAllBlogPosts();
     },
     structuralSharing: false, // Disable structural sharing to prevent the circular reference error
   });

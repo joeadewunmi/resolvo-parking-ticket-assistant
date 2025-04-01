@@ -1,7 +1,7 @@
 
 import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
-import { EntrySkeletonType, Entry } from 'contentful';
+import { EntrySkeletonType, Entry, EntryCollection } from 'contentful';
 
 // Define interfaces for nested types
 interface FileFields {
@@ -66,3 +66,29 @@ export const contentfulClient = createClient({
   space: spaceId,
   accessToken: accessToken,
 });
+
+// Helper function to get blog post by slug
+export const getBlogPostBySlug = async (slug: string): Promise<Entry<BlogPostSkeleton> | null> => {
+  const response = await contentfulClient.getEntries<BlogPostSkeleton>({
+    content_type: 'blogPost',
+    'fields.slug': slug,
+    limit: 1,
+    include: 2,
+  } as any); // Type assertion to bypass the strict typing
+
+  if (response.items.length === 0) {
+    return null;
+  }
+  
+  return response.items[0];
+};
+
+// Helper function to get all blog posts
+export const getAllBlogPosts = async (): Promise<Entry<BlogPostSkeleton>[]> => {
+  const response = await contentfulClient.getEntries<BlogPostSkeleton>({
+    content_type: 'blogPost',
+    order: ['-sys.createdAt'],
+  } as any); // Type assertion to bypass the strict typing
+  
+  return response.items;
+};

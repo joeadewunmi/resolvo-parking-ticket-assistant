@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { contentfulClient, BlogPostSkeleton } from '@/lib/contentful';
+import { getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import BlogPostTags from '@/components/blog/BlogPostTags';
@@ -20,21 +20,7 @@ const BlogPostPage = () => {
     queryKey: ['blog-post', slug],
     queryFn: async () => {
       if (!slug) return null;
-      
-      // Use a TypeScript-compatible query format with proper field names
-      const response = await contentfulClient.getEntries<BlogPostSkeleton>({
-        content_type: 'blogPost',
-        // Use the correct query format for field filtering
-        'fields.slug': slug,
-        limit: 1,
-        include: 2,
-      });
-      
-      if (response.items.length === 0) {
-        return null;
-      }
-      
-      return response.items[0];
+      return getBlogPostBySlug(slug);
     },
   });
 
