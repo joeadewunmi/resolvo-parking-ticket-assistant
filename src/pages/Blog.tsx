@@ -56,7 +56,7 @@ const Blog = () => {
     <div className="container mx-auto py-12 bg-white">
       <h1 className="text-4xl font-bold mb-8">Blog</h1>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts?.map((post: Entry<BlogPostSkeleton>) => (
+        {posts?.map((post) => (
           <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
             <Card className="h-full hover:shadow-lg transition-shadow">
               {post.fields.featuredImage && (

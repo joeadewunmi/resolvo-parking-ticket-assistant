@@ -62,36 +62,32 @@ const BlogPostPage = () => {
       </Button>
 
       <article className="prose prose-lg mx-auto">
-        {post && (
-          <>
-            <BlogPostHeader
-              title={post.fields.title}
-              publishDate={post.fields.publishDate}
-              featuredImage={post.fields.featuredImage}
-              author={post.fields.authorName}
-            />
+        <BlogPostHeader
+          title={post.fields.title}
+          publishDate={post.fields.publishDate}
+          featuredImage={post.fields.featuredImage}
+          author={post.fields.authorName}
+        />
 
-            {post.fields.content && (
-              <BlogPostContent content={post.fields.content} />
-            )}
+        {post.fields.content && (
+          <BlogPostContent content={post.fields.content} />
+        )}
 
-            {/* Handle tags as a string field in the content model */}
-            {post.fields.tags && (
-              <div className="flex gap-2 mt-8">
-                <span className="bg-secondary px-3 py-1 rounded-full text-sm">
-                  {post.fields.tags}
-                </span>
-              </div>
-            )}
+        {/* Handle tags as a string field in the content model */}
+        {post.fields.tags && (
+          <div className="flex gap-2 mt-8">
+            <span className="bg-secondary px-3 py-1 rounded-full text-sm">
+              {post.fields.tags}
+            </span>
+          </div>
+        )}
 
-            {post.fields.authorName && (
-              <BlogPostAuthor author={post.fields.authorName} />
-            )}
+        {post.fields.authorName && (
+          <BlogPostAuthor author={post.fields.authorName} />
+        )}
 
-            {post.fields.relatedPost && post.fields.relatedPost.length > 0 && (
-              <RelatedPosts posts={post.fields.relatedPost} />
-            )}
-          </>
+        {post.fields.relatedPost && post.fields.relatedPost.length > 0 && (
+          <RelatedPosts posts={post.fields.relatedPost} />
         )}
       </article>
 
