@@ -19,16 +19,21 @@ const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
+  // 🔒 Prevent query from running until slug is available
   const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
-    queryFn: async () => {
-      return getBlogPostBySlug(slug!);
-    },
-    enabled: !!slug, // ✅ Wait until slug is available
-    refetchOnWindowFocus: false, // ✅ Optional: avoid refetch on tab switch
-    staleTime: 0, // ✅ Optional: always fetch fresh data on route change
+    queryFn: async () => getBlogPostBySlug(slug!),
+    enabled: !!slug,
+    refetchOnWindowFocus: false,
+    staleTime: 0,
   });
 
+  // 🧱 Wait until slug is available
+  if (!slug) {
+    return null;
+  }
+
+  // 🕐 Loading state
   if (isLoading) {
     return (
       <div className="container mx-auto py-12 bg-[#FFFFFF]">
@@ -44,11 +49,12 @@ const BlogPostPage = () => {
     );
   }
 
+  // ❌ Error or no data
   if (error || !post) {
     return (
       <div className="container mx-auto py-12 bg-[#FFFFFF]">
         <div className="text-center text-red-500">
-          Failed to load blog post. Please try again later.
+          Failed to load this blog post. Please try refreshing the page or check the URL.
         </div>
       </div>
     );
