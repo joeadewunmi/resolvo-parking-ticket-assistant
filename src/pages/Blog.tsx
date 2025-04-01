@@ -8,7 +8,7 @@ import { getAllBlogPosts, BlogPostSkeleton } from "@/lib/contentful";
 import { Entry } from "contentful";
 
 const Blog = () => {
-  const { data: posts, isLoading, error, refetch } = useQuery({
+  const { data: posts, isLoading, error, refetch } = useQuery<Entry<BlogPostSkeleton>[]>({
     queryKey: ['blog-posts'],
     queryFn: async () => {
       return getAllBlogPosts();

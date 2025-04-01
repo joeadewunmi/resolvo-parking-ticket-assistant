@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Entry } from 'contentful';
-import { AuthorSkeleton, Asset } from '@/lib/contentful';
+import { Entry, Asset } from 'contentful';
+import { AuthorSkeleton } from '@/lib/contentful';
 
 interface BlogPostHeaderProps {
   title: string;

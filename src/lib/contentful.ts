@@ -1,30 +1,7 @@
 
 import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
-import { EntrySkeletonType, Entry, EntryCollection } from 'contentful';
-
-// Define interfaces for Asset types
-export interface Asset {
-  sys: {
-    id: string;
-  };
-  fields: {
-    file: {
-      url: string;
-      details?: {
-        size?: number;
-        image?: {
-          width: number;
-          height: number;
-        };
-      };
-      fileName?: string;
-      contentType?: string;
-    };
-    title?: string;
-    description?: string;
-  };
-}
+import { Asset, EntrySkeletonType, Entry, EntryCollection } from 'contentful';
 
 // Define the blog post fields based on the actual Contentful model
 export interface BlogPostFields {
@@ -69,14 +46,6 @@ export interface TagSkeleton extends EntrySkeletonType {
   fields: TagFields;
 }
 
-// Type for Contentful response
-export interface ContentfulResponse<T> {
-  items: T[];
-  total: number;
-  skip: number;
-  limit: number;
-}
-
 // Use provided Contentful credentials
 const spaceId = 'fal2hauaxrft';
 const accessToken = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
@@ -90,10 +59,10 @@ export const contentfulClient = createClient({
 export const getBlogPostBySlug = async (slug: string): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug as any, // Type assertion for dynamic query field
+    'fields.slug': slug,
     limit: 1,
     include: 2,
-  });
+  } as any); // Type assertion to avoid strict typing issues with dynamic field queries
 
   if (response.items.length === 0) {
     return null;

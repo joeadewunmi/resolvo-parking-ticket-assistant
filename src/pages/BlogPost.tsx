@@ -17,7 +17,7 @@ const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const { data: post, isLoading, error } = useQuery({
+  const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
       if (!slug) return null;
