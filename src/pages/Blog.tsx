@@ -1,23 +1,32 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getAllBlogPosts, BlogPostSkeleton } from "@/lib/contentful";
 import { Entry } from "contentful";
 
 const Blog = () => {
-  const { data: posts, isLoading, error, refetch } = useQuery<Entry<BlogPostSkeleton>[]>({
-    queryKey: ['blog-posts'],
-    queryFn: async () => {
-      return getAllBlogPosts();
-    },
-    structuralSharing: false, // Disable structural sharing to prevent the circular reference error
+  const {
+    data: posts,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<Entry<BlogPostSkeleton>[]>({
+    queryKey: ["blog-posts"],
+    queryFn: async () => getAllBlogPosts(),
+    structuralSharing: false,
+    refetchOnWindowFocus: false, // ✅ Prevent re-fetch on tab switch
+    staleTime: 1000 * 60 * 5,     // ✅ Cache for 5 minutes
+    enabled: true,                // ✅ Explicitly enabled for clarity
   });
 
-  // This ensures the blog posts are fetched when the component mounts or when
-  // a user navigates back to this page from a blog post
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -75,7 +84,7 @@ const Blog = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 line-clamp-3">
-                  {post.fields.seoDescription || ''}
+                  {post.fields.seoDescription || ""}
                 </p>
                 <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
                   Read More
