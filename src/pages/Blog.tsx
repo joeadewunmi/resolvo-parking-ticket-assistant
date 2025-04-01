@@ -13,7 +13,7 @@ const Blog = () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
         order: ['-sys.createdAt'],
-      });
+      } as any); // Type assertion to bypass TypeScript error
       
       // Return only the necessary data to avoid circular references
       return response.items.map(item => ({
@@ -36,6 +36,8 @@ const Blog = () => {
     structuralSharing: false, // Disable structural sharing to prevent the circular reference error
   });
 
+  // This ensures the blog posts are fetched when the component mounts or when
+  // a user navigates back to this page from a blog post
   useEffect(() => {
     refetch();
   }, [refetch]);

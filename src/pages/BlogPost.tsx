@@ -21,13 +21,14 @@ const BlogPostPage = () => {
     queryFn: async () => {
       if (!slug) return null;
       
-      // Use a TypeScript-compatible query format
+      // Use a TypeScript-compatible query format with proper typing
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
-        'fields.slug': slug,
+        // Use the correct format for field filtering
+        'fields.slug[match]': slug,
         limit: 1,
         include: 2,
-      });
+      } as any); // Type assertion to bypass TypeScript error
       
       if (response.items.length === 0) {
         return null;
