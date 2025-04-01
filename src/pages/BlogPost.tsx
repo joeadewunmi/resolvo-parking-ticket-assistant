@@ -3,10 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  getBlogPostBySlug,
-  BlogPostSkeleton,
-} from '@/lib/contentful';
+import { getBlogPostBySlug, BlogPostSkeleton } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import BlogPostTags from '@/components/blog/BlogPostTags';
@@ -19,21 +16,16 @@ const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  // 🔒 Prevent query from running until slug is available
   const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
-    queryFn: async () => getBlogPostBySlug(slug!),
+    queryFn: async () => {
+      return getBlogPostBySlug(slug!);
+    },
     enabled: !!slug,
     refetchOnWindowFocus: false,
     staleTime: 0,
   });
 
-  // 🧱 Wait until slug is available
-  if (!slug) {
-    return null;
-  }
-
-  // 🕐 Loading state
   if (isLoading) {
     return (
       <div className="container mx-auto py-12 bg-[#FFFFFF]">
@@ -49,12 +41,11 @@ const BlogPostPage = () => {
     );
   }
 
-  // ❌ Error or no data
   if (error || !post) {
     return (
       <div className="container mx-auto py-12 bg-[#FFFFFF]">
         <div className="text-center text-red-500">
-          Failed to load this blog post. Please try refreshing the page or check the URL.
+          Failed to load blog post. Please try again later.
         </div>
       </div>
     );
