@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Building, City, Check } from 'lucide-react';
+import { Building, Check, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import FAQSection from '@/components/home/FAQSection';
@@ -82,7 +82,7 @@ const AppealHub = () => {
           {/* Council Fines Section */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <City className="h-6 w-6 text-primary" />
+              <MapPin className="h-6 w-6 text-primary" />
               <h2 className="text-2xl font-bold text-primary">Appeal a Fine from a Council</h2>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
