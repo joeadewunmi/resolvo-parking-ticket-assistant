@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../ui/card';
-import { Entry, EntryCollection } from 'contentful';
+import { Entry } from 'contentful';
 import { BlogPostSkeleton } from '@/lib/contentful';
 
 interface RelatedPostsProps {

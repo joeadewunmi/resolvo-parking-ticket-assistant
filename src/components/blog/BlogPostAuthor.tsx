@@ -1,14 +1,10 @@
-import React from 'react';
 
-interface Author {
-  fields: {
-    authorName: string;
-    socialLinks?: string;
-  };
-}
+import React from 'react';
+import { Entry } from 'contentful';
+import { AuthorSkeleton } from '@/lib/contentful';
 
 interface BlogPostAuthorProps {
-  author: Author;
+  author: Entry<AuthorSkeleton>;
 }
 
 const BlogPostAuthor = ({ author }: BlogPostAuthorProps) => {

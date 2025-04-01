@@ -1,5 +1,8 @@
+
 import React from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Entry } from 'contentful';
+import { AuthorSkeleton } from '@/lib/contentful';
 
 interface BlogPostHeaderProps {
   title: string;
@@ -11,12 +14,7 @@ interface BlogPostHeaderProps {
       };
     };
   };
-  author?: {
-    fields: {
-      authorName: string;
-      socialLinks?: string;
-    };
-  };
+  author?: Entry<AuthorSkeleton>;
 }
 
 const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostHeaderProps) => {

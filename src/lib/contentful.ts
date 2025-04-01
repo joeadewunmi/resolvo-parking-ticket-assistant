@@ -14,7 +14,7 @@ interface ImageAsset {
   fields: FileFields;
 }
 
-interface Tag {
+export interface Tag {
   sys: {
     id: string;
   };
@@ -24,7 +24,7 @@ interface Tag {
   };
 }
 
-interface Author {
+export interface Author {
   fields: {
     authorName: string;
     socialLinks?: string;
@@ -38,16 +38,38 @@ export interface BlogPostFields {
   publishDate: string;
   content: Document;
   seoDescription?: string;
-  featuredImage?: ImageAsset;
-  tags?: Tag[];
-  authorName?: Author;
+  featuredImage?: {
+    fields: {
+      file: {
+        url: string;
+      };
+    };
+  };
+  tags?: Entry<TagSkeleton>[];
+  authorName?: Entry<AuthorSkeleton>;
   relatedPost?: Entry<BlogPostSkeleton>[];
 }
 
-// Create a proper skeleton type that extends EntrySkeletonType
+// Create proper skeleton types
 export interface BlogPostSkeleton extends EntrySkeletonType {
   contentTypeId: 'blogPost';
   fields: BlogPostFields;
+}
+
+export interface TagSkeleton extends EntrySkeletonType {
+  contentTypeId: 'tag';
+  fields: {
+    tagName: string;
+    tagSlug: string;
+  };
+}
+
+export interface AuthorSkeleton extends EntrySkeletonType {
+  contentTypeId: 'author';
+  fields: {
+    authorName: string;
+    socialLinks?: string;
+  };
 }
 
 // Type for Contentful response

@@ -11,6 +11,7 @@ import BlogPostTags from '@/components/blog/BlogPostTags';
 import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import FAQSection from '@/components/home/FAQSection';
+import { Entry } from 'contentful';
 
 const BlogPostPage = () => {
   const { slug } = useParams();

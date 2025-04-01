@@ -1,18 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-interface Tag {
-  sys: {
-    id: string;
-  };
-  fields: {
-    tagName: string;
-    tagSlug: string;
-  };
-}
+import { Entry } from 'contentful';
+import { TagSkeleton } from '@/lib/contentful';
 
 interface BlogPostTagsProps {
-  tags: Tag[];
+  tags: Entry<TagSkeleton>[];
 }
 
 const BlogPostTags = ({ tags }: BlogPostTagsProps) => {
