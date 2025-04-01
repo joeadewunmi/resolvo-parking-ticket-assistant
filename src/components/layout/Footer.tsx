@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -11,7 +12,7 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">Resolvo</h3>
             <p className="text-sm">
@@ -39,6 +40,26 @@ const Footer = () => {
               <li>
                 <Link to="/privacy" className="text-sm hover:text-accent">
                   Privacy Policy
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Appeal Hub</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/appeal-hub" className="text-sm hover:text-accent">
+                  All Appeal Guides
+                </Link>
+              </li>
+              <li>
+                <Link to="/appeal-hub" className="text-sm hover:text-accent">
+                  Private Company Appeals
+                </Link>
+              </li>
+              <li>
+                <Link to="/appeal-hub" className="text-sm hover:text-accent">
+                  Council PCN Appeals
                 </Link>
               </li>
             </ul>

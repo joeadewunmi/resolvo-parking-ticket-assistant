@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -27,6 +28,9 @@ const Navbar = () => {
             <div className="flex space-x-4 items-center">
               <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 Home
+              </Link>
+              <Link to="/appeal-hub" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+                Appeal Hub
               </Link>
               <Link to="/blog" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 Blog
@@ -64,6 +68,13 @@ const Navbar = () => {
               onClick={toggleMenu}
             >
               Home
+            </Link>
+            <Link
+              to="/appeal-hub"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
+              onClick={toggleMenu}
+            >
+              Appeal Hub
             </Link>
             <Link
               to="/blog"
