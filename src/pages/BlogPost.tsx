@@ -25,7 +25,7 @@ const BlogPostPage = () => {
       const response = await contentfulClient.getEntries<BlogPost>({
         content_type: 'blogPost',
         // Use the correct format for field filtering
-        'fields.slug[match]': slug,
+        'fields.slug': slug,
         limit: 1,
         include: 2,
       } as any); // Type assertion to bypass TypeScript error
