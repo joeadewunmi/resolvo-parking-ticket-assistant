@@ -34,7 +34,7 @@ const AppealHub = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/blog" className="text-blue-600 hover:underline flex items-center">
+                      <Link to="/euro-car-parks" className="text-blue-600 hover:underline flex items-center">
                         <span>Euro Car Parks Appeal Guide</span>
                       </Link>
                     </li>

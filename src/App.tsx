@@ -12,6 +12,7 @@ import BlogPost from "./pages/BlogPost";
 import FAQ from "./pages/FAQ";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AppealHub from "./pages/AppealHub";
+import EuroCarParks from "./pages/EuroCarParks";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
               <Route path="/faq" element={<FAQ />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/appeal-hub" element={<AppealHub />} />
+              <Route path="/euro-car-parks" element={<EuroCarParks />} />
             </Routes>
           </main>
           <Footer />
