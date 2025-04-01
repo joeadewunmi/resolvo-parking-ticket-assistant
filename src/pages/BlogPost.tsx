@@ -21,7 +21,7 @@ const BlogPostPage = () => {
     queryFn: async () => {
       if (!slug) return null;
       
-      // Use a TypeScript-compatible query format
+      // Use a TypeScript-compatible query format with proper field names
       const response = await contentfulClient.getEntries<BlogPostSkeleton>({
         content_type: 'blogPost',
         'fields.slug': slug,

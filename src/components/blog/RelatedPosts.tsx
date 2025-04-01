@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../ui/card';
-import { BlogPost } from '@/lib/contentful';
+import { BlogPostSkeleton } from '@/lib/contentful';
 
 interface RelatedPostsProps {
-  posts: BlogPost[];
+  posts: BlogPostSkeleton[];
 }
 
 const RelatedPosts = ({ posts }: RelatedPostsProps) => {
