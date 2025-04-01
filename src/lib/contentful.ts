@@ -1,15 +1,7 @@
 
 import { createClient } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
-
-// Define type for Contentful's Entry responses
-export interface ContentfulEntry<T> {
-  sys: {
-    id: string;
-    createdAt: string;
-  };
-  fields: T;
-}
+import { EntrySkeletonType } from 'contentful';
 
 // Define interfaces for nested types
 interface FileFields {
@@ -39,7 +31,7 @@ interface Author {
   };
 }
 
-// Define the actual blog post fields type
+// Define the blog post fields
 export interface BlogPostFields {
   title: string;
   slug: string;
@@ -49,15 +41,18 @@ export interface BlogPostFields {
   featuredImage?: ImageAsset;
   tags?: Tag[];
   authorName?: Author;
-  relatedPost?: ContentfulEntry<BlogPostFields>[];
+  relatedPost?: BlogPostSkeleton[];
 }
 
-// Type for a complete blog post entry
-export type BlogPost = ContentfulEntry<BlogPostFields>;
+// Create a proper skeleton type that extends EntrySkeletonType
+export interface BlogPostSkeleton extends EntrySkeletonType {
+  contentTypeId: 'blogPost';
+  fields: BlogPostFields;
+}
 
 // Type for Contentful response
 export interface ContentfulResponse<T> {
-  items: ContentfulEntry<T>[];
+  items: T[];
   total: number;
   skip: number;
   limit: number;

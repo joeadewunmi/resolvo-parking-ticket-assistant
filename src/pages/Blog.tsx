@@ -4,20 +4,20 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { contentfulClient, BlogPost, BlogPostFields, ContentfulResponse } from "@/lib/contentful";
+import { contentfulClient, BlogPostSkeleton } from "@/lib/contentful";
 
 const Blog = () => {
   const { data: posts, isLoading, error, refetch } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      const response = await contentfulClient.getEntries<BlogPostFields>({
+      const response = await contentfulClient.getEntries<BlogPostSkeleton>({
         content_type: 'blogPost',
         order: ['-sys.createdAt'],
       });
       
       // Transform the response to avoid circular references
       return response.items.map(item => ({
-        sys: { id: item.sys.id },
+        sys: { id: item.sys.id, createdAt: item.sys.createdAt },
         fields: {
           title: item.fields.title,
           slug: item.fields.slug,
@@ -31,7 +31,7 @@ const Blog = () => {
             }
           } : undefined
         }
-      })) as BlogPost[];
+      }));
     },
     structuralSharing: false, // Disable structural sharing to prevent the circular reference error
   });
