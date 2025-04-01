@@ -90,7 +90,7 @@ export const contentfulClient = createClient({
 export const getBlogPostBySlug = async (slug: string): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug,
+    'fields.slug': slug as any, // Type assertion for dynamic query field
     limit: 1,
     include: 2,
   });
