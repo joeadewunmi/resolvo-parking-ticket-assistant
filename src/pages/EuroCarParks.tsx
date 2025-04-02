@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 
 const EuroCarParks = () => {
   return (
@@ -36,12 +36,6 @@ const EuroCarParks = () => {
                 </a>
                 <p className="mt-2 text-sm text-primary/70 font-bold">Used by 800+ users </p>
                 <p className="mt-1 text-sm text-primary/70">Requires ChatGPT login</p>
-              </div>
-              <div className="mt-6">
-                <Link to="/appeal-hub" className="inline-flex items-center text-primary hover:text-primary/80">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Appeal Hub
-                </Link>
               </div>
             </div>
             <div className="block">
@@ -99,36 +93,33 @@ const EuroCarParks = () => {
       {/* Process Section */}
       <div className="py-24 bg-[#FFD700]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
-            How to Appeal Your Euro Car Parks Fine
-          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <div className="flex justify-center mb-6">
                 <div className="p-3 bg-secondary rounded-lg">
-                  <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  <MessageSquare className="h-8 w-8" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-primary mb-4">Tell Us About Your Fine</h3>
-              <p className="text-gray-600">Share the details about your Euro Car Parks fine, the location, and why you believe it's unfair. Upload a photo of your ticket for faster results.</p>
+              <h3 className="text-xl font-bold text-primary mb-4">Chat</h3>
+              <p className="text-gray-600">Tell us what happened with how you got your ticket, every detail helps. You can even upload a photo of the ticket –and we'll pull out key information automatically</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <div className="flex justify-center mb-6">
                 <div className="p-3 bg-secondary rounded-lg">
-                  <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 17.5c2.5 0 4.5-2 4.5-4.5 0-1.5-.5-2-2-3-1.4-.9-2-1.8-2-3 0-1.1.9-2 2-2"></path><path d="M12 4v1"></path><path d="M12 19v1"></path></svg>
+                  <Brain className="h-8 w-8" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-primary mb-4">Get Expert Guidance</h3>
-              <p className="text-gray-600">Our AI will analyze your case using British Parking Association guidelines that Euro Car Parks must follow, identifying the strongest grounds for appeal.</p>
+              <h3 className="text-xl font-bold text-primary mb-4">Understand</h3>
+              <p className="text-gray-600">We look at everything you've told us. You might get a few questions to understand what happened. Did you have a permit? Was there a sign?</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <div className="flex justify-center mb-6">
                 <div className="p-3 bg-secondary rounded-lg">
-                  <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <CheckCircle className="h-8 w-8" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-primary mb-4">Submit Your Appeal</h3>
-              <p className="text-gray-600">Receive a professional appeal letter for your Euro Car Parks fine that you can submit immediately. No legal expertise required.</p>
+              <h3 className="text-xl font-bold text-primary mb-4">Resolve</h3>
+              <p className="text-gray-600">We will instantly generate an appeal letter tailored to your situation. You can review it, make any changes you like, and then use it to fight your ticket.</p>
             </div>
           </div>
           <div className="text-center mt-16">
