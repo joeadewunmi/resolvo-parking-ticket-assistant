@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
+import FAQSection from "@/components/home/FAQSection";
 
 const EuroCarParks = () => {
   return (
@@ -136,36 +137,7 @@ const EuroCarParks = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
-            Euro Car Parks Fine FAQs
-          </h2>
-          <div className="space-y-6">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-bold text-lg mb-2">How long do I have to appeal a Euro Car Parks fine?</h3>
-              <p className="text-gray-600">You typically have 28 days to appeal a Euro Car Parks Parking Charge Notice (PCN). It's important to act quickly as the fine can increase after this period.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-bold text-lg mb-2">Can Euro Car Parks legally enforce their fines?</h3>
-              <p className="text-gray-600">As a private company, Euro Car Parks can't issue "fines" like authorities can, but they can issue Parking Charge Notices based on breach of contract. They would need to take you to court to enforce payment.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-bold text-lg mb-2">What are common grounds for appealing a Euro Car Parks ticket?</h3>
-              <p className="text-gray-600">Common grounds include: unclear signage, payment machine issues, valid ticket but displayed incorrectly, mitigating circumstances, or errors in the PCN details.</p>
-            </div>
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <h3 className="font-bold text-lg mb-2">How successful are appeals against Euro Car Parks?</h3>
-              <p className="text-gray-600">Many appeals are successful, especially when the parking operator hasn't followed proper procedures. A well-written appeal with clear evidence has a good chance of success.</p>
-            </div>
-          </div>
-          <div className="text-center mt-12">
-            <Link to="/faq" className="inline-flex items-center text-blue-600 hover:underline">
-              View all frequently asked questions
-            </Link>
-          </div>
-        </div>
-      </div>
+      <FAQSection />
     </div>
   );
 };
