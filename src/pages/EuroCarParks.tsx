@@ -25,7 +25,7 @@ const EuroCarParks = () => {
                 Appeal Your Euro Car Parks Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                Got a Euro Car Parks ticket? Get a free appeal letter written in minutes using up-to-date UK parking regulations.
+                Got a Euro Car Parks ticket? Get a free appeal written in minutes to help you fight it.
               </p>
               <div className="mt-8">
                 <a
@@ -60,7 +60,7 @@ const EuroCarParks = () => {
               <div className="relative">
                 <img 
                   src="/lovable-uploads/65a99b15-80e2-4483-80cb-824db7613e33.png" 
-                  alt="Example of an AI-generated appeal letter for a Euro Car Parks fine showing detailed grounds for appeal" 
+                  alt="Example of an AI-generated appeal letter showing detailed grounds for appeal" 
                   className="rounded-lg shadow-2xl w-full h-auto object-cover object-top"
                   style={{ maxHeight: "600px" }}
                 />
@@ -69,10 +69,10 @@ const EuroCarParks = () => {
             </div>
             <div>
               <h2 className="text-3xl font-extrabold text-primary">
-                Don't pay your Euro Car Parks fine without appealing first
+                Don't let a parking ticket ruin your day
               </h2>
               <p className="mt-4 text-lg text-gray-600">
-                Euro Car Parks issues thousands of parking tickets every day. Many can be successfully challenged if you know the right regulations and procedures.
+                Euro Car Parks dishes out thousands of parking tickets every day. But many of them can be challenged if you know the rules
               </p>
               <p className="mt-4 text-lg text-gray-600">
                 Resolvo is trained on the latest UK parking laws, including the rules Euro Car Parks must follow as a member of the British Parking Association.
