@@ -30,7 +30,7 @@ function App() {
           <Route path="/appeal-help" element={<AppealHub />} />
           <Route path="/euro-car-parks" element={<EuroCarParks />} />
           <Route path="/uk-parking-administration" element={<UKParkingAdministration />} />
-          <Route path="/uk-parking-control" element={<UKParkingControl />} />
+          <Route path="/ukpc" element={<UKParkingControl />} />
           <Route path="/uk-parking-enforcement" element={<UKParkingEnforcement />} />
         </Routes>
         <Footer />
