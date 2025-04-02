@@ -1,45 +1,42 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import { Toaster } from "@/components/ui/toaster"
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Index from "./pages/Index";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import FAQ from "./pages/FAQ";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import AppealHub from "./pages/AppealHub";
-import EuroCarParks from "./pages/EuroCarParks";
+import Index from './pages/Index';
+import FAQ from './pages/FAQ';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import AppealHub from './pages/AppealHub';
+import EuroCarParks from './pages/EuroCarParks';
+import UKParkingAdministration from './pages/UKParkingAdministration';
+import UKParkingControl from './pages/UKParkingControl';
+import UKParkingEnforcement from './pages/UKParkingEnforcement';
 
-const queryClient = new QueryClient();
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/appeal-hub" element={<AppealHub />} />
-              <Route path="/euro-car-parks" element={<EuroCarParks />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/appeal-help" element={<AppealHub />} />
+          <Route path="/euro-car-parks" element={<EuroCarParks />} />
+          <Route path="/uk-parking-administration" element={<UKParkingAdministration />} />
+          <Route path="/uk-parking-control" element={<UKParkingControl />} />
+          <Route path="/uk-parking-enforcement" element={<UKParkingEnforcement />} />
+        </Routes>
+        <Footer />
+        <Toaster />
+      </Router>
+    </div>
+  );
+}
 
 export default App;
