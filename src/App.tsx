@@ -38,7 +38,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/appeal-help" element={<AppealHub />} />
+            <Route path="/appeal-hub" element={<AppealHub />} />
             <Route path="/euro-car-parks" element={<EuroCarParks />} />
             <Route path="/uk-parking-administration" element={<UKParkingAdministration />} />
             <Route path="/ukpc" element={<UKParkingControl />} />

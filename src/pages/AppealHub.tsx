@@ -39,7 +39,7 @@ const AppealHub = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/blog" className="text-blue-600 hover:underline flex items-center">
+                      <Link to="/ukpc" className="text-blue-600 hover:underline flex items-center">
                         <span>UK Parking Control (UKPC) Appeal Guide</span>
                       </Link>
                     </li>
