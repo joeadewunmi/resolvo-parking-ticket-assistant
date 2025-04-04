@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -19,7 +20,8 @@ const BlogPostPage = () => {
   const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
-      return getBlogPostBySlug(slug!);
+      if (!slug) return null;
+      return getBlogPostBySlug(slug);
     },
     enabled: !!slug,
     refetchOnWindowFocus: false,

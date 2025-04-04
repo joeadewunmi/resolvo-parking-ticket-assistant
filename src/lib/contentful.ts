@@ -1,3 +1,4 @@
+
 import { createClient, Asset, Entry, EntrySkeletonType } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
@@ -59,7 +60,7 @@ export const getBlogPostBySlug = async (
 ): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug as any, // OK to assert due to dynamic field access
+    'fields.slug': slug,
     limit: 1,
     include: 2,
   });

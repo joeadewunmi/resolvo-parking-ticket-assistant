@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -68,7 +69,7 @@ const Blog = () => {
         {posts?.map((post) => (
           <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
             <Card className="h-full hover:shadow-lg transition-shadow">
-              {post.fields.featuredImage && (
+              {post.fields.featuredImage && post.fields.featuredImage.fields.file && (
                 <img
                   src={`https:${post.fields.featuredImage.fields.file.url}`}
                   alt={post.fields.title}
@@ -79,7 +80,7 @@ const Blog = () => {
               <CardHeader>
                 <CardTitle>{post.fields.title}</CardTitle>
                 <CardDescription>
-                  {new Date(post.fields.publishDate).toLocaleDateString()}
+                  {post.fields.publishDate && new Date(post.fields.publishDate).toLocaleDateString()}
                 </CardDescription>
               </CardHeader>
               <CardContent>

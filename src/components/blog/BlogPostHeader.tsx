@@ -22,7 +22,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
               <Avatar className="h-12 w-12">
                 {author.fields.profilePicture ? (
                   <AvatarImage 
-                    src={`https:${author.fields.profilePicture.fields.file.url}`} 
+                    src={`https:${author.fields.profilePicture.fields.file?.url || ''}`} 
                     alt={author.fields.authorName} 
                   />
                 ) : (
@@ -54,7 +54,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           </a>
         )}
       </div>
-      {featuredImage && (
+      {featuredImage && featuredImage.fields.file && (
         <img
           src={`https:${featuredImage.fields.file.url}`}
           alt={title}
