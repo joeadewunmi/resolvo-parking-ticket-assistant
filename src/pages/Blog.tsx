@@ -6,47 +6,58 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getAllBlogPosts, BlogPostSkeleton } from "@/lib/contentful";
-import { Entry } from "contentful";
+import { getAllBlogPosts } from "@/lib/contentful";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Blog = () => {
   const {
     data: posts,
     isLoading,
     error,
-    refetch,
-  } = useQuery<Entry<BlogPostSkeleton>[]>({
+  } = useQuery({
     queryKey: ["blog-posts"],
-    queryFn: async () => getAllBlogPosts(),
-    structuralSharing: false,
-    refetchOnWindowFocus: false, // ✅ Prevent re-fetch on tab switch
-    staleTime: 1000 * 60 * 5,     // ✅ Cache for 5 minutes
-    enabled: true,                // ✅ Explicitly enabled for clarity
+    queryFn: getAllBlogPosts,
   });
 
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    // Set meta tags for this page
+    document.title = "Blog | Resolvo - Fight Your Parking Ticket";
+  }, []);
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-12 bg-white">
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader>
-                <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2 mt-2"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-4 bg-gray-200 rounded w-full"></div>
-              </CardContent>
-            </Card>
-          ))}
+      <div className="min-h-screen bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-primary mb-4">Resolvo Blog</h1>
+            <p className="text-gray-600">
+              Latest news and insights about parking tickets and appeals
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <Card key={index} className="h-full">
+                <Skeleton className="w-full h-48 rounded-t-lg" />
+                <CardHeader>
+                  <Skeleton className="h-6 w-3/4 mb-2" />
+                  <Skeleton className="h-4 w-1/4" />
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-3/4" />
+                </CardContent>
+                <CardFooter>
+                  <Skeleton className="h-10 w-1/3" />
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -54,46 +65,54 @@ const Blog = () => {
 
   if (error) {
     return (
-      <div className="container mx-auto py-12 bg-white">
-        <div className="text-center text-red-500">
-          Failed to load blog posts. Please try again later.
+      <div className="min-h-screen bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl font-bold text-primary mb-4">Oops!</h1>
+          <p className="text-gray-600">
+            We're having trouble loading our blog posts. Please try again later.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-12 bg-white">
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts?.map((post) => (
-          <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
-            <Card className="h-full hover:shadow-lg transition-shadow">
-              {post.fields.featuredImage && post.fields.featuredImage.fields.file && (
-                <img
-                  src={`https:${post.fields.featuredImage.fields.file.url}`}
-                  alt={post.fields.title}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                  loading="lazy"
-                />
-              )}
-              <CardHeader>
-                <CardTitle>{post.fields.title}</CardTitle>
-                <CardDescription>
-                  {post.fields.publishDate && new Date(post.fields.publishDate).toLocaleDateString()}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 line-clamp-3">
-                  {post.fields.seoDescription || ""}
-                </p>
-                <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
-                  Read More
-                </Button>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+    <div className="min-h-screen bg-white py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-primary mb-4">Resolvo Blog</h1>
+          <p className="text-gray-600">
+            Latest news and insights about parking tickets and appeals
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts?.map((post) => (
+            <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                {post.fields.featuredImage && post.fields.featuredImage.fields && post.fields.featuredImage.fields.file && (
+                  <img
+                    src={`https:${post.fields.featuredImage.fields.file.url}`}
+                    alt={post.fields.title}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                    loading="lazy"
+                  />
+                )}
+                <CardHeader>
+                  <CardTitle>{post.fields.title}</CardTitle>
+                  <CardDescription>
+                    {post.fields.publishDate && new Date(post.fields.publishDate).toLocaleDateString()}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {post.fields.seoDescription}
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline">Read more</Button>
+                </CardFooter>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

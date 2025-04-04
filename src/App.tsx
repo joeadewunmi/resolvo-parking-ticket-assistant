@@ -15,6 +15,12 @@ import EuroCarParks from './pages/EuroCarParks';
 import UKParkingAdministration from './pages/UKParkingAdministration';
 import UKParkingControl from './pages/UKParkingControl';
 import UKParkingEnforcement from './pages/UKParkingEnforcement';
+import EastKentNHS from './pages/EastKentNHS';
+import AllParkingServices from './pages/AllParkingServices';
+import AMParkingServices from './pages/AMParkingServices';
+import ANPR365 from './pages/ANPR365';
+import ParkingCollectionServices from './pages/ParkingCollectionServices';
+import APCOAParking from './pages/APCOAParking';
 
 function App() {
   return (
@@ -32,6 +38,12 @@ function App() {
           <Route path="/uk-parking-administration" element={<UKParkingAdministration />} />
           <Route path="/ukpc" element={<UKParkingControl />} />
           <Route path="/uk-parking-enforcement" element={<UKParkingEnforcement />} />
+          <Route path="/east-kent-nhs" element={<EastKentNHS />} />
+          <Route path="/all-parking-services" element={<AllParkingServices />} />
+          <Route path="/am-parking-services" element={<AMParkingServices />} />
+          <Route path="/anpr-365" element={<ANPR365 />} />
+          <Route path="/parking-collection-services" element={<ParkingCollectionServices />} />
+          <Route path="/apcoa-parking" element={<APCOAParking />} />
         </Routes>
         <Footer />
         <Toaster />

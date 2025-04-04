@@ -2,18 +2,17 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { getBlogPostBySlug, BlogPostSkeleton } from '@/lib/contentful';
+import { useEffect } from 'react';
+import { Entry } from 'contentful';
+import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
-import BlogPostTags from '@/components/blog/BlogPostTags';
-import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
 import RelatedPosts from '@/components/blog/RelatedPosts';
-import FAQSection from '@/components/home/FAQSection';
-import { Entry } from 'contentful';
+import { BlogPostTags } from '@/components/blog/BlogPostTags';
+import { Skeleton } from '@/components/ui/skeleton';
+import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
 
-const BlogPostPage = () => {
+const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
@@ -25,79 +24,86 @@ const BlogPostPage = () => {
     },
     enabled: !!slug,
     refetchOnWindowFocus: false,
-    staleTime: 0,
   });
+
+  useEffect(() => {
+    if (post && post.fields) {
+      document.title = `${post.fields.seoTitle || post.fields.title} | Resolvo`;
+      
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', post.fields.seoDescription || '');
+      }
+    }
+  }, [post]);
+
+  useEffect(() => {
+    if (error) {
+      navigate('/blog', { replace: true });
+    }
+  }, [error, navigate]);
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-12 bg-[#FFFFFF]">
-        <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-64 bg-gray-200 rounded"></div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 rounded w-full"></div>
-            <div className="h-4 bg-gray-200 rounded w-full"></div>
+      <div className="min-h-screen py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Skeleton className="h-10 w-3/4 mb-4" />
+          <div className="flex items-center mb-6">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="ml-4">
+              <Skeleton className="h-5 w-40 mb-1" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+          <Skeleton className="w-full h-64 mb-8" />
+          <div className="space-y-4">
+            {[...Array(5)].map((_, index) => (
+              <Skeleton key={index} className="h-4 w-full" />
+            ))}
           </div>
         </div>
       </div>
     );
   }
 
-  if (error || !post) {
-    return (
-      <div className="container mx-auto py-12 bg-[#FFFFFF]">
-        <div className="text-center text-red-500">
-          Failed to load blog post. Please try again later.
-        </div>
-      </div>
-    );
+  if (!post || !post.fields) {
+    return null;
   }
+
+  const {
+    title,
+    publishDate,
+    featuredImage,
+    content,
+    relatedPost,
+    tags,
+    authorName,
+  } = post.fields;
 
   return (
-    <div className="container mx-auto py-12 bg-[#FFFFFF]">
-      <Button
-        variant="ghost"
-        className="mb-8"
-        onClick={() => navigate('/blog')}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back to Blog
-      </Button>
-
-      <article className="prose prose-lg mx-auto">
+    <div className="min-h-screen py-12 bg-white">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <BlogPostHeader
-          title={post.fields.title}
-          publishDate={post.fields.publishDate}
-          featuredImage={post.fields.featuredImage}
-          author={post.fields.authorName}
+          title={title || ''}
+          publishDate={publishDate}
+          featuredImage={featuredImage}
+          author={authorName}
         />
+        
+        <BlogPostContent content={content} />
 
-        {post.fields.content && (
-          <BlogPostContent content={post.fields.content} />
+        <BlogPostTags tags={tags || ''} />
+        
+        {authorName && (
+          <BlogPostAuthor author={authorName} />
         )}
 
-        {post.fields.tags && (
-          <div className="flex gap-2 mt-8">
-            <span className="bg-secondary px-3 py-1 rounded-full text-sm">
-              {post.fields.tags}
-            </span>
-          </div>
+        {relatedPost && relatedPost.length > 0 && (
+          <RelatedPosts posts={relatedPost} />
         )}
-
-        {post.fields.authorName && (
-          <BlogPostAuthor author={post.fields.authorName} />
-        )}
-
-        {post.fields.relatedPost && post.fields.relatedPost.length > 0 && (
-          <RelatedPosts posts={post.fields.relatedPost} />
-        )}
-      </article>
-
-      <div className="mt-16">
-        <FAQSection limit={4} />
       </div>
     </div>
   );
 };
 
-export default BlogPostPage;
+export default BlogPost;
