@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
-import { faqs } from "@/data/faqs";
+import { euroCarParksFaqs } from "@/data/faqs";
 
 const ANPR365 = () => {
   return (
@@ -147,20 +147,22 @@ const ANPR365 = () => {
             ANPR 365 Fine FAQs
           </h2>
           <div className="space-y-6">
-            {faqs.slice(0, 5).map((faq, index) => (
+            {euroCarParksFaqs.map((faq, index) => (
               <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-bold text-lg mb-2">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+                <h3 className="font-bold text-lg mb-2">{faq.question.replace("Euro Car Parks", "ANPR 365")}</h3>
+                <p className="text-gray-600">{faq.answer.replace(/Euro Car Parks/g, "ANPR 365")}</p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-12 flex flex-col gap-4">
-            <Link to="/faq" className="inline-flex items-center text-blue-600 hover:underline">
-              View all frequently asked questions
-            </Link>
-            <Link to="/appeal-help" className="inline-flex items-center text-blue-600 hover:underline">
-              Visit our Appeal Hub
-            </Link>
+          <div className="text-center mt-12">
+            <div className="flex flex-col md:flex-row justify-center gap-4">
+              <Link to="/faq" className="inline-flex items-center justify-center text-blue-600 hover:underline">
+                View all frequently asked questions
+              </Link>
+              <Link to="/appeal-hub" className="inline-flex items-center justify-center text-blue-600 hover:underline">
+                Appeal Hub
+              </Link>
+            </div>
           </div>
         </div>
       </div>
