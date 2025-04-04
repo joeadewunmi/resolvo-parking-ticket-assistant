@@ -22,7 +22,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <div className="flex items-center">
               <Avatar className="h-12 w-12">
-                {author.fields.profilePicture && author.fields.profilePicture.fields && author.fields.profilePicture.fields.file && (
+                {author.fields.profilePicture && author.fields.profilePicture.fields && author.fields.profilePicture.fields.file ? (
                   <AvatarImage 
                     src={`https:${author.fields.profilePicture.fields.file.url}`} 
                     alt={author.fields.authorName} 
