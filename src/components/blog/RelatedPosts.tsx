@@ -22,17 +22,19 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
             to={`/blog/${post.fields.slug}`}
           >
             <Card className="h-full hover:shadow-lg transition-shadow">
-              {post.fields.featuredImage && post.fields.featuredImage.fields.file && (
+              {post.fields.featuredImage && 
+               post.fields.featuredImage.fields && 
+               post.fields.featuredImage.fields.file && (
                 <img
                   src={`https:${post.fields.featuredImage.fields.file.url}`}
-                  alt={post.fields.title}
+                  alt={post.fields.title || ''}
                   className="w-full h-32 object-cover rounded-t-lg"
                   loading="lazy"
                 />
               )}
               <CardContent className="p-4">
                 <h3 className="font-semibold line-clamp-2">
-                  {post.fields.title}
+                  {post.fields.title || ''}
                 </h3>
               </CardContent>
             </Card>

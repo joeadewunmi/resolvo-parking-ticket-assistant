@@ -22,10 +22,12 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <div className="flex items-center">
               <Avatar className="h-12 w-12">
-                {author.fields.profilePicture && author.fields.profilePicture.fields && author.fields.profilePicture.fields.file ? (
+                {author.fields.profilePicture && 
+                 author.fields.profilePicture.fields && 
+                 author.fields.profilePicture.fields.file ? (
                   <AvatarImage 
-                    src={`https:${author.fields.profilePicture.fields.file.url}`} 
-                    alt={author.fields.authorName} 
+                    src={`https:${author.fields.profilePicture.fields.file.url}`}
+                    alt={author.fields.authorName || ''}
                   />
                 ) : (
                   <AvatarFallback>
@@ -34,7 +36,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
                 )}
               </Avatar>
               <div className="ml-4">
-                <p className="font-medium">{author.fields.authorName}</p>
+                <p className="font-medium">{author.fields.authorName || ''}</p>
                 {publishDate && (
                   <p className="text-gray-500 text-sm">
                     {format(new Date(publishDate), 'MMMM dd, yyyy')}

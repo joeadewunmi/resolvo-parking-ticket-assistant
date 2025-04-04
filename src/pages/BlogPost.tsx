@@ -8,7 +8,7 @@ import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
-import { BlogPostTags } from '@/components/blog/BlogPostTags';
+import BlogPostTags from '@/components/blog/BlogPostTags';
 import { Skeleton } from '@/components/ui/skeleton';
 import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
 

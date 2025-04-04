@@ -25,3 +25,4 @@ const BlogPostTags = ({ tags }: BlogPostTagsProps) => {
 };
 
 export default BlogPostTags;
+export { BlogPostTags }; // Add named export as well

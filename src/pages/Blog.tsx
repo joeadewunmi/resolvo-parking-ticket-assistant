@@ -89,22 +89,24 @@ const Blog = () => {
           {posts?.map((post) => (
             <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
               <Card className="h-full hover:shadow-lg transition-shadow">
-                {post.fields.featuredImage && post.fields.featuredImage.fields && post.fields.featuredImage.fields.file && (
+                {post.fields.featuredImage && 
+                 post.fields.featuredImage.fields && 
+                 post.fields.featuredImage.fields.file && (
                   <img
                     src={`https:${post.fields.featuredImage.fields.file.url}`}
-                    alt={post.fields.title}
+                    alt={post.fields.title || ''}
                     className="w-full h-48 object-cover rounded-t-lg"
                     loading="lazy"
                   />
                 )}
                 <CardHeader>
-                  <CardTitle>{post.fields.title}</CardTitle>
+                  <CardTitle>{post.fields.title || ''}</CardTitle>
                   <CardDescription>
                     {post.fields.publishDate && new Date(post.fields.publishDate).toLocaleDateString()}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {post.fields.seoDescription}
+                  {post.fields.seoDescription || ''}
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline">Read more</Button>
