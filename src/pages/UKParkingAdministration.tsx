@@ -159,7 +159,7 @@ const UKParkingAdministration = () => {
               <Link to="/faq" className="inline-flex items-center justify-center text-blue-600 hover:underline">
                 View all frequently asked questions
               </Link>
-              <Link to="/appeal-help" className="inline-flex items-center justify-center text-blue-600 hover:underline">
+              <Link to="/appeal-hub" className="inline-flex items-center justify-center text-blue-600 hover:underline">
                 Appeal Hub
               </Link>
             </div>
