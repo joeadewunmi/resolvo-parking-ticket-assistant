@@ -12,6 +12,17 @@ interface RelatedPostsProps {
 const RelatedPosts = ({ posts }: RelatedPostsProps) => {
   if (!posts || posts.length === 0) return null;
 
+  // Helper to safely get image URL
+  const getImageUrl = (post: Entry<BlogPostSkeleton>): string | undefined => {
+    if (post.fields.featuredImage && 
+        post.fields.featuredImage.fields && 
+        post.fields.featuredImage.fields.file && 
+        post.fields.featuredImage.fields.file.url) {
+      return `https:${post.fields.featuredImage.fields.file.url}`;
+    }
+    return undefined;
+  };
+
   return (
     <div className="border-t border-gray-200 mt-8 pt-8">
       <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
@@ -22,11 +33,9 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
             to={`/blog/${post.fields.slug}`}
           >
             <Card className="h-full hover:shadow-lg transition-shadow">
-              {post.fields.featuredImage && 
-               post.fields.featuredImage.fields && 
-               post.fields.featuredImage.fields.file && (
+              {getImageUrl(post) && (
                 <img
-                  src={`https:${post.fields.featuredImage.fields.file.url}`}
+                  src={getImageUrl(post)}
                   alt={post.fields.title || ''}
                   className="w-full h-32 object-cover rounded-t-lg"
                   loading="lazy"

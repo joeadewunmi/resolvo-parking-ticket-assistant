@@ -70,21 +70,20 @@ const BlogPost = () => {
     return null;
   }
 
-  const {
-    title,
-    publishDate,
-    featuredImage,
-    content,
-    relatedPost,
-    tags,
-    authorName,
-  } = post.fields;
+  // Safely access fields with nullish coalescing to provide defaults
+  const title = post.fields.title || '';
+  const publishDate = post.fields.publishDate;
+  const featuredImage = post.fields.featuredImage;
+  const content = post.fields.content;
+  const tags = post.fields.tags || '';
+  const authorName = post.fields.authorName;
+  const relatedPost = post.fields.relatedPost || [];
 
   return (
     <div className="min-h-screen py-12 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <BlogPostHeader
-          title={title || ''}
+          title={title}
           publishDate={publishDate}
           featuredImage={featuredImage}
           author={authorName}
@@ -92,7 +91,7 @@ const BlogPost = () => {
         
         <BlogPostContent content={content} />
 
-        <BlogPostTags tags={tags || ''} />
+        <BlogPostTags tags={tags} />
         
         {authorName && (
           <BlogPostAuthor author={authorName} />

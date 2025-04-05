@@ -13,6 +13,14 @@ interface BlogPostHeaderProps {
 }
 
 const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostHeaderProps) => {
+  // Helper to safely access nested properties
+  const getImageUrl = (asset?: Asset): string | undefined => {
+    if (!asset || !asset.fields || !asset.fields.file || !asset.fields.file.url) {
+      return undefined;
+    }
+    return `https:${asset.fields.file.url}`;
+  };
+
   return (
     <div className="mb-8">
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
@@ -22,11 +30,9 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <div className="flex items-center">
               <Avatar className="h-12 w-12">
-                {author.fields.profilePicture && 
-                 author.fields.profilePicture.fields && 
-                 author.fields.profilePicture.fields.file ? (
+                {author.fields.profilePicture ? (
                   <AvatarImage 
-                    src={`https:${author.fields.profilePicture.fields.file.url}`}
+                    src={getImageUrl(author.fields.profilePicture)}
                     alt={author.fields.authorName || ''}
                   />
                 ) : (
@@ -59,9 +65,9 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
         )}
       </div>
       
-      {featuredImage && featuredImage.fields && featuredImage.fields.file && (
+      {featuredImage && (
         <img
-          src={`https:${featuredImage.fields.file.url}`}
+          src={getImageUrl(featuredImage)}
           alt={title}
           className="w-full h-auto max-h-96 object-cover rounded-md mb-8"
         />

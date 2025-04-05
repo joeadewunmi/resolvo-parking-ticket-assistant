@@ -29,6 +29,24 @@ const Blog = () => {
     document.title = "Blog | Resolvo - Fight Your Parking Ticket";
   }, []);
 
+  // Helper to safely get image URL
+  const getImageUrl = (post: any): string | undefined => {
+    if (post?.fields?.featuredImage?.fields?.file?.url) {
+      return `https:${post.fields.featuredImage.fields.file.url}`;
+    }
+    return undefined;
+  };
+
+  // Helper to safely format date
+  const formatDate = (dateString: any): string => {
+    if (!dateString) return '';
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch (e) {
+      return '';
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white py-12">
@@ -89,11 +107,9 @@ const Blog = () => {
           {posts?.map((post) => (
             <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
               <Card className="h-full hover:shadow-lg transition-shadow">
-                {post.fields.featuredImage && 
-                 post.fields.featuredImage.fields && 
-                 post.fields.featuredImage.fields.file && (
+                {getImageUrl(post) && (
                   <img
-                    src={`https:${post.fields.featuredImage.fields.file.url}`}
+                    src={getImageUrl(post)}
                     alt={post.fields.title || ''}
                     className="w-full h-48 object-cover rounded-t-lg"
                     loading="lazy"
@@ -102,7 +118,7 @@ const Blog = () => {
                 <CardHeader>
                   <CardTitle>{post.fields.title || ''}</CardTitle>
                   <CardDescription>
-                    {post.fields.publishDate && new Date(post.fields.publishDate).toLocaleDateString()}
+                    {post.fields.publishDate && formatDate(post.fields.publishDate)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
