@@ -14,13 +14,20 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
 
   // Helper to safely get image URL
   const getImageUrl = (post: Entry<BlogPostSkeleton>): string | undefined => {
-    if (post.fields.featuredImage && 
-        post.fields.featuredImage.fields && 
-        post.fields.featuredImage.fields.file && 
-        post.fields.featuredImage.fields.file.url) {
-      return `https:${post.fields.featuredImage.fields.file.url}`;
+    if (!post?.fields?.featuredImage?.fields?.file?.url) {
+      return undefined;
     }
-    return undefined;
+    return `https:${post.fields.featuredImage.fields.file.url}`;
+  };
+
+  // Helper to safely get post title
+  const getPostTitle = (post: Entry<BlogPostSkeleton>): string => {
+    return post?.fields?.title || '';
+  };
+
+  // Helper to safely get post slug
+  const getPostSlug = (post: Entry<BlogPostSkeleton>): string => {
+    return post?.fields?.slug || '';
   };
 
   return (
@@ -30,20 +37,20 @@ const RelatedPosts = ({ posts }: RelatedPostsProps) => {
         {posts.map((post) => (
           <Link
             key={post.sys.id}
-            to={`/blog/${post.fields.slug}`}
+            to={`/blog/${getPostSlug(post)}`}
           >
             <Card className="h-full hover:shadow-lg transition-shadow">
               {getImageUrl(post) && (
                 <img
                   src={getImageUrl(post)}
-                  alt={post.fields.title || ''}
+                  alt={getPostTitle(post)}
                   className="w-full h-32 object-cover rounded-t-lg"
                   loading="lazy"
                 />
               )}
               <CardContent className="p-4">
                 <h3 className="font-semibold line-clamp-2">
-                  {post.fields.title || ''}
+                  {getPostTitle(post)}
                 </h3>
               </CardContent>
             </Card>

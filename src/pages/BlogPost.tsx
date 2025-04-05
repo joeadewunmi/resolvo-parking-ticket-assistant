@@ -3,8 +3,9 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Entry } from 'contentful';
-import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
+import { Entry, Asset } from 'contentful';
+import { Document } from '@contentful/rich-text-types';
+import { BlogPostSkeleton, getBlogPostBySlug, AuthorSkeleton } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
@@ -28,7 +29,7 @@ const BlogPost = () => {
 
   useEffect(() => {
     if (post && post.fields) {
-      document.title = `${post.fields.seoTitle || post.fields.title} | Resolvo`;
+      document.title = `${post.fields.seoTitle || post.fields.title || 'Blog Post'} | Resolvo`;
       
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
@@ -70,14 +71,19 @@ const BlogPost = () => {
     return null;
   }
 
-  // Safely access fields with nullish coalescing to provide defaults
+  // Safely extract fields with fallback values
   const title = post.fields.title || '';
   const publishDate = post.fields.publishDate;
   const featuredImage = post.fields.featuredImage;
   const content = post.fields.content;
+  
+  // Add proper type checking or default values
   const tags = post.fields.tags || '';
   const authorName = post.fields.authorName;
-  const relatedPost = post.fields.relatedPost || [];
+  const relatedPost = Array.isArray(post.fields.relatedPost) ? post.fields.relatedPost : [];
+
+  // Ensure content is valid before rendering
+  const hasValidContent = content && content.nodeType && content.content;
 
   return (
     <div className="min-h-screen py-12 bg-white">
@@ -89,7 +95,7 @@ const BlogPost = () => {
           author={authorName}
         />
         
-        <BlogPostContent content={content} />
+        {hasValidContent && <BlogPostContent content={content} />}
 
         <BlogPostTags tags={tags} />
         

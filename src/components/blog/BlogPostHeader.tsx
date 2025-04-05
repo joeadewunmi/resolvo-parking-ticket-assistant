@@ -21,6 +21,19 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
     return `https:${asset.fields.file.url}`;
   };
 
+  // Helper to safely get author name
+  const getAuthorName = (author?: Entry<AuthorSkeleton>): string => {
+    return author?.fields?.authorName || '';
+  };
+
+  // Helper to safely get profile picture URL
+  const getProfilePictureUrl = (author?: Entry<AuthorSkeleton>): string | undefined => {
+    if (!author?.fields?.profilePicture?.fields?.file?.url) {
+      return undefined;
+    }
+    return `https:${author.fields.profilePicture.fields.file.url}`;
+  };
+
   return (
     <div className="mb-8">
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
@@ -30,19 +43,19 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <div className="flex items-center">
               <Avatar className="h-12 w-12">
-                {author.fields.profilePicture ? (
+                {getProfilePictureUrl(author) ? (
                   <AvatarImage 
-                    src={getImageUrl(author.fields.profilePicture)}
-                    alt={author.fields.authorName || ''}
+                    src={getProfilePictureUrl(author)}
+                    alt={getAuthorName(author)}
                   />
                 ) : (
                   <AvatarFallback>
-                    {author.fields.authorName ? author.fields.authorName.substring(0, 2).toUpperCase() : 'AU'}
+                    {getAuthorName(author) ? getAuthorName(author).substring(0, 2).toUpperCase() : 'AU'}
                   </AvatarFallback>
                 )}
               </Avatar>
               <div className="ml-4">
-                <p className="font-medium">{author.fields.authorName || ''}</p>
+                <p className="font-medium">{getAuthorName(author)}</p>
                 {publishDate && (
                   <p className="text-gray-500 text-sm">
                     {format(new Date(publishDate), 'MMMM dd, yyyy')}
@@ -53,7 +66,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           )}
         </div>
         
-        {author && author.fields.twitter && (
+        {author?.fields?.twitter && (
           <a 
             href={`https://twitter.com/${author.fields.twitter}`}
             target="_blank" 
@@ -65,7 +78,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
         )}
       </div>
       
-      {featuredImage && (
+      {featuredImage && getImageUrl(featuredImage) && (
         <img
           src={getImageUrl(featuredImage)}
           alt={title}

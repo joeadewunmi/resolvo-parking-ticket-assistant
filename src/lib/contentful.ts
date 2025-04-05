@@ -60,7 +60,7 @@ export const getBlogPostBySlug = async (
 ): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug, // Fixed from 'fields.slug' to fields.slug
+    'fields.slug': slug, // Fixed query parameter format
     limit: 1,
     include: 2,
   });

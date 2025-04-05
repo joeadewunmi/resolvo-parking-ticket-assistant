@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Entry } from "contentful";
 import {
   Card,
   CardContent,
@@ -11,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getAllBlogPosts } from "@/lib/contentful";
+import { getAllBlogPosts, BlogPostSkeleton } from "@/lib/contentful";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Blog = () => {
@@ -30,15 +31,30 @@ const Blog = () => {
   }, []);
 
   // Helper to safely get image URL
-  const getImageUrl = (post: any): string | undefined => {
-    if (post?.fields?.featuredImage?.fields?.file?.url) {
-      return `https:${post.fields.featuredImage.fields.file.url}`;
+  const getImageUrl = (post: Entry<BlogPostSkeleton>): string | undefined => {
+    if (!post?.fields?.featuredImage?.fields?.file?.url) {
+      return undefined;
     }
-    return undefined;
+    return `https:${post.fields.featuredImage.fields.file.url}`;
+  };
+
+  // Helper to safely get post title
+  const getPostTitle = (post: Entry<BlogPostSkeleton>): string => {
+    return post?.fields?.title || '';
+  };
+
+  // Helper to safely get post description
+  const getPostDescription = (post: Entry<BlogPostSkeleton>): string => {
+    return post?.fields?.seoDescription || '';
+  };
+
+  // Helper to safely get post slug
+  const getPostSlug = (post: Entry<BlogPostSkeleton>): string => {
+    return post?.fields?.slug || '';
   };
 
   // Helper to safely format date
-  const formatDate = (dateString: any): string => {
+  const formatDate = (dateString?: string): string => {
     if (!dateString) return '';
     try {
       return new Date(dateString).toLocaleDateString();
@@ -105,24 +121,24 @@ const Blog = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts?.map((post) => (
-            <Link key={post.sys.id} to={`/blog/${post.fields.slug}`}>
+            <Link key={post.sys.id} to={`/blog/${getPostSlug(post)}`}>
               <Card className="h-full hover:shadow-lg transition-shadow">
                 {getImageUrl(post) && (
                   <img
                     src={getImageUrl(post)}
-                    alt={post.fields.title || ''}
+                    alt={getPostTitle(post)}
                     className="w-full h-48 object-cover rounded-t-lg"
                     loading="lazy"
                   />
                 )}
                 <CardHeader>
-                  <CardTitle>{post.fields.title || ''}</CardTitle>
+                  <CardTitle>{getPostTitle(post)}</CardTitle>
                   <CardDescription>
-                    {post.fields.publishDate && formatDate(post.fields.publishDate)}
+                    {formatDate(post.fields.publishDate)}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {post.fields.seoDescription || ''}
+                  {getPostDescription(post)}
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline">Read more</Button>
