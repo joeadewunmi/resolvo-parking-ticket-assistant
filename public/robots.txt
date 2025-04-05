@@ -1,3 +1,4 @@
+
 # robots.txt for https://resolvo.uk/
 
 # Allow all web crawlers to access all content
