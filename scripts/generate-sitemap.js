@@ -1,4 +1,3 @@
-
 // This is a simple Node.js script that could be run during the build process
 // to generate an updated sitemap.xml file
 
@@ -32,6 +31,7 @@ const generateSitemap = (routes) => {
   const domain = 'https://resolvo.uk';
   const today = new Date().toISOString().split('T')[0];
   
+  // Make sure there's absolutely nothing before the XML declaration
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   
@@ -76,5 +76,7 @@ if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
 
-fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
+// Use the flag 'w' to ensure the file is truncated before writing
+// and specify utf8 encoding without BOM
+fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap, { encoding: 'utf8', flag: 'w' });
 console.log('Sitemap generated successfully at public/sitemap.xml');
