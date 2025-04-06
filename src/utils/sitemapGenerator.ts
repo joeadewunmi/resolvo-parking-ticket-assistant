@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import path from 'path';
 
@@ -53,7 +52,7 @@ export const generateSitemap = (routes: string[], domain: string = 'https://reso
   entries.forEach(entry => {
     xml += '  <url>\n';
     xml += `    <loc>${entry.url}</loc>\n`;
-    xml += `    <lastmod>${entry.lastmod}</loc>\n`;
+    xml += `    <lastmod>${entry.lastmod}</lastmod>\n`;
     xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
     xml += `    <priority>${entry.priority.toFixed(1)}</priority>\n`;
     xml += '  </url>\n';
@@ -82,6 +81,8 @@ export const extractRoutesFromApp = (): string[] => {
     '/faq',
     '/appeal-hub',
     '/privacy-policy',
+    
+    // Existing parking company routes
     '/euro-car-parks',
     '/ukpc',
     '/uk-parking-administration',
@@ -91,7 +92,31 @@ export const extractRoutesFromApp = (): string[] => {
     '/am-parking-services',
     '/anpr-365',
     '/parking-collection-services',
-    '/apcoa-parking'
+    '/apcoa-parking',
+    
+    // New parking company routes
+    '/workflow-dynamics',
+    '/flashpark',
+    '/university-of-kent',
+    '/university-of-edinburgh',
+    '/total-parking-solutions',
+    '/total-car-parks',
+    '/spring-parking',
+    '/smart-parking',
+    '/shield-security-services',
+    '/select-parking',
+    '/secure-parking-solutions',
+    '/secure-a-space',
+    '/safe-duty',
+    '/saba-parking',
+    '/rmc-parking',
+    '/rfc-car-park-management',
+    '/rcp-parking',
+    '/q-park',
+    '/atlas-enforcement',
+    '/azure-parking',
+    '/bay-sentry-solutions',
+    '/britannia-parking'
   ];
 };
 

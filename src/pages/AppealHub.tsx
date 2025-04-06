@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Building } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import FAQSection from '@/components/home/FAQSection';
 
-// Private parking companies with existing routes
+// All parking companies with routes
 const parkingCompanies = [
   { name: "APCOA Parking Appeal Guide", path: "/apcoa-parking" },
   { name: "All Parking Services Appeal Guide", path: "/all-parking-services" },
@@ -16,6 +15,29 @@ const parkingCompanies = [
   { name: "UK Parking Administration Appeal Guide", path: "/uk-parking-administration" },
   { name: "UK Parking Control (UKPC) Appeal Guide", path: "/ukpc" },
   { name: "UK Parking Enforcement Appeal Guide", path: "/uk-parking-enforcement" },
+  
+  { name: "Workflow Dynamics Appeal Guide", path: "/workflow-dynamics" },
+  { name: "FlashPark Appeal Guide", path: "/flashpark" },
+  { name: "University of Kent Appeal Guide", path: "/university-of-kent" },
+  { name: "University of Edinburgh Appeal Guide", path: "/university-of-edinburgh" },
+  { name: "Total Parking Solutions Appeal Guide", path: "/total-parking-solutions" },
+  { name: "Total Car Parks Appeal Guide", path: "/total-car-parks" },
+  { name: "Spring Parking Appeal Guide", path: "/spring-parking" },
+  { name: "Smart Parking Appeal Guide", path: "/smart-parking" },
+  { name: "Shield Security Services Appeal Guide", path: "/shield-security-services" },
+  { name: "Select Parking Appeal Guide", path: "/select-parking" },
+  { name: "Secure Parking Solutions Appeal Guide", path: "/secure-parking-solutions" },
+  { name: "Secure A Space Appeal Guide", path: "/secure-a-space" },
+  { name: "Safe Duty Appeal Guide", path: "/safe-duty" },
+  { name: "Saba Parking Appeal Guide", path: "/saba-parking" },
+  { name: "RMC Parking Appeal Guide", path: "/rmc-parking" },
+  { name: "RFC Car Park Management Appeal Guide", path: "/rfc-car-park-management" },
+  { name: "RCP Parking Appeal Guide", path: "/rcp-parking" },
+  { name: "Q Park Appeal Guide", path: "/q-park" },
+  { name: "Atlas Enforcement Appeal Guide", path: "/atlas-enforcement" },
+  { name: "Azure Parking Appeal Guide", path: "/azure-parking" },
+  { name: "Bay Sentry Solutions Appeal Guide", path: "/bay-sentry-solutions" },
+  { name: "Britannia Parking Appeal Guide", path: "/britannia-parking" },
 ];
 
 // Sort companies alphabetically
