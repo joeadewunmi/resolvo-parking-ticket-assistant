@@ -38,7 +38,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-sm hover:text-accent">
+                <Link to="/privacy-policy" className="text-sm hover:text-accent">
                   Privacy Policy
                 </Link>
               </li>
@@ -83,6 +83,19 @@ const Footer = () => {
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
                 Follow us on Twitter
+              </a>
+              <a
+                href="https://www.tiktok.com/@resolvoparking1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <img 
+                  src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
+                  alt="TikTok"
+                  className="h-5 w-5 mr-2 brightness-0 invert"
+                />
+                Follow us on TikTok
               </a>
               <button
                 onClick={handleWhatsAppShare}

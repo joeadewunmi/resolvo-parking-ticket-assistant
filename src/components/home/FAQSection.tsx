@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+
 import { faqs } from "@/data/faqs";
 
 interface FAQSectionProps {
@@ -14,18 +14,14 @@ const FAQSection = ({ limit }: FAQSectionProps) => {
         <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
           Resolvo FAQs
         </h2>
-        <Accordion type="single" collapsible className="space-y-4">
+        <div className="space-y-6">
           {displayedFaqs.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`} className="border rounded-lg px-4">
-              <AccordionTrigger className="text-left font-medium py-4">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="pb-4 text-gray-600 whitespace-pre-line">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
+            <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="font-bold text-lg mb-2">{faq.question}</h3>
+              <p className="text-gray-600 whitespace-pre-line">{faq.answer}</p>
+            </div>
           ))}
-        </Accordion>
+        </div>
       </div>
     </div>
   );
