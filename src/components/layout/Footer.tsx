@@ -91,7 +91,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/270ce9f1-68b4-4974-8194-9cf0e689b7cc.png"
+                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
                   alt="TikTok"
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
