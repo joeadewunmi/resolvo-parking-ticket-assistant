@@ -1,3 +1,4 @@
+
 import fs from 'fs';
 import path from 'path';
 
@@ -94,7 +95,7 @@ export const extractRoutesFromApp = (): string[] => {
     '/parking-collection-services',
     '/apcoa-parking',
     
-    // New parking company routes
+    // Previously added parking company routes
     '/workflow-dynamics',
     '/flashpark',
     '/university-of-kent',
@@ -116,7 +117,48 @@ export const extractRoutesFromApp = (): string[] => {
     '/atlas-enforcement',
     '/azure-parking',
     '/bay-sentry-solutions',
-    '/britannia-parking'
+    '/britannia-parking',
+    
+    // New parking company routes
+    '/canterbury-christ-church-university',
+    '/capital-car-park-control',
+    '/car-park-services',
+    '/carparkers',
+    '/city-car-parks',
+    '/city-permits',
+    '/civil-enforcement',
+    '/comply-park-solutions',
+    '/dorset-county-hospital',
+    '/westfield-parking',
+    '/elite-car-parking',
+    '/eternity-fire-security',
+    '/fisc-parking-solutions',
+    '/gbp-management',
+    '/green-parking',
+    '/highview-parking',
+    '/horizon-parking',
+    '/initial-parking',
+    '/jd-parking-consultants',
+    '/key-parking-uk',
+    '/ldk-security-group',
+    '/lodge-parking',
+    '/leeds-teaching-hospitals',
+    '/met-parking-services',
+    '/minster-baywatch',
+    '/mk1-parking',
+    '/national-car-parks',
+    '/nsgl',
+    '/nsl',
+    '/observices-parking',
+    '/ocs',
+    '/p4-parking',
+    '/parkingeye',
+    '/parking-control-solutions',
+    '/parkmaven',
+    '/premier-park',
+    '/private-parking-solutions',
+    '/professional-parking-solutions',
+    '/pess'
   ];
 };
 

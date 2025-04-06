@@ -38,6 +38,46 @@ const parkingCompanies = [
   { name: "Azure Parking Appeal Guide", path: "/azure-parking" },
   { name: "Bay Sentry Solutions Appeal Guide", path: "/bay-sentry-solutions" },
   { name: "Britannia Parking Appeal Guide", path: "/britannia-parking" },
+  
+  { name: "Canterbury Christ Church University Appeal Guide", path: "/canterbury-christ-church-university" },
+  { name: "Capital Car Park Control Appeal Guide", path: "/capital-car-park-control" },
+  { name: "Car Park Services Appeal Guide", path: "/car-park-services" },
+  { name: "Carparkers Appeal Guide", path: "/carparkers" },
+  { name: "City Car Parks Appeal Guide", path: "/city-car-parks" },
+  { name: "City Permits Appeal Guide", path: "/city-permits" },
+  { name: "Civil Enforcement Appeal Guide", path: "/civil-enforcement" },
+  { name: "Comply Park Solutions Appeal Guide", path: "/comply-park-solutions" },
+  { name: "Dorset County Hospital Foundation Trust Appeal Guide", path: "/dorset-county-hospital" },
+  { name: "EFIPS - Westfield Parking Appeal Guide", path: "/westfield-parking" },
+  { name: "Elite Car Parking Management Appeal Guide", path: "/elite-car-parking" },
+  { name: "Eternity Fire & Security Appeal Guide", path: "/eternity-fire-security" },
+  { name: "Fisc Parking Solutions Appeal Guide", path: "/fisc-parking-solutions" },
+  { name: "GBP Management Appeal Guide", path: "/gbp-management" },
+  { name: "Green Parking Appeal Guide", path: "/green-parking" },
+  { name: "Highview Parking Appeal Guide", path: "/highview-parking" },
+  { name: "Horizon Parking Appeal Guide", path: "/horizon-parking" },
+  { name: "Initial Parking Appeal Guide", path: "/initial-parking" },
+  { name: "JD Parking Consultants Appeal Guide", path: "/jd-parking-consultants" },
+  { name: "Key Parking UK Appeal Guide", path: "/key-parking-uk" },
+  { name: "LDK Security Group Appeal Guide", path: "/ldk-security-group" },
+  { name: "Lodge Parking Appeal Guide", path: "/lodge-parking" },
+  { name: "Leeds Teaching Hospitals NHS Trust Appeal Guide", path: "/leeds-teaching-hospitals" },
+  { name: "MET Parking Services Appeal Guide", path: "/met-parking-services" },
+  { name: "Minster Baywatch Appeal Guide", path: "/minster-baywatch" },
+  { name: "MK1 Parking Appeal Guide", path: "/mk1-parking" },
+  { name: "National Car Parks Appeal Guide", path: "/national-car-parks" },
+  { name: "NSGL Appeal Guide", path: "/nsgl" },
+  { name: "NSL Appeal Guide", path: "/nsl" },
+  { name: "Observices Parking Consultancy Appeal Guide", path: "/observices-parking" },
+  { name: "OCS Appeal Guide", path: "/ocs" },
+  { name: "P4 Parking Appeal Guide", path: "/p4-parking" },
+  { name: "ParkingEye Appeal Guide", path: "/parkingeye" },
+  { name: "Parking Control Solutions Appeal Guide", path: "/parking-control-solutions" },
+  { name: "ParkMaven Appeal Guide", path: "/parkmaven" },
+  { name: "Premier Park Appeal Guide", path: "/premier-park" },
+  { name: "Private Parking Solutions Appeal Guide", path: "/private-parking-solutions" },
+  { name: "Professional Parking Solutions Appeal Guide", path: "/professional-parking-solutions" },
+  { name: "PESS Appeal Guide", path: "/pess" }
 ];
 
 // Sort companies alphabetically
@@ -64,7 +104,7 @@ const AppealHub = () => {
               <h2 className="text-2xl font-bold text-primary">Appeal a Fine from a Private Parking Company</h2>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-              <ul className="space-y-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ul className="space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {sortedCompanies.map((company, index) => (
                   <li key={index}>
                     <Link to={company.path} className="text-blue-600 hover:underline flex items-center">
