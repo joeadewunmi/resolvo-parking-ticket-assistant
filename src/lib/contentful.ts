@@ -54,13 +54,25 @@ export const contentfulClient = createClient({
   accessToken: accessToken,
 });
 
+// Helper functions for safely getting values
+export const getImageUrl = (asset?: Asset): string => {
+  if (!asset || !asset.fields || !asset.fields.file || !asset.fields.file.url) {
+    return '';
+  }
+  return `https:${asset.fields.file.url}`;
+};
+
+export const getSafeString = (value: string | undefined): string => {
+  return value || '';
+};
+
 // Get a single blog post by slug
 export const getBlogPostBySlug = async (
   slug: string
 ): Promise<Entry<BlogPostSkeleton> | null> => {
   const response = await contentfulClient.getEntries<BlogPostSkeleton>({
     content_type: 'blogPost',
-    'fields.slug': slug, // Fixed query parameter format
+    'fields.slug': slug, // Use proper query format
     limit: 1,
     include: 2,
   });
