@@ -83,7 +83,7 @@ export const extractRoutesFromApp = (): string[] => {
     '/appeal-hub',
     '/privacy-policy',
     
-    // Existing parking company routes
+    // Original parking company routes
     '/euro-car-parks',
     '/ukpc',
     '/uk-parking-administration',
@@ -119,7 +119,7 @@ export const extractRoutesFromApp = (): string[] => {
     '/bay-sentry-solutions',
     '/britannia-parking',
     
-    // New parking company routes
+    // Newly added parking company routes
     '/canterbury-christ-church-university',
     '/capital-car-park-control',
     '/car-park-services',

@@ -93,7 +93,7 @@ const Footer = () => {
                 <img 
                   src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
                   alt="TikTok"
-                  className="h-5 w-5 mr-2 brightness-0 invert"
+                  className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
                 />
                 Follow us on TikTok
               </a>

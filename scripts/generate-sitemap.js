@@ -1,3 +1,4 @@
+
 // This is a simple Node.js script that could be run during the build process
 // to generate an updated sitemap.xml file
 
@@ -14,6 +15,8 @@ const getRoutesFromApp = () => {
     '/faq',
     '/appeal-hub',
     '/privacy-policy',
+    
+    // Original parking company routes
     '/euro-car-parks',
     '/ukpc',
     '/uk-parking-administration',
@@ -23,7 +26,72 @@ const getRoutesFromApp = () => {
     '/am-parking-services',
     '/anpr-365',
     '/parking-collection-services',
-    '/apcoa-parking'
+    '/apcoa-parking',
+    
+    // Previously added parking company routes
+    '/workflow-dynamics',
+    '/flashpark',
+    '/university-of-kent',
+    '/university-of-edinburgh',
+    '/total-parking-solutions',
+    '/total-car-parks',
+    '/spring-parking',
+    '/smart-parking',
+    '/shield-security-services',
+    '/select-parking',
+    '/secure-parking-solutions',
+    '/secure-a-space',
+    '/safe-duty',
+    '/saba-parking',
+    '/rmc-parking',
+    '/rfc-car-park-management',
+    '/rcp-parking',
+    '/q-park',
+    '/atlas-enforcement',
+    '/azure-parking',
+    '/bay-sentry-solutions',
+    '/britannia-parking',
+    
+    // Newly added parking company routes
+    '/canterbury-christ-church-university',
+    '/capital-car-park-control',
+    '/car-park-services',
+    '/carparkers',
+    '/city-car-parks',
+    '/city-permits',
+    '/civil-enforcement',
+    '/comply-park-solutions',
+    '/dorset-county-hospital',
+    '/westfield-parking',
+    '/elite-car-parking',
+    '/eternity-fire-security',
+    '/fisc-parking-solutions',
+    '/gbp-management',
+    '/green-parking',
+    '/highview-parking',
+    '/horizon-parking',
+    '/initial-parking',
+    '/jd-parking-consultants',
+    '/key-parking-uk',
+    '/ldk-security-group',
+    '/lodge-parking',
+    '/leeds-teaching-hospitals',
+    '/met-parking-services',
+    '/minster-baywatch',
+    '/mk1-parking',
+    '/national-car-parks',
+    '/nsgl',
+    '/nsl',
+    '/observices-parking',
+    '/ocs',
+    '/p4-parking',
+    '/parkingeye',
+    '/parking-control-solutions',
+    '/parkmaven',
+    '/premier-park',
+    '/private-parking-solutions',
+    '/professional-parking-solutions',
+    '/pess'
   ];
 };
 
