@@ -67,7 +67,10 @@ export const generateSitemap = (routes: string[], domain: string = 'https://reso
     fs.mkdirSync(publicDir, { recursive: true });
   }
   
-  fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml, { encoding: 'utf8', flag: 'w' });
+  fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml, { 
+    encoding: 'utf8', 
+    flag: 'w' 
+  });
   console.log('Sitemap generated successfully at public/sitemap.xml');
 };
 

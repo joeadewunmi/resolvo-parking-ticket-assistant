@@ -146,5 +146,8 @@ if (!fs.existsSync(publicDir)) {
 
 // Use the flag 'w' to ensure the file is truncated before writing
 // and specify utf8 encoding without BOM
-fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap, { encoding: 'utf8', flag: 'w' });
+fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap, { 
+  encoding: 'utf8', 
+  flag: 'w' 
+});
 console.log('Sitemap generated successfully at public/sitemap.xml');
