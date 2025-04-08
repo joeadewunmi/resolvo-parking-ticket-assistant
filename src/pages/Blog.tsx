@@ -66,14 +66,14 @@ const Blog = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-primary mb-4">Resolvo Blog</h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg leading-relaxed">
               Latest news and insights about parking tickets and appeals
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, index) => (
               <Card key={index} className="h-full">
                 <Skeleton className="w-full h-48 rounded-t-lg" />
@@ -100,9 +100,9 @@ const Blog = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-primary mb-4">Oops!</h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-lg leading-relaxed">
             We're having trouble loading our blog posts. Please try again later.
           </p>
         </div>
@@ -112,14 +112,14 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-white py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Resolvo Blog</h1>
-          <p className="text-gray-600">
+          <h1 className="text-4xl font-bold text-primary mb-6">Resolvo Blog</h1>
+          <p className="text-gray-600 text-lg leading-relaxed mb-8">
             Latest news and insights about parking tickets and appeals
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts?.map((post) => (
             <Link key={post.sys.id} to={`/blog/${getPostSlug(post)}`}>
               <Card className="h-full hover:shadow-lg transition-shadow">
@@ -137,7 +137,7 @@ const Blog = () => {
                     {formatDate(post.fields.publishDate)}
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="leading-relaxed">
                   {getPostDescription(post)}
                 </CardContent>
                 <CardFooter>

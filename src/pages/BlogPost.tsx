@@ -3,9 +3,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Entry, Asset } from 'contentful';
-import { Document } from '@contentful/rich-text-types';
-import { BlogPostSkeleton, getBlogPostBySlug, AuthorSkeleton } from '@/lib/contentful';
+import { Entry } from 'contentful';
+import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
@@ -47,7 +46,7 @@ const BlogPost = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Skeleton className="h-10 w-3/4 mb-4" />
           <div className="flex items-center mb-6">
             <Skeleton className="h-12 w-12 rounded-full" />
@@ -71,23 +70,21 @@ const BlogPost = () => {
     return null;
   }
 
-  // Safely extract fields with fallback values
-  const title = post.fields.title || '';
-  const publishDate = post.fields.publishDate;
-  const featuredImage = post.fields.featuredImage;
-  const content = post.fields.content;
-  
-  // Add proper type checking or default values
-  const tags = post.fields.tags || '';
-  const authorName = post.fields.authorName;
-  const relatedPost = Array.isArray(post.fields.relatedPost) ? post.fields.relatedPost : [];
+  const { 
+    title = '',
+    publishDate,
+    featuredImage,
+    content,
+    tags = '',
+    authorName,
+    relatedPost = []
+  } = post.fields;
 
-  // Ensure content is valid before rendering
   const hasValidContent = content && content.nodeType && content.content;
 
   return (
     <div className="min-h-screen py-12 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <BlogPostHeader
           title={title}
           publishDate={publishDate}
@@ -95,7 +92,9 @@ const BlogPost = () => {
           author={authorName}
         />
         
-        {hasValidContent && <BlogPostContent content={content} />}
+        <div className="prose prose-lg max-w-none prose-headings:font-bold prose-headings:mb-6 prose-p:text-gray-700 prose-p:mb-6 prose-p:leading-relaxed prose-a:text-blue-600 prose-img:rounded-lg prose-li:mb-2 prose-li:leading-relaxed">
+          {hasValidContent && <BlogPostContent content={content} />}
+        </div>
 
         <BlogPostTags tags={tags} />
         
