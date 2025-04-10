@@ -1,11 +1,15 @@
-
 # robots.txt for https://resolvo.uk/
 
-# Allow all web crawlers to access all content
+# Explicitly allow all web crawlers
 User-agent: *
+Allow: /
+
+# Explicit allowance for Bingbot
+User-agent: Bingbot
 Allow: /
 
 # Sitemap location
 Sitemap: https://resolvo.uk/sitemap.xml
 
 # Crawl-delay is not needed as the site is static and can handle frequent requests
+
