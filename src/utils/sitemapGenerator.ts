@@ -1,8 +1,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import { contentfulClient, BlogPostSkeleton } from '../lib/contentful';
-import { Entry } from 'contentful';
+
+// Note: This is a Node.js utility that would be used during build time
+// It's not meant to be imported directly in the React application
 
 interface SitemapEntry {
   url: string;
@@ -11,36 +12,7 @@ interface SitemapEntry {
   priority: number;
 }
 
-// Function to fetch all blog posts from Contentful
-async function fetchAllBlogPosts(): Promise<Entry<BlogPostSkeleton>[]> {
-  try {
-    const response = await contentfulClient.getEntries<BlogPostSkeleton>({
-      content_type: 'blogPost',
-      order: ['-sys.createdAt'],
-      limit: 1000 // Get all blog posts (up to 1000)
-    });
-    return response.items;
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error);
-    return [];
-  }
-}
-
-// Function to extract blog post URLs from Contentful entries
-async function getBlogPostUrls(): Promise<string[]> {
-  const blogPosts = await fetchAllBlogPosts();
-  return blogPosts.map(post => {
-    if (post.fields && post.fields.slug) {
-      return `/blog/${post.fields.slug}`;
-    }
-    return '';
-  }).filter(Boolean); // Remove empty strings
-}
-
-export const generateSitemap = async (
-  staticRoutes: string[], 
-  domain: string = 'https://resolvo.uk'
-): Promise<void> => {
+export const generateSitemap = (routes: string[], domain: string = 'https://resolvo.uk'): void => {
   if (typeof window !== 'undefined') {
     console.error('Sitemap generator should only be run in Node.js environment during build');
     return;
@@ -48,78 +20,65 @@ export const generateSitemap = async (
 
   const today = new Date().toISOString().split('T')[0];
   
-  try {
-    // Get dynamic blog post URLs
-    const blogPostUrls = await getBlogPostUrls();
-    console.log(`Found ${blogPostUrls.length} blog post URLs for sitemap`);
+  const entries: SitemapEntry[] = routes.map(route => {
+    // Default values for most pages
+    let priority = 0.8;
+    let changefreq: SitemapEntry['changefreq'] = 'monthly';
     
-    // Combine static routes with blog post URLs
-    const allRoutes = [...staticRoutes, ...blogPostUrls];
-    
-    const entries: SitemapEntry[] = allRoutes.map(route => {
-      // Default values for most pages
-      let priority = 0.8;
-      let changefreq: SitemapEntry['changefreq'] = 'monthly';
-      
-      // Special cases
-      if (route === '/') {
-        priority = 1.0;
-        changefreq = 'weekly';
-      } else if (route === '/blog') {
-        changefreq = 'weekly';
-      } else if (route.startsWith('/blog/')) {
-        // Individual blog posts
-        changefreq = 'monthly';
-        priority = 0.7;
-      } else if (route === '/privacy-policy') {
-        priority = 0.5;
-        changefreq = 'yearly';
-      } else if (route === '/appeal-hub') {
-        priority = 0.9;
-      }
-      
-      return {
-        url: `${domain}${route}`,
-        lastmod: today,
-        changefreq,
-        priority
-      };
-    });
-    
-    // Generate XML with no whitespace before declaration
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-    
-    entries.forEach(entry => {
-      xml += '  <url>\n';
-      xml += `    <loc>${entry.url}</loc>\n`;
-      xml += `    <lastmod>${entry.lastmod}</lastmod>\n`;
-      xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
-      xml += `    <priority>${entry.priority.toFixed(1)}</priority>\n`;
-      xml += '  </url>\n';
-    });
-    
-    xml += '</urlset>';
-    
-    // Write to file with explicit utf8 encoding and no BOM
-    const publicDir = path.join(process.cwd(), 'public');
-    if (!fs.existsSync(publicDir)) {
-      fs.mkdirSync(publicDir, { recursive: true });
+    // Special cases
+    if (route === '/') {
+      priority = 1.0;
+      changefreq = 'weekly';
+    } else if (route.includes('blog') && !route.includes('/blog/')) {
+      changefreq = 'weekly';
+    } else if (route === '/privacy-policy') {
+      priority = 0.5;
+      changefreq = 'yearly';
+    } else if (route === '/appeal-hub') {
+      priority = 0.9;
     }
     
-    fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml, { 
-      encoding: 'utf8', 
-      flag: 'w' 
-    });
-    console.log('Sitemap generated successfully at public/sitemap.xml');
-  } catch (error) {
-    console.error('Error generating sitemap:', error);
+    return {
+      url: `${domain}${route}`,
+      lastmod: today,
+      changefreq,
+      priority
+    };
+  });
+  
+  // Generate XML with no whitespace before declaration
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  
+  entries.forEach(entry => {
+    xml += '  <url>\n';
+    xml += `    <loc>${entry.url}</loc>\n`;
+    xml += `    <lastmod>${entry.lastmod}</lastmod>\n`;
+    xml += `    <changefreq>${entry.changefreq}</changefreq>\n`;
+    xml += `    <priority>${entry.priority.toFixed(1)}</priority>\n`;
+    xml += '  </url>\n';
+  });
+  
+  xml += '</urlset>';
+  
+  // Write to file with explicit utf8 encoding and no BOM
+  const publicDir = path.join(process.cwd(), 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
   }
+  
+  fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), xml, { 
+    encoding: 'utf8', 
+    flag: 'w' 
+  });
+  console.log('Sitemap generated successfully at public/sitemap.xml');
 };
 
-// This is a simplified implementation of static routes
+// This is a simplified implementation
+// In a real scenario, you would need to traverse the React element tree
+// to find all Route components and extract their paths
 export const extractRoutesFromApp = (): string[] => {
-  // All the static routes
+  // For now, we'll just return a hardcoded list of routes
   return [
     '/',
     '/blog',
@@ -205,3 +164,7 @@ export const extractRoutesFromApp = (): string[] => {
     '/pess'
   ];
 };
+
+// Usage example (in a build script):
+// const routes = extractRoutesFromApp();
+// generateSitemap(routes);

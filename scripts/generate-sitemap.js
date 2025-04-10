@@ -1,46 +1,14 @@
 
-// This is a Node.js script that generates the sitemap.xml file
-// It pulls blog posts from Contentful and combines them with static routes
+// This is a simple Node.js script that could be run during the build process
+// to generate an updated sitemap.xml file
 
 const fs = require('fs');
 const path = require('path');
-const { createClient } = require('contentful');
 
-// Contentful client setup
-const spaceId = 'fal2hauaxrft';
-const accessToken = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
-
-const contentfulClient = createClient({
-  space: spaceId,
-  accessToken: accessToken,
-});
-
-// Function to fetch all blog posts from Contentful
-async function fetchAllBlogPosts() {
-  try {
-    const response = await contentfulClient.getEntries({
-      content_type: 'blogPost',
-      order: ['-sys.createdAt'],
-      limit: 1000 // Get all blog posts (up to 1000)
-    });
-    return response.items;
-  } catch (error) {
-    console.error('Error fetching blog posts for sitemap:', error);
-    return [];
-  }
-}
-
-// Function to extract blog post URLs from Contentful entries
-async function getBlogPostUrls() {
-  const blogPosts = await fetchAllBlogPosts();
-  return blogPosts
-    .filter(post => post.fields && post.fields.slug)
-    .map(post => `/blog/${post.fields.slug}`);
-}
-
-// Get all static routes from the application
-const getStaticRoutes = () => {
-  // All static routes from App.tsx
+// Get all routes from App.tsx (simplified approach)
+const getRoutesFromApp = () => {
+  // In a real implementation, this would parse the routes from App.tsx
+  // For now, we'll use a hardcoded list
   return [
     '/',
     '/blog',
@@ -127,18 +95,15 @@ const getStaticRoutes = () => {
   ];
 };
 
-const generateSitemap = async (staticRoutes, blogPostUrls) => {
+const generateSitemap = (routes) => {
   const domain = 'https://resolvo.uk';
   const today = new Date().toISOString().split('T')[0];
-  
-  // Combine static routes with blog post URLs
-  const allRoutes = [...staticRoutes, ...blogPostUrls];
   
   // Make sure there's absolutely nothing before the XML declaration
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   
-  allRoutes.forEach(route => {
+  routes.forEach(route => {
     // Default values
     let priority = 0.8;
     let changefreq = 'monthly';
@@ -149,10 +114,6 @@ const generateSitemap = async (staticRoutes, blogPostUrls) => {
       changefreq = 'weekly';
     } else if (route === '/blog') {
       changefreq = 'weekly';
-    } else if (route.startsWith('/blog/')) {
-      // Individual blog posts
-      changefreq = 'monthly';
-      priority = 0.7;
     } else if (route === '/privacy-policy') {
       priority = 0.5;
       changefreq = 'yearly';
@@ -173,38 +134,20 @@ const generateSitemap = async (staticRoutes, blogPostUrls) => {
   return xml;
 };
 
-// Main execution
-async function main() {
-  try {
-    const staticRoutes = getStaticRoutes();
-    const blogPostUrls = await getBlogPostUrls();
-    
-    console.log(`Found ${staticRoutes.length} static routes`);
-    console.log(`Found ${blogPostUrls.length} blog post URLs`);
-    
-    const sitemap = await generateSitemap(staticRoutes, blogPostUrls);
-    
-    // Write to file
-    const publicDir = path.join(__dirname, '../public');
-    if (!fs.existsSync(publicDir)) {
-      fs.mkdirSync(publicDir, { recursive: true });
-    }
-    
-    // Use the flag 'w' to ensure the file is truncated before writing
-    // and specify utf8 encoding without BOM
-    fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap, { 
-      encoding: 'utf8', 
-      flag: 'w' 
-    });
-    
-    console.log('Sitemap generated successfully at public/sitemap.xml');
-    
-    // Output some statistics
-    console.log(`Total URLs in sitemap: ${staticRoutes.length + blogPostUrls.length}`);
-  } catch (error) {
-    console.error('Error generating sitemap:', error);
-    process.exit(1);
-  }
+// Generate the sitemap
+const routes = getRoutesFromApp();
+const sitemap = generateSitemap(routes);
+
+// Write to file
+const publicDir = path.join(__dirname, '../public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
 }
 
-main();
+// Use the flag 'w' to ensure the file is truncated before writing
+// and specify utf8 encoding without BOM
+fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap, { 
+  encoding: 'utf8', 
+  flag: 'w' 
+});
+console.log('Sitemap generated successfully at public/sitemap.xml');

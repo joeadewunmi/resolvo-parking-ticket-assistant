@@ -14,7 +14,3 @@
   for = "/robots.txt"
   [headers.values]
     Content-Type = "text/plain"
-
-# Run sitemap generator before build
-[build]
-  command = "node scripts/generate-sitemap.js && npm run build"

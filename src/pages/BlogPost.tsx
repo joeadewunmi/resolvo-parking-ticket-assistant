@@ -2,9 +2,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Entry, Asset } from 'contentful';
-import { Document } from '@contentful/rich-text-types';
-import { BlogPostSkeleton, getBlogPostBySlug, AuthorSkeleton } from '@/lib/contentful';
+import { Entry } from 'contentful';
+import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
@@ -33,11 +32,9 @@ const BlogPost = () => {
 
   useEffect(() => {
     if (post && post.fields) {
-      // Get safe values with fallbacks
-      const title = typeof post.fields.title === 'string' ? post.fields.title : 'Blog Post';
-      const description = typeof post.fields.seoDescription === 'string' ? post.fields.seoDescription : '';
-      
       // Set basic meta tags
+      const title = post.fields.seoTitle || post.fields.title || 'Blog Post';
+      const description = post.fields.seoDescription || '';
       document.title = `${title} | Resolvo`;
       
       // Set description meta tag
@@ -62,12 +59,7 @@ const BlogPost = () => {
       setOrCreateMetaTag('twitter:description', description);
 
       // Set featured image as OG image if available
-      if (
-        post.fields.featuredImage &&
-        post.fields.featuredImage.fields &&
-        post.fields.featuredImage.fields.file &&
-        post.fields.featuredImage.fields.file.url
-      ) {
+      if (post.fields.featuredImage?.fields?.file?.url) {
         const imageUrl = `https:${post.fields.featuredImage.fields.file.url}`;
         setOrCreateMetaTag('og:image', imageUrl);
         setOrCreateMetaTag('twitter:image', imageUrl);
@@ -186,22 +178,19 @@ const BlogPost = () => {
     );
   }
 
-  // Safely extract fields with strong type checking
-  const title = typeof post.fields.title === 'string' ? post.fields.title : '';
-  const publishDate = typeof post.fields.publishDate === 'string' ? post.fields.publishDate : undefined;
-  const featuredImage = post.fields.featuredImage as Asset | undefined;
-  const content = post.fields.content as Document;
+  // Safely extract fields with fallback values
+  const title = post.fields.title || '';
+  const publishDate = post.fields.publishDate;
+  const featuredImage = post.fields.featuredImage;
+  const content = post.fields.content;
   
-  // Add proper type checking for optional fields
-  const tags = typeof post.fields.tags === 'string' ? post.fields.tags : '';
-  const authorName = post.fields.authorName as Entry<AuthorSkeleton> | undefined;
+  // Add proper type checking or default values
+  const tags = post.fields.tags || '';
+  const authorName = post.fields.authorName;
   const relatedPost = Array.isArray(post.fields.relatedPost) ? post.fields.relatedPost : [];
 
   // Ensure content is valid before rendering
-  const hasValidContent = content && 
-    typeof content === 'object' && 
-    'nodeType' in content && 
-    Array.isArray(content.content);
+  const hasValidContent = content && content.nodeType && content.content;
 
   return (
     <div className="min-h-screen py-12 bg-white">
