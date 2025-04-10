@@ -40,7 +40,9 @@ const Blog = () => {
 
   // Helper to safely get image URL
   const getImageUrl = (post: Entry<BlogPostSkeleton>): string | undefined => {
-    if (!post?.fields?.featuredImage?.fields?.file?.url) {
+    if (!post || !post.fields || !post.fields.featuredImage || 
+        !post.fields.featuredImage.fields || !post.fields.featuredImage.fields.file || 
+        !post.fields.featuredImage.fields.file.url) {
       return undefined;
     }
     return `https:${post.fields.featuredImage.fields.file.url}`;
@@ -48,17 +50,26 @@ const Blog = () => {
 
   // Helper to safely get post title
   const getPostTitle = (post: Entry<BlogPostSkeleton>): string => {
-    return post?.fields?.title || '';
+    if (!post || !post.fields || !post.fields.title) {
+      return '';
+    }
+    return post.fields.title;
   };
 
   // Helper to safely get post description
   const getPostDescription = (post: Entry<BlogPostSkeleton>): string => {
-    return post?.fields?.seoDescription || '';
+    if (!post || !post.fields || !post.fields.seoDescription) {
+      return '';
+    }
+    return post.fields.seoDescription;
   };
 
   // Helper to safely get post slug
   const getPostSlug = (post: Entry<BlogPostSkeleton>): string => {
-    return post?.fields?.slug || '';
+    if (!post || !post.fields || !post.fields.slug) {
+      return '';
+    }
+    return post.fields.slug;
   };
 
   // Helper to safely format date
@@ -170,7 +181,7 @@ const Blog = () => {
                   <CardHeader>
                     <CardTitle>{getPostTitle(post)}</CardTitle>
                     <CardDescription>
-                      {formatDate(post.fields.publishDate)}
+                      {post.fields && post.fields.publishDate ? formatDate(post.fields.publishDate) : ''}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>

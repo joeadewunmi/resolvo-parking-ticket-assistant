@@ -23,12 +23,16 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
 
   // Helper to safely get author name
   const getAuthorName = (author?: Entry<AuthorSkeleton>): string => {
-    return author?.fields?.authorName || '';
+    if (!author || !author.fields || !author.fields.authorName) {
+      return '';
+    }
+    return author.fields.authorName;
   };
 
   // Helper to safely get profile picture URL
   const getProfilePictureUrl = (author?: Entry<AuthorSkeleton>): string | undefined => {
-    if (!author?.fields?.profilePicture?.fields?.file?.url) {
+    if (!author || !author.fields || !author.fields.profilePicture || !author.fields.profilePicture.fields || 
+        !author.fields.profilePicture.fields.file || !author.fields.profilePicture.fields.file.url) {
       return undefined;
     }
     return `https:${author.fields.profilePicture.fields.file.url}`;
@@ -66,7 +70,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           )}
         </div>
         
-        {author?.fields?.twitter && (
+        {author && author.fields && author.fields.twitter && (
           <a 
             href={`https://twitter.com/${author.fields.twitter}`}
             target="_blank" 

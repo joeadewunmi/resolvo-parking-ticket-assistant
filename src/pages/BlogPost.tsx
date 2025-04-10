@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Entry } from 'contentful';
+import { Entry, Asset } from 'contentful';
+import { Document } from '@contentful/rich-text-types';
 import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
@@ -178,19 +180,22 @@ const BlogPost = () => {
     );
   }
 
-  // Safely extract fields with fallback values
+  // Safely extract fields with strong type checking
   const title = post.fields.title || '';
   const publishDate = post.fields.publishDate;
   const featuredImage = post.fields.featuredImage;
   const content = post.fields.content;
   
-  // Add proper type checking or default values
+  // Add proper type checking for optional fields
   const tags = post.fields.tags || '';
   const authorName = post.fields.authorName;
   const relatedPost = Array.isArray(post.fields.relatedPost) ? post.fields.relatedPost : [];
 
   // Ensure content is valid before rendering
-  const hasValidContent = content && content.nodeType && content.content;
+  const hasValidContent = content && 
+    typeof content === 'object' && 
+    'nodeType' in content && 
+    Array.isArray(content.content);
 
   return (
     <div className="min-h-screen py-12 bg-white">
