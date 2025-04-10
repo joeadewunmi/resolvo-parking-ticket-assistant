@@ -14,15 +14,23 @@ import {
 import { Button } from "@/components/ui/button";
 import { getAllBlogPosts, BlogPostSkeleton } from "@/lib/contentful";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { RefreshCw } from "lucide-react";
 
 const Blog = () => {
   const {
     data: posts,
     isLoading,
     error,
+    refetch,
+    isError,
   } = useQuery({
     queryKey: ["blog-posts"],
     queryFn: getAllBlogPosts,
+    staleTime: 5 * 60 * 1000, // 5 minutes (matches cache TTL)
+    retry: 2,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
   });
 
   useEffect(() => {
@@ -63,6 +71,10 @@ const Blog = () => {
     }
   };
 
+  const handleRetry = () => {
+    refetch();
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white py-12">
@@ -97,18 +109,33 @@ const Blog = () => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <div className="min-h-screen bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-primary mb-4">Oops!</h1>
-          <p className="text-gray-600">
-            We're having trouble loading our blog posts. Please try again later.
-          </p>
+          <h1 className="text-4xl font-bold text-primary mb-4">Resolvo Blog</h1>
+          <Alert className="max-w-2xl mx-auto my-8 bg-red-50 border border-red-200">
+            <AlertTitle className="text-lg font-semibold text-red-700">
+              Oops! We're having trouble loading our blog posts.
+            </AlertTitle>
+            <AlertDescription className="text-red-600 mt-2">
+              We couldn't fetch the latest blog posts. This might be a temporary issue.
+            </AlertDescription>
+          </Alert>
+          <Button 
+            onClick={handleRetry} 
+            className="mt-4 flex items-center gap-2"
+          >
+            <RefreshCw className="h-4 w-4" />
+            Try Again
+          </Button>
         </div>
       </div>
     );
   }
+
+  // Handle the case where posts might be null or empty
+  const hasNoPosts = !posts || posts.length === 0;
 
   return (
     <div className="min-h-screen bg-white py-12">
@@ -119,34 +146,44 @@ const Blog = () => {
             Latest news and insights about parking tickets and appeals
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts?.map((post) => (
-            <Link key={post.sys.id} to={`/blog/${getPostSlug(post)}`}>
-              <Card className="h-full hover:shadow-lg transition-shadow">
-                {getImageUrl(post) && (
-                  <img
-                    src={getImageUrl(post)}
-                    alt={getPostTitle(post)}
-                    className="w-full h-48 object-cover rounded-t-lg"
-                    loading="lazy"
-                  />
-                )}
-                <CardHeader>
-                  <CardTitle>{getPostTitle(post)}</CardTitle>
-                  <CardDescription>
-                    {formatDate(post.fields.publishDate)}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {getPostDescription(post)}
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline">Read more</Button>
-                </CardFooter>
-              </Card>
-            </Link>
-          ))}
-        </div>
+
+        {hasNoPosts ? (
+          <div className="text-center">
+            <p className="text-lg text-gray-600">No blog posts available at the moment.</p>
+            <Button onClick={handleRetry} className="mt-4">
+              Refresh
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <Link key={post.sys.id} to={`/blog/${getPostSlug(post)}`}>
+                <Card className="h-full hover:shadow-lg transition-shadow">
+                  {getImageUrl(post) && (
+                    <img
+                      src={getImageUrl(post)}
+                      alt={getPostTitle(post)}
+                      className="w-full h-48 object-cover rounded-t-lg"
+                      loading="lazy"
+                    />
+                  )}
+                  <CardHeader>
+                    <CardTitle>{getPostTitle(post)}</CardTitle>
+                    <CardDescription>
+                      {formatDate(post.fields.publishDate)}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {getPostDescription(post)}
+                  </CardContent>
+                  <CardFooter>
+                    <Button variant="outline">Read more</Button>
+                  </CardFooter>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

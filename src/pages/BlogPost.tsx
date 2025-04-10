@@ -1,23 +1,25 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Entry, Asset } from 'contentful';
-import { Document } from '@contentful/rich-text-types';
-import { BlogPostSkeleton, getBlogPostBySlug, AuthorSkeleton } from '@/lib/contentful';
+import { Entry } from 'contentful';
+import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import BlogPostTags from '@/components/blog/BlogPostTags';
 import { Skeleton } from '@/components/ui/skeleton';
 import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { RefreshCw, ArrowLeft } from 'lucide-react';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const { data: post, isLoading, error } = useQuery<Entry<BlogPostSkeleton> | null>({
+  const { data: post, isLoading, error, refetch, isError } = useQuery<Entry<BlogPostSkeleton> | null>({
     queryKey: ['blog-post', slug],
     queryFn: async () => {
       if (!slug) return null;
@@ -25,6 +27,8 @@ const BlogPost = () => {
     },
     enabled: !!slug,
     refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // 5 minutes (matches cache TTL)
+    retry: 2,
   });
 
   useEffect(() => {
@@ -38,11 +42,13 @@ const BlogPost = () => {
     }
   }, [post]);
 
-  useEffect(() => {
-    if (error) {
-      navigate('/blog', { replace: true });
-    }
-  }, [error, navigate]);
+  const handleRetry = () => {
+    refetch();
+  };
+
+  const handleBackToBlog = () => {
+    navigate('/blog');
+  };
 
   if (isLoading) {
     return (
@@ -67,8 +73,66 @@ const BlogPost = () => {
     );
   }
 
-  if (!post || !post.fields) {
-    return null;
+  if (isError || !post) {
+    return (
+      <div className="min-h-screen py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Alert className="mb-8 bg-red-50 border border-red-200">
+            <AlertTitle className="text-lg font-semibold text-red-700">
+              Post Not Found
+            </AlertTitle>
+            <AlertDescription className="text-red-600 mt-2">
+              We couldn't find the blog post you're looking for. It may have been removed or the URL might be incorrect.
+            </AlertDescription>
+          </Alert>
+          
+          <div className="flex gap-4 mt-6">
+            <Button 
+              onClick={handleBackToBlog} 
+              variant="secondary"
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Button>
+            
+            <Button 
+              onClick={handleRetry} 
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Try Again
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!post.fields) {
+    return (
+      <div className="min-h-screen py-12 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Alert className="mb-8 bg-amber-50 border border-amber-200">
+            <AlertTitle className="text-lg font-semibold text-amber-700">
+              Post Content Not Available
+            </AlertTitle>
+            <AlertDescription className="text-amber-600 mt-2">
+              This post exists but its content couldn't be loaded correctly.
+            </AlertDescription>
+          </Alert>
+          
+          <Button 
+            onClick={handleBackToBlog} 
+            variant="secondary"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Blog
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   // Safely extract fields with fallback values
@@ -88,6 +152,16 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen py-12 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <Link 
+            to="/blog" 
+            className="flex items-center text-gray-600 hover:text-primary transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Blog
+          </Link>
+        </div>
+        
         <BlogPostHeader
           title={title}
           publishDate={publishDate}
