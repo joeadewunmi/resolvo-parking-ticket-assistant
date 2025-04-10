@@ -38,9 +38,9 @@ async function getBlogPostUrls() {
     .map(post => `/blog/${post.fields.slug}`);
 }
 
-// Get all static routes
+// Get all static routes from the application
 const getStaticRoutes = () => {
-  // In a real implementation, this would parse the routes from App.tsx
+  // All static routes from App.tsx
   return [
     '/',
     '/blog',
@@ -198,6 +198,9 @@ async function main() {
     });
     
     console.log('Sitemap generated successfully at public/sitemap.xml');
+    
+    // Output some statistics
+    console.log(`Total URLs in sitemap: ${staticRoutes.length + blogPostUrls.length}`);
   } catch (error) {
     console.error('Error generating sitemap:', error);
     process.exit(1);
