@@ -23,7 +23,7 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
 
   // Helper to safely get author name
   const getAuthorName = (author?: Entry<AuthorSkeleton>): string => {
-    if (!author || !author.fields || !author.fields.authorName) {
+    if (!author || !author.fields || typeof author.fields.authorName !== 'string') {
       return '';
     }
     return author.fields.authorName;
@@ -31,12 +31,23 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
 
   // Helper to safely get profile picture URL
   const getProfilePictureUrl = (author?: Entry<AuthorSkeleton>): string | undefined => {
-    if (!author || !author.fields || !author.fields.profilePicture || !author.fields.profilePicture.fields || 
-        !author.fields.profilePicture.fields.file || !author.fields.profilePicture.fields.file.url) {
+    if (
+      !author || 
+      !author.fields || 
+      !author.fields.profilePicture || 
+      !author.fields.profilePicture.fields || 
+      !author.fields.profilePicture.fields.file || 
+      !author.fields.profilePicture.fields.file.url
+    ) {
       return undefined;
     }
     return `https:${author.fields.profilePicture.fields.file.url}`;
   };
+
+  const authorName = getAuthorName(author);
+  const profilePicUrl = getProfilePictureUrl(author);
+  const twitterHandle = author?.fields?.twitter || '';
+  const imageUrl = getImageUrl(featuredImage);
 
   return (
     <div className="mb-8">
@@ -47,19 +58,19 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           {author && (
             <div className="flex items-center">
               <Avatar className="h-12 w-12">
-                {getProfilePictureUrl(author) ? (
+                {profilePicUrl ? (
                   <AvatarImage 
-                    src={getProfilePictureUrl(author)}
-                    alt={getAuthorName(author)}
+                    src={profilePicUrl}
+                    alt={authorName}
                   />
                 ) : (
                   <AvatarFallback>
-                    {getAuthorName(author) ? getAuthorName(author).substring(0, 2).toUpperCase() : 'AU'}
+                    {authorName ? authorName.substring(0, 2).toUpperCase() : 'AU'}
                   </AvatarFallback>
                 )}
               </Avatar>
               <div className="ml-4">
-                <p className="font-medium">{getAuthorName(author)}</p>
+                <p className="font-medium">{authorName}</p>
                 {publishDate && (
                   <p className="text-gray-500 text-sm">
                     {format(new Date(publishDate), 'MMMM dd, yyyy')}
@@ -70,21 +81,21 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           )}
         </div>
         
-        {author && author.fields && author.fields.twitter && (
+        {author && author.fields && twitterHandle && (
           <a 
-            href={`https://twitter.com/${author.fields.twitter}`}
+            href={`https://twitter.com/${twitterHandle}`}
             target="_blank" 
             rel="noopener noreferrer"
             className="text-blue-500 text-sm hover:underline"
           >
-            @{author.fields.twitter}
+            @{twitterHandle}
           </a>
         )}
       </div>
       
-      {featuredImage && getImageUrl(featuredImage) && (
+      {imageUrl && (
         <img
-          src={getImageUrl(featuredImage)}
+          src={imageUrl}
           alt={title}
           className="w-full h-auto max-h-96 object-cover rounded-md mb-8"
         />

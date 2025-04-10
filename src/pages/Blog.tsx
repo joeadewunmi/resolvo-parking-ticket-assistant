@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -40,9 +39,14 @@ const Blog = () => {
 
   // Helper to safely get image URL
   const getImageUrl = (post: Entry<BlogPostSkeleton>): string | undefined => {
-    if (!post || !post.fields || !post.fields.featuredImage || 
-        !post.fields.featuredImage.fields || !post.fields.featuredImage.fields.file || 
-        !post.fields.featuredImage.fields.file.url) {
+    if (
+      !post || 
+      !post.fields || 
+      !post.fields.featuredImage || 
+      !post.fields.featuredImage.fields || 
+      !post.fields.featuredImage.fields.file || 
+      !post.fields.featuredImage.fields.file.url
+    ) {
       return undefined;
     }
     return `https:${post.fields.featuredImage.fields.file.url}`;
@@ -50,7 +54,7 @@ const Blog = () => {
 
   // Helper to safely get post title
   const getPostTitle = (post: Entry<BlogPostSkeleton>): string => {
-    if (!post || !post.fields || !post.fields.title) {
+    if (!post || !post.fields || typeof post.fields.title !== 'string') {
       return '';
     }
     return post.fields.title;
@@ -58,7 +62,7 @@ const Blog = () => {
 
   // Helper to safely get post description
   const getPostDescription = (post: Entry<BlogPostSkeleton>): string => {
-    if (!post || !post.fields || !post.fields.seoDescription) {
+    if (!post || !post.fields || typeof post.fields.seoDescription !== 'string') {
       return '';
     }
     return post.fields.seoDescription;
@@ -66,7 +70,7 @@ const Blog = () => {
 
   // Helper to safely get post slug
   const getPostSlug = (post: Entry<BlogPostSkeleton>): string => {
-    if (!post || !post.fields || !post.fields.slug) {
+    if (!post || !post.fields || typeof post.fields.slug !== 'string') {
       return '';
     }
     return post.fields.slug;
@@ -167,32 +171,38 @@ const Blog = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <Link key={post.sys.id} to={`/blog/${getPostSlug(post)}`}>
-                <Card className="h-full hover:shadow-lg transition-shadow">
-                  {getImageUrl(post) && (
-                    <img
-                      src={getImageUrl(post)}
-                      alt={getPostTitle(post)}
-                      className="w-full h-48 object-cover rounded-t-lg"
-                      loading="lazy"
-                    />
-                  )}
-                  <CardHeader>
-                    <CardTitle>{getPostTitle(post)}</CardTitle>
-                    <CardDescription>
-                      {post.fields && post.fields.publishDate ? formatDate(post.fields.publishDate) : ''}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {getPostDescription(post)}
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline">Read more</Button>
-                  </CardFooter>
-                </Card>
-              </Link>
-            ))}
+            {posts.map((post) => {
+              const imageUrl = getImageUrl(post);
+              const title = getPostTitle(post);
+              const description = getPostDescription(post);
+              const slug = getPostSlug(post);
+              const date = post.fields && post.fields.publishDate ? formatDate(post.fields.publishDate) : '';
+              
+              return (
+                <Link key={post.sys.id} to={`/blog/${slug}`}>
+                  <Card className="h-full hover:shadow-lg transition-shadow">
+                    {imageUrl && (
+                      <img
+                        src={imageUrl}
+                        alt={title}
+                        className="w-full h-48 object-cover rounded-t-lg"
+                        loading="lazy"
+                      />
+                    )}
+                    <CardHeader>
+                      <CardTitle>{title}</CardTitle>
+                      <CardDescription>{date}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {description}
+                    </CardContent>
+                    <CardFooter>
+                      <Button variant="outline">Read more</Button>
+                    </CardFooter>
+                  </Card>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>

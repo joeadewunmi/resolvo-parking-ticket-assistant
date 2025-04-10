@@ -95,7 +95,7 @@ export const getBlogPostBySlug = async (
     // Not in cache, fetch from API
     const response = await contentfulClient.getEntries<BlogPostSkeleton>({
       content_type: 'blogPost',
-      'fields.slug': slug, // This is valid syntax for Contentful SDK
+      'fields.slug': slug, // Use correct syntax with quotes around the property name
       limit: 1,
       include: 2,
     });
