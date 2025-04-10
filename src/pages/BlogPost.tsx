@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -33,14 +32,58 @@ const BlogPost = () => {
 
   useEffect(() => {
     if (post && post.fields) {
-      document.title = `${post.fields.seoTitle || post.fields.title || 'Blog Post'} | Resolvo`;
+      // Set basic meta tags
+      const title = post.fields.seoTitle || post.fields.title || 'Blog Post';
+      const description = post.fields.seoDescription || '';
+      document.title = `${title} | Resolvo`;
       
-      const metaDescription = document.querySelector('meta[name="description"]');
+      // Set description meta tag
+      let metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
-        metaDescription.setAttribute('content', post.fields.seoDescription || '');
+        metaDescription.setAttribute('content', description);
+      } else {
+        metaDescription = document.createElement('meta');
+        metaDescription.setAttribute('name', 'description');
+        metaDescription.setAttribute('content', description);
+        document.head.appendChild(metaDescription);
+      }
+
+      // Set Open Graph meta tags
+      setOrCreateMetaTag('og:title', title);
+      setOrCreateMetaTag('og:description', description);
+      setOrCreateMetaTag('og:type', 'article');
+      
+      // Set Twitter card meta tags
+      setOrCreateMetaTag('twitter:card', 'summary_large_image');
+      setOrCreateMetaTag('twitter:title', title);
+      setOrCreateMetaTag('twitter:description', description);
+
+      // Set featured image as OG image if available
+      if (post.fields.featuredImage?.fields?.file?.url) {
+        const imageUrl = `https:${post.fields.featuredImage.fields.file.url}`;
+        setOrCreateMetaTag('og:image', imageUrl);
+        setOrCreateMetaTag('twitter:image', imageUrl);
       }
     }
+    
+    // Cleanup function to remove meta tags when component unmounts
+    return () => {
+      // No need to remove standard meta tags, but could reset OG tags if needed
+    };
   }, [post]);
+
+  // Helper function to set or create meta tags
+  const setOrCreateMetaTag = (property: string, content: string) => {
+    let meta = document.querySelector(`meta[property="${property}"]`);
+    if (meta) {
+      meta.setAttribute('content', content);
+    } else {
+      meta = document.createElement('meta');
+      meta.setAttribute('property', property);
+      meta.setAttribute('content', content);
+      document.head.appendChild(meta);
+    }
+  };
 
   const handleRetry = () => {
     refetch();
