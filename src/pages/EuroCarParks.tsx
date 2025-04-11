@@ -5,10 +5,20 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
 import { euroCarParksFaqs } from "@/data/faqs";
+import { Helmet } from "react-helmet-async";
 
 const EuroCarParks = () => {
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Appeal Your Euro Car Parks Fine for Free with Resolvo</title>
+        <meta name="description" content="Got a Euro Car Parks parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
+        <meta property="og:title" content="Appeal Your Euro Car Parks Fine for Free with Resolvo" />
+        <meta property="og:description" content="Got a Euro Car Parks parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
+        <meta name="twitter:title" content="Appeal Your Euro Car Parks Fine for Free with Resolvo" />
+        <meta name="twitter:description" content="Got a Euro Car Parks parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
+      </Helmet>
+      
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">
