@@ -1,8 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
-import Home from "./pages/Home";
-import Faq from "./pages/Faq";
+import Home from "./pages/Index";
+import Faq from "./pages/FAQ";
 import EuroCarParks from "./pages/EuroCarParks";
 import EastKentNHS from "./pages/EastKentNHS";
 import AllParkingServices from "./pages/AllParkingServices";
@@ -11,7 +11,7 @@ import ANPR365 from "./pages/ANPR365";
 import ParkingCollectionServices from "./pages/ParkingCollectionServices";
 import APCOAParking from "./pages/APCOAParking";
 import UKParkingAdministration from "./pages/UKParkingAdministration";
-import UKPC from "./pages/UKPC";
+import UKPC from "./pages/UKParkingControl";
 import UKParkingEnforcement from "./pages/UKParkingEnforcement";
 import NSL from "./pages/NSL";
 import OCS from "./pages/OCS";
@@ -53,7 +53,7 @@ import PrivateParkingSolutions from "./pages/PrivateParkingSolutions";
 import DorsetCountyHospital from "./pages/DorsetCountyHospital";
 import ProfessionalParkingSolutions from "./pages/ProfessionalParkingSolutions";
 import CanterburyChristChurchUniversity from "./pages/CanterburyChristChurchUniversity";
-import AppealHelp from "./pages/AppealHelp";
+import AppealHelp from "./pages/AppealHub";
 
 const App = () => {
   const router = createBrowserRouter([
