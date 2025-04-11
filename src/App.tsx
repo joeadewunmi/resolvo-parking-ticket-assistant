@@ -1,4 +1,3 @@
-
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
@@ -57,12 +56,15 @@ import ProfessionalParkingSolutions from "./pages/ProfessionalParkingSolutions";
 import CanterburyChristChurchUniversity from "./pages/CanterburyChristChurchUniversity";
 import AppealHelp from "./pages/AppealHub";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Layout />,
+      errorElement: <ErrorBoundary><Layout /></ErrorBoundary>,
       children: [
         {
           index: true,
@@ -75,6 +77,14 @@ const App = () => {
         {
           path: "blog",
           element: <Blog />,
+        },
+        {
+          path: "blog/:slug",
+          element: <BlogPost />,
+        },
+        {
+          path: "appeal-help",
+          element: <AppealHelp />,
         },
         {
           path: "euro-car-parks",
@@ -275,10 +285,6 @@ const App = () => {
         {
           path: "canterbury-christ-church-university",
           element: <CanterburyChristChurchUniversity />,
-        },
-        {
-          path: "appeal-help",
-          element: <AppealHelp />,
         },
       ],
     },
