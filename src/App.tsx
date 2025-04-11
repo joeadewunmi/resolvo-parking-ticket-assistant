@@ -1,6 +1,8 @@
+
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
+import Layout from "./components/layout/Layout";
 import Home from "./pages/Index";
 import Faq from "./pages/FAQ";
 import EuroCarParks from "./pages/EuroCarParks";
@@ -54,220 +56,231 @@ import DorsetCountyHospital from "./pages/DorsetCountyHospital";
 import ProfessionalParkingSolutions from "./pages/ProfessionalParkingSolutions";
 import CanterburyChristChurchUniversity from "./pages/CanterburyChristChurchUniversity";
 import AppealHelp from "./pages/AppealHub";
+import Blog from "./pages/Blog";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/faq",
-      element: <Faq />,
-    },
-    {
-      path: "/euro-car-parks",
-      element: <EuroCarParks />,
-    },
-    {
-      path: "/east-kent-nhs",
-      element: <EastKentNHS />,
-    },
-    {
-      path: "/all-parking-services",
-      element: <AllParkingServices />,
-    },
-    {
-      path: "/am-parking-services",
-      element: <AMParkingServices />,
-    },
-    {
-      path: "/anpr-365",
-      element: <ANPR365 />,
-    },
-    {
-      path: "/parking-collection-services",
-      element: <ParkingCollectionServices />,
-    },
-    {
-      path: "/apcoa-parking",
-      element: <APCOAParking />,
-    },
-    {
-      path: "/uk-parking-administration",
-      element: <UKParkingAdministration />,
-    },
-    {
-      path: "/ukpc",
-      element: <UKPC />,
-    },
-    {
-      path: "/uk-parking-enforcement",
-      element: <UKParkingEnforcement />,
-    },
-    {
-      path: "/nsl",
-      element: <NSL />,
-    },
-    {
-      path: "/ocs",
-      element: <OCS />,
-    },
-    {
-      path: "/nsgl",
-      element: <NSGL />,
-    },
-    {
-      path: "/pess",
-      element: <PESS />,
-    },
-    {
-      path: "/q-park",
-      element: <QPark />,
-    },
-    {
-      path: "/safe-duty",
-      element: <SafeDuty />,
-    },
-    {
-      path: "/parkmaven",
-      element: <ParkMaven />,
-    },
-    {
-      path: "/p4-parking",
-      element: <P4Parking />,
-    },
-    {
-      path: "/carparkers",
-      element: <Carparkers />,
-    },
-    {
-      path: "/parkingeye",
-      element: <ParkingEye />,
-    },
-    {
-      path: "/mk1-parking",
-      element: <MK1Parking />,
-    },
-    {
-      path: "/rcp-parking",
-      element: <RCPParking />,
-    },
-    {
-      path: "/rmc-parking",
-      element: <RMCParking />,
-    },
-    {
-      path: "/city-permits",
-      element: <CityPermits />,
-    },
-    {
-      path: "/premier-park",
-      element: <PremierPark />,
-    },
-    {
-      path: "/saba-parking",
-      element: <SabaParking />,
-    },
-    {
-      path: "/lodge-parking",
-      element: <LodgeParking />,
-    },
-    {
-      path: "/smart-parking",
-      element: <SmartParking />,
-    },
-    {
-      path: "/city-car-parks",
-      element: <CityCarParks />,
-    },
-    {
-      path: "/secure-a-space",
-      element: <SecureASpace />,
-    },
-    {
-      path: "/select-parking",
-      element: <SelectParking />,
-    },
-    {
-      path: "/spring-parking",
-      element: <SpringParking />,
-    },
-    {
-      path: "/minster-baywatch",
-      element: <MinsterBaywatch />,
-    },
-    {
-      path: "/car-park-services",
-      element: <CarParkServices />,
-    },
-    {
-      path: "/britannia-parking",
-      element: <BritanniaParking />,
-    },
-    {
-      path: "/civil-enforcement",
-      element: <CivilEnforcement />,
-    },
-    {
-      path: "/national-car-parks",
-      element: <NationalCarParks />,
-    },
-    {
-      path: "/elite-car-parking",
-      element: <EliteCarParking />,
-    },
-    {
-      path: "/met-parking-services",
-      element: <METParkingServices />,
-    },
-    {
-      path: "/comply-park-solutions",
-      element: <ComplyParkSolutions />,
-    },
-    {
-      path: "/observices-parking",
-      element: <ObservicesParking />,
-    },
-    {
-      path: "/rfc-car-park-management",
-      element: <RFCCarParkManagement />,
-    },
-    {
-      path: "/capital-car-park-control",
-      element: <CapitalCarParkControl />,
-    },
-    {
-      path: "/secure-parking-solutions",
-      element: <SecureParkingSolutions />,
-    },
-    {
-      path: "/shield-security-services",
-      element: <ShieldSecurityServices />,
-    },
-    {
-      path: "/parking-control-solutions",
-      element: <ParkingControlSolutions />,
-    },
-    {
-      path: "/private-parking-solutions",
-      element: <PrivateParkingSolutions />,
-    },
-    {
-      path: "/dorset-county-hospital",
-      element: <DorsetCountyHospital />,
-    },
-    {
-      path: "/professional-parking-solutions",
-      element: <ProfessionalParkingSolutions />,
-    },
-    {
-      path: "/canterbury-christ-church-university",
-      element: <CanterburyChristChurchUniversity />,
-    },
-    {
-      path: "/appeal-help",
-      element: <AppealHelp />,
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "faq",
+          element: <Faq />,
+        },
+        {
+          path: "blog",
+          element: <Blog />,
+        },
+        {
+          path: "euro-car-parks",
+          element: <EuroCarParks />,
+        },
+        {
+          path: "east-kent-nhs",
+          element: <EastKentNHS />,
+        },
+        {
+          path: "all-parking-services",
+          element: <AllParkingServices />,
+        },
+        {
+          path: "am-parking-services",
+          element: <AMParkingServices />,
+        },
+        {
+          path: "anpr-365",
+          element: <ANPR365 />,
+        },
+        {
+          path: "parking-collection-services",
+          element: <ParkingCollectionServices />,
+        },
+        {
+          path: "apcoa-parking",
+          element: <APCOAParking />,
+        },
+        {
+          path: "uk-parking-administration",
+          element: <UKParkingAdministration />,
+        },
+        {
+          path: "ukpc",
+          element: <UKPC />,
+        },
+        {
+          path: "uk-parking-enforcement",
+          element: <UKParkingEnforcement />,
+        },
+        {
+          path: "nsl",
+          element: <NSL />,
+        },
+        {
+          path: "ocs",
+          element: <OCS />,
+        },
+        {
+          path: "nsgl",
+          element: <NSGL />,
+        },
+        {
+          path: "pess",
+          element: <PESS />,
+        },
+        {
+          path: "q-park",
+          element: <QPark />,
+        },
+        {
+          path: "safe-duty",
+          element: <SafeDuty />,
+        },
+        {
+          path: "parkmaven",
+          element: <ParkMaven />,
+        },
+        {
+          path: "p4-parking",
+          element: <P4Parking />,
+        },
+        {
+          path: "carparkers",
+          element: <Carparkers />,
+        },
+        {
+          path: "parkingeye",
+          element: <ParkingEye />,
+        },
+        {
+          path: "mk1-parking",
+          element: <MK1Parking />,
+        },
+        {
+          path: "rcp-parking",
+          element: <RCPParking />,
+        },
+        {
+          path: "rmc-parking",
+          element: <RMCParking />,
+        },
+        {
+          path: "city-permits",
+          element: <CityPermits />,
+        },
+        {
+          path: "premier-park",
+          element: <PremierPark />,
+        },
+        {
+          path: "saba-parking",
+          element: <SabaParking />,
+        },
+        {
+          path: "lodge-parking",
+          element: <LodgeParking />,
+        },
+        {
+          path: "smart-parking",
+          element: <SmartParking />,
+        },
+        {
+          path: "city-car-parks",
+          element: <CityCarParks />,
+        },
+        {
+          path: "secure-a-space",
+          element: <SecureASpace />,
+        },
+        {
+          path: "select-parking",
+          element: <SelectParking />,
+        },
+        {
+          path: "spring-parking",
+          element: <SpringParking />,
+        },
+        {
+          path: "minster-baywatch",
+          element: <MinsterBaywatch />,
+        },
+        {
+          path: "car-park-services",
+          element: <CarParkServices />,
+        },
+        {
+          path: "britannia-parking",
+          element: <BritanniaParking />,
+        },
+        {
+          path: "civil-enforcement",
+          element: <CivilEnforcement />,
+        },
+        {
+          path: "national-car-parks",
+          element: <NationalCarParks />,
+        },
+        {
+          path: "elite-car-parking",
+          element: <EliteCarParking />,
+        },
+        {
+          path: "met-parking-services",
+          element: <METParkingServices />,
+        },
+        {
+          path: "comply-park-solutions",
+          element: <ComplyParkSolutions />,
+        },
+        {
+          path: "observices-parking",
+          element: <ObservicesParking />,
+        },
+        {
+          path: "rfc-car-park-management",
+          element: <RFCCarParkManagement />,
+        },
+        {
+          path: "capital-car-park-control",
+          element: <CapitalCarParkControl />,
+        },
+        {
+          path: "secure-parking-solutions",
+          element: <SecureParkingSolutions />,
+        },
+        {
+          path: "shield-security-services",
+          element: <ShieldSecurityServices />,
+        },
+        {
+          path: "parking-control-solutions",
+          element: <ParkingControlSolutions />,
+        },
+        {
+          path: "private-parking-solutions",
+          element: <PrivateParkingSolutions />,
+        },
+        {
+          path: "dorset-county-hospital",
+          element: <DorsetCountyHospital />,
+        },
+        {
+          path: "professional-parking-solutions",
+          element: <ProfessionalParkingSolutions />,
+        },
+        {
+          path: "canterbury-christ-church-university",
+          element: <CanterburyChristChurchUniversity />,
+        },
+        {
+          path: "appeal-help",
+          element: <AppealHelp />,
+        },
+      ],
     },
   ]);
 

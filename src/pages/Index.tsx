@@ -1,3 +1,4 @@
+
 import HeroSection from "@/components/home/HeroSection";
 import AppealSection from "@/components/home/AppealSection";
 import ProcessSection from "@/components/home/ProcessSection";
