@@ -1,16 +1,16 @@
-
 // @ts-nocheck
 const { defineConfig } = require('vite');
 const react = require('@vitejs/plugin-react');
 const path = require('path');
-// Use require for the plugin
-const viteSsgPlugin = require('./vite-ssg-plugin.js');
+// Import the plugin - use destructuring to avoid any naming issues in Netlify
+const ssgPlugin = require('./vite-ssg-plugin.js');
 
 // https://vitejs.dev/config/
 module.exports = defineConfig({
   plugins: [
     react(),
-    viteSsgPlugin(), // Use the plugin function directly
+    // Use the plugin with a clear name to avoid any "viteSsgPlugin2" confusion
+    ssgPlugin(),
   ],
   resolve: {
     alias: {

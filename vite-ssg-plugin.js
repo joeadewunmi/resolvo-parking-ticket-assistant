@@ -1,4 +1,3 @@
-
 /**
  * Custom Vite plugin for Static Site Generation (SSG)
  * This plugin ensures that the HTML content (including H1 tags) is included
@@ -10,7 +9,8 @@ const { createServer } = require('vite');
 const { renderToString } = require('react-dom/server');
 const React = require('react');
 
-function viteSsgPlugin() {
+// Define the plugin function
+const ssgPlugin = function() {
   return {
     name: 'vite-ssg-plugin',
     
@@ -67,6 +67,5 @@ function viteSsgPlugin() {
   };
 }
 
-// Proper CommonJS exports
-module.exports = viteSsgPlugin;
-module.exports.default = viteSsgPlugin;
+// Use cleaner export pattern that's more compatible with various environments
+module.exports = ssgPlugin;
