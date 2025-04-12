@@ -1,5 +1,6 @@
+
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, StaticRouter } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { routeConfig } from "./routes/routeConfig";
 
