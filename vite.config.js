@@ -1,15 +1,16 @@
 
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-// Import the plugin using namespace import pattern
-import * as viteSsgPlugin from './vite-ssg-plugin.js';
+// @ts-nocheck
+const { defineConfig } = require('vite');
+const react = require('@vitejs/plugin-react');
+const path = require('path');
+// Use require for the plugin
+const viteSsgPlugin = require('./vite-ssg-plugin.js');
 
 // https://vitejs.dev/config/
-export default defineConfig({
+module.exports = defineConfig({
   plugins: [
     react(),
-    viteSsgPlugin.default(), // Use the default export from the namespace import
+    viteSsgPlugin(), // Use the plugin function directly
   ],
   resolve: {
     alias: {

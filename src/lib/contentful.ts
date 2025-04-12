@@ -95,7 +95,7 @@ export const getBlogPostBySlug = async (
     // Not in cache, fetch from API
     const response = await contentfulClient.getEntries<BlogPostSkeleton>({
       content_type: 'blogPost',
-      'fields.slug': slug, // Fix: correct query format for Contentful
+      'fields.slug': slug, // Use correct query format
       limit: 1,
       include: 2,
     });

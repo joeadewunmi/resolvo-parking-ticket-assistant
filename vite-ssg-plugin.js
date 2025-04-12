@@ -67,7 +67,6 @@ function viteSsgPlugin() {
   };
 }
 
-// Make sure the CommonJS exports are correctly set up
-// The default export is the viteSsgPlugin function itself
-exports = module.exports = viteSsgPlugin;
+// Proper CommonJS exports
+module.exports = viteSsgPlugin;
 module.exports.default = viteSsgPlugin;
