@@ -3,14 +3,14 @@
  * This plugin ensures that the HTML content (including H1 tags) is included
  * in the initial HTML payload, making it visible to search engines without JavaScript.
  */
-const fs = require('fs');
-const path = require('path');
-const { createServer } = require('vite');
-const { renderToString } = require('react-dom/server');
-const React = require('react');
+import fs from 'fs';
+import path from 'path';
+import { createServer } from 'vite';
+import { renderToString } from 'react-dom/server';
+import React from 'react';
 
 // Define the plugin function
-const ssgPlugin = function() {
+export default function ssgPlugin() {
   return {
     name: 'vite-ssg-plugin',
     
@@ -38,7 +38,7 @@ const ssgPlugin = function() {
           console.log(`Generating static HTML for ${route}...`);
           
           // Get the output HTML file path
-          const outputDir = path.resolve(__dirname, 'dist');
+          const outputDir = path.resolve(process.cwd(), 'dist');
           const routePath = route === '/' ? '/index.html' : `${route}.html`;
           const htmlFilePath = path.join(outputDir, routePath);
           
@@ -66,6 +66,3 @@ const ssgPlugin = function() {
     }
   };
 }
-
-// Use cleaner export pattern that's more compatible with various environments
-module.exports = ssgPlugin;
