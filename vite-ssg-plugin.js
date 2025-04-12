@@ -10,7 +10,7 @@ const { createServer } = require('vite');
 const { renderToString } = require('react-dom/server');
 const React = require('react');
 
-async function viteSsgPlugin() {
+function viteSsgPlugin() {
   return {
     name: 'vite-ssg-plugin',
     
@@ -67,5 +67,6 @@ async function viteSsgPlugin() {
   };
 }
 
-// Use a named export for the main function
-exports.default = viteSsgPlugin;
+// Fix CommonJS export to work properly in ESM context
+module.exports = viteSsgPlugin;
+module.exports.default = viteSsgPlugin;
