@@ -4,7 +4,13 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
-import { Helmet } from "react-helmet-async";
+import { useLocation, useMatches } from "react-router-dom";
+
+interface RouteHandle {
+  title?: string;
+  description?: string;
+  h1?: string;
+}
 
 interface ParkingCompanyTemplateProps {
   companyName: string;
@@ -13,17 +19,14 @@ interface ParkingCompanyTemplateProps {
 }
 
 const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompanyTemplateProps) => {
+  const matches = useMatches();
+  const currentHandle = matches.find(match => match.handle)?.handle as RouteHandle | undefined;
+  
+  // Use the H1 from route metadata or fall back to the prop-based version
+  const h1Text = currentHandle?.h1 || `Appeal Your ${companyName} Fine`;
+  
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Appeal Your {companyName} Fine for Free with Resolvo</title>
-        <meta name="description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
-        <meta property="og:title" content={`Appeal Your ${companyName} Fine for Free with Resolvo`} />
-        <meta property="og:description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
-        <meta name="twitter:title" content={`Appeal Your ${companyName} Fine for Free with Resolvo`} />
-        <meta name="twitter:description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
-      </Helmet>
-
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">
@@ -36,8 +39,9 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
+              {/* This H1 is visible to users but also properly in the initial HTML now */}
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Appeal Your {companyName} Fine
+                {h1Text}
               </h1>
               <p className="mt-6 text-lg text-primary/80">
                 Got a {companyName} ticket? Get a free appeal written in minutes to help you fight it.
