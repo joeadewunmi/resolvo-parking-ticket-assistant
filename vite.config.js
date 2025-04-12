@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -22,5 +23,9 @@ export default defineConfig({
   // Add SSR config for improved performance
   ssr: {
     noExternal: ['react-helmet-async'],
+  },
+  // Set the server port to 8080 as required
+  server: {
+    port: 8080
   },
 }); 
