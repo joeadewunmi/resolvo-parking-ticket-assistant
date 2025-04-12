@@ -1,6 +1,6 @@
 
 import React from "react";
-import { createBrowserRouter, RouterProvider, StaticRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
 import { routeConfig } from "./routes/routeConfig";
 
@@ -17,9 +17,10 @@ const App = () => {
   if (typeof window === 'undefined') {
     return (
       <HelmetProvider>
-        <StaticRouter location="/404">
+        {/* For SSG, we'll handle StaticRouter differently */}
+        <div>
           {/* Router will be replaced with actual route content */}
-        </StaticRouter>
+        </div>
       </HelmetProvider>
     );
   }

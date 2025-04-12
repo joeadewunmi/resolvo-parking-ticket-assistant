@@ -2,13 +2,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import viteSsgPlugin from './vite-ssg-plugin';
+import * as viteSsgPluginModule from './vite-ssg-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    viteSsgPlugin(),
+    viteSsgPluginModule.default(), // Call the default export function
   ],
   resolve: {
     alias: {

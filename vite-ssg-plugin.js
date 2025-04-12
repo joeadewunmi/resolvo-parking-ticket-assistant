@@ -67,4 +67,5 @@ async function viteSsgPlugin() {
   };
 }
 
-module.exports = viteSsgPlugin;
+// Use a named export for the main function
+exports.default = viteSsgPlugin;
