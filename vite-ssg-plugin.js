@@ -67,6 +67,7 @@ function viteSsgPlugin() {
   };
 }
 
-// Fix CommonJS export to work properly in ESM context
-module.exports = viteSsgPlugin;
+// Make sure the CommonJS exports are correctly set up
+// The default export is the viteSsgPlugin function itself
+exports = module.exports = viteSsgPlugin;
 module.exports.default = viteSsgPlugin;
