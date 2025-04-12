@@ -46,9 +46,9 @@ export default function ssgPlugin() {
         '/leeds-teaching-hospitals',
       ];
 
-      // Read environment variable for batch size, default to 10
+      // Read environment variable for batch size, default to 5 (reduced from 10)
       const batchSizeEnv = process.env.SSG_BATCH_SIZE;
-      const batchSize = batchSizeEnv ? parseInt(batchSizeEnv, 10) : 10;
+      const batchSize = batchSizeEnv ? parseInt(batchSizeEnv, 10) : 5;
 
       // Read environment variable for batch number, default to 1
       const batchNumberEnv = process.env.SSG_BATCH_NUMBER;
