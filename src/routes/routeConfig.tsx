@@ -1,4 +1,3 @@
-
 import React from "react";
 import { mainRoutes } from "./mainRoutes";
 import { parkingCompaniesGroup1 } from "./parkingCompaniesRoutes";
@@ -8,8 +7,8 @@ import Layout from "../components/layout/Layout";
 import ErrorBoundary from "../components/ErrorBoundary";
 import SEOHead from "../components/SEOHead";
 
-// Enhanced route configuration with SEO metadata for SSG
-export const routeConfig = [
+// Route configuration with SEO metadata
+export const routes = [
   {
     path: "/",
     element: (
@@ -25,5 +24,9 @@ export const routeConfig = [
       ...parkingCompaniesGroup2,
       ...parkingCompaniesGroup3,
     ],
+    meta: {
+      title: 'Fight Your Parking Ticket for Free in Minutes',
+      description: 'Got a parking ticket? Challenge it in minutes with Resolvo—the free, fast, and simple way to create a personalized appeal letter.',
+    },
   },
 ];

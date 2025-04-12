@@ -1,9 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Injection Placeholder -->
+    <div id="seo-content"></div>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -34,7 +36,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-J9G6LX46ZK');
     </script>
   </head>
@@ -43,5 +44,14 @@
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- SEO Injection Script -->
+    <script>
+      fetch('/.netlify/functions/seo-injector')
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('seo-content').innerHTML = html;
+        });
+    </script>
   </body>
 </html>
