@@ -5,6 +5,7 @@ import Faq from "../pages/FAQ";
 import Blog from "../pages/Blog";
 import BlogPost from "../pages/BlogPost";
 import AppealHelp from "../pages/AppealHub";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 // Main site routes with enhanced SEO metadata
 export const mainRoutes = [
@@ -47,6 +48,15 @@ export const mainRoutes = [
       title: "Get Help With Your Parking Ticket Appeal | Resolvo",
       description: "Find the right help for your parking ticket appeal with Resolvo's free appeal letter generator for all UK parking companies.",
       h1: "Get Help With Your Parking Ticket Appeal"
+    }
+  },
+  {
+    path: "privacy-policy",
+    element: <PrivacyPolicy />,
+    handle: {
+      title: "Privacy Policy | Resolvo",
+      description: "Learn about how Resolvo handles your data and protects your privacy when using our parking ticket appeal services.",
+      h1: "Privacy Policy"
     }
   },
 ];
