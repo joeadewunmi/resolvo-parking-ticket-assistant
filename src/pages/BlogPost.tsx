@@ -1,14 +1,14 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { getBlogPostBySlug, getBlogPosts, renderRichText } from '@/lib/contentful';
 import { Entry, Asset } from 'contentful';
-import { BlogPostSkeleton, AuthorSkeleton } from '@/types/contentful';
 import { Loader2, ArrowLeft } from 'lucide-react';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import { Document } from '@contentful/rich-text-types';
+
+type BlogPostEntry = Entry<any>;
 
 type SafeContentfulImage = {
   url: string;
@@ -37,22 +37,24 @@ const getEstimatedReadTime = (content: Document): number => {
 };
 
 // Helper to safely get cover image data
-const getCoverImageData = (post: Entry<BlogPostSkeleton> | null): SafeContentfulImage => {
-  if (!post?.fields?.coverImage?.fields?.file?.url) {
+const getCoverImageData = (post: BlogPostEntry | null): SafeContentfulImage => {
+  const fields = post?.fields as Record<string, any>;
+  const imageAsset = fields?.featuredImage as { fields?: { file?: { url?: string }, title?: string } };
+  if (!imageAsset?.fields?.file?.url) {
     return null;
   }
   
   return {
-    url: post.fields.coverImage.fields.file.url,
-    title: post.fields.coverImage.fields.title || ''
+    url: imageAsset.fields.file.url,
+    title: imageAsset.fields.title || ''
   };
 };
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [post, setPost] = useState<Entry<BlogPostSkeleton> | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<Entry<BlogPostSkeleton>[]>([]);
+  const [post, setPost] = useState<BlogPostEntry | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPostEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -70,11 +72,11 @@ const BlogPost = () => {
         return;
       }
       
-      setPost(fetchedPost);
+      setPost(fetchedPost as BlogPostEntry);
 
       // Fetch related posts
       const allPosts = await getBlogPosts();
-      setRelatedPosts(allPosts);
+      setRelatedPosts(allPosts as BlogPostEntry[]);
       
       setLoading(false);
     };
@@ -82,12 +84,23 @@ const BlogPost = () => {
     fetchBlogPost();
   }, [slug, navigate]);
 
-  // Safe data access helpers
-  const getTitle = (): string => post?.fields?.title || 'Blog Post';
-  const getSubtitle = (): string => post?.fields?.excerpt || '';
-  const getDate = (): string => post?.fields?.date || '';
-  const getAuthor = (): Entry<AuthorSkeleton> | null => post?.fields?.author || null;
-  const getContent = (): Document | null => post?.fields?.content || null;
+  // Safe data access helpers with proper type casting
+  const fields = post?.fields as Record<string, any>;
+  const getTitle = (): string => (fields?.title as string) || 'Blog Post';
+  const getSubtitle = (): string => (fields?.seoDescription as string) || '';
+  const getDate = (): string => (fields?.publishDate as string) || '';
+  const getAuthor = () => {
+    const authorEntry = fields?.authorName as Entry<any>;
+    if (!authorEntry?.fields) return null;
+    return {
+      name: authorEntry.fields.authorName as string,
+      bio: authorEntry.fields.bio as string,
+      avatar: authorEntry.fields.avatar?.fields?.file?.url
+        ? `https:${authorEntry.fields.avatar.fields.file.url}`
+        : null
+    };
+  };
+  const getContent = (): Document | null => fields?.content as Document || null;
   const getCoverImage = (): SafeContentfulImage => getCoverImageData(post);
 
   // SEO data

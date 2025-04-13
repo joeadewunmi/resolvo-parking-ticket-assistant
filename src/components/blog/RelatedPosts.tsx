@@ -1,33 +1,34 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Asset, Entry } from 'contentful';
-import { BlogPostSkeleton } from '@/types/contentful';
+import { Entry } from 'contentful';
 import { formatDate } from '@/lib/utils';
 
+type BlogPostEntry = Entry<any>;
+
 type RelatedPostsProps = {
-  posts: Entry<BlogPostSkeleton>[];
+  posts: BlogPostEntry[];
   currentPostId: string;
 };
 
-const RelatedPostCard = ({ post }: { post: Entry<BlogPostSkeleton> }) => {
-  // Safely extract fields
-  const title = post?.fields?.title || '';
-  const slug = post?.fields?.slug || '';
-  const excerpt = post?.fields?.excerpt || '';
-  const date = post?.fields?.date || '';
+const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
+  // Safe access helpers using optional chaining and casting
+  const fields = post?.fields as Record<string, any>;
+  const title = (fields?.title as string) || '';
+  const slug = (fields?.slug as string) || '';
+  const excerpt = (fields?.excerpt as string) || '';
+  const date = (fields?.publishDate as string) || '';
   
-  // Safely extract cover image if available
-  const coverImage = post?.fields?.coverImage?.fields?.file?.url 
-    ? `https:${post.fields.coverImage.fields.file.url}`
+  // Safely extract featured image if available
+  const featuredImage = fields?.featuredImage?.fields?.file?.url
+    ? `https:${fields.featuredImage.fields.file.url}`
     : null;
     
   return (
     <Link to={`/blog/${slug}`} className="block group">
-      {coverImage && (
+      {featuredImage && (
         <div className="aspect-video w-full overflow-hidden rounded-lg mb-3">
           <img 
-            src={coverImage}
+            src={featuredImage}
             alt={title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
@@ -41,8 +42,15 @@ const RelatedPostCard = ({ post }: { post: Entry<BlogPostSkeleton> }) => {
 };
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
-  // Filter out the current post and limit to 3 related posts
-  const relatedPosts = posts.filter(post => post.sys.id !== currentPostId).slice(0, 3);
+  // Get the current post to access its related posts
+  const currentPost = posts.find(post => post.sys.id === currentPostId);
+  const relatedPostRefs = (currentPost?.fields?.relatedPosts || []) as Entry<any>[];
+  
+  // Get the full post objects for the related post references
+  const relatedPosts = relatedPostRefs
+    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
+    .filter(Boolean)
+    .slice(0, 3);
 
   if (relatedPosts.length === 0) {
     return null;

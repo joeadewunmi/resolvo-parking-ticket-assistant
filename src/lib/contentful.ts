@@ -3,16 +3,7 @@ import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-
-// Define BlogPostSkeleton interface to avoid module import errors
-interface BlogPostSkeleton {
-  title: string;
-  slug: string;
-  date: string;
-  content: any;
-  excerpt: string;
-  featuredImage?: any;
-}
+import { BlogPostSkeleton } from '@/types/contentful';
 
 // Initialize Contentful client
 const client = createClient({
@@ -58,11 +49,12 @@ export const richTextOptions = {
     },
     [INLINES.HYPERLINK]: (node: any, children: ReactNode) => {
       const { uri } = node.data;
-      const isInternal = uri.includes('mysite.com'); // Replace with your domain
+      const isInternal = uri.startsWith('/') || uri.includes(window.location.hostname);
       
       if (isInternal) {
+        const path = uri.startsWith('/') ? uri : new URL(uri).pathname;
         return React.createElement(Link, {
-          to: uri.replace('https://mysite.com', ''),
+          to: path,
           className: "text-primary hover:underline"
         }, children);
       } else {
@@ -82,7 +74,7 @@ export const getBlogPosts = async () => {
   try {
     const response = await client.getEntries({
       content_type: 'blogPost',
-      order: ['-fields.publishDate'],  // Use correct Field ID for sorting
+      order: ['-fields.date'],  // Use array format to fix type error
       include: 2, // Include linked entries up to 2 levels deep
     });
     return response.items as any[];

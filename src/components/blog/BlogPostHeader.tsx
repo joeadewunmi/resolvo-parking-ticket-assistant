@@ -1,14 +1,17 @@
-
 import React from 'react';
 import { formatDate } from '@/lib/utils';
-import { Entry } from 'contentful';
-import { AuthorSkeleton } from '@/types/contentful';
+
+type Author = {
+  name: string;
+  bio: string;
+  avatar: string | null;
+} | null;
 
 type BlogPostHeaderProps = {
   title: string;
   subtitle: string;
   date: string;
-  author: Entry<AuthorSkeleton> | null;
+  author: Author;
   coverImage: {
     url: string;
     title: string;
@@ -24,14 +27,6 @@ const BlogPostHeader = ({
   coverImage,
   estimatedReadTime
 }: BlogPostHeaderProps) => {
-  // Safely access author name
-  const authorName = author?.fields?.name || '';
-  
-  // Safely access author image
-  const authorImage = author?.fields?.image?.fields?.file?.url 
-    ? `https:${author?.fields?.image?.fields?.file?.url}`
-    : null;
-    
   // Safely access cover image
   const coverImageUrl = coverImage?.url ? `https:${coverImage.url}` : '';
   
@@ -55,15 +50,15 @@ const BlogPostHeader = ({
         
         <div className="flex items-center mb-8">
           {/* Author Image */}
-          {authorImage && (
+          {author?.avatar && (
             <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-              <img src={authorImage} alt={authorName} className="w-full h-full object-cover" />
+              <img src={author.avatar} alt={author.name} className="w-full h-full object-cover" />
             </div>
           )}
           
           {/* Meta Information */}
           <div>
-            {authorName && <p className="font-medium">{authorName}</p>}
+            {author?.name && <p className="font-medium">{author.name}</p>}
             <div className="flex items-center text-sm text-gray-500">
               <span>{formatDate(date)}</span>
               {estimatedReadTime && (

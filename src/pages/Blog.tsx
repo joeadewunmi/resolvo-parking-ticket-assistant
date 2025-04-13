@@ -18,6 +18,7 @@ const Blog = () => {
     const fetchPosts = async () => {
       // Fetch posts (getBlogPosts returns any[])
       const fetchedPosts = await getBlogPosts();
+      console.log('Blog post data:', fetchedPosts[0]?.fields); // Log the first post's fields
       setPosts(fetchedPosts || []); // Ensure posts is always an array
       setLoading(false);
     };
