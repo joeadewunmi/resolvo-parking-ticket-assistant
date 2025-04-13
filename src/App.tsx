@@ -4,60 +4,62 @@ import { HelmetProvider } from 'react-helmet-async';
 import Layout from "./components/layout/Layout";
 import Home from "./pages/Index";
 import Faq from "./pages/FAQ";
-import EuroCarParks from "./pages/EuroCarParks";
-import EastKentNHS from "./pages/EastKentNHS";
-import AllParkingServices from "./pages/AllParkingServices";
-import AMParkingServices from "./pages/AMParkingServices";
-import ANPR365 from "./pages/ANPR365";
-import ParkingCollectionServices from "./pages/ParkingCollectionServices";
-import APCOAParking from "./pages/APCOAParking";
-import UKParkingAdministration from "./pages/UKParkingAdministration";
-import UKPC from "./pages/UKParkingControl";
-import UKParkingEnforcement from "./pages/UKParkingEnforcement";
-import NSL from "./pages/NSL";
-import OCS from "./pages/OCS";
-import NSGL from "./pages/NSGL";
-import PESS from "./pages/PESS";
-import QPark from "./pages/QPark";
-import SafeDuty from "./pages/SafeDuty";
-import ParkMaven from "./pages/ParkMaven";
-import P4Parking from "./pages/P4Parking";
-import Carparkers from "./pages/Carparkers";
-import ParkingEye from "./pages/ParkingEye";
-import MK1Parking from "./pages/MK1Parking";
-import RCPParking from "./pages/RCPParking";
-import RMCParking from "./pages/RMCParking";
-import CityPermits from "./pages/CityPermits";
-import PremierPark from "./pages/PremierPark";
-import SabaParking from "./pages/SabaParking";
-import LodgeParking from "./pages/LodgeParking";
-import SmartParking from "./pages/SmartParking";
-import CityCarParks from "./pages/CityCarParks";
-import SecureASpace from "./pages/SecureASpace";
-import SelectParking from "./pages/SelectParking";
-import SpringParking from "./pages/SpringParking";
-import MinsterBaywatch from "./pages/MinsterBaywatch";
-import CarParkServices from "./pages/CarParkServices";
-import BritanniaParking from "./pages/BritanniaParking";
-import CivilEnforcement from "./pages/CivilEnforcement";
-import NationalCarParks from "./pages/NationalCarParks";
-import EliteCarParking from "./pages/EliteCarParking";
-import METParkingServices from "./pages/METParkingServices";
-import ComplyParkSolutions from "./pages/ComplyParkSolutions";
-import ObservicesParking from "./pages/ObservicesParking";
-import RFCCarParkManagement from "./pages/RFCCarParkManagement";
-import CapitalCarParkControl from "./pages/CapitalCarParkControl";
-import SecureParkingSolutions from "./pages/SecureParkingSolutions";
-import ShieldSecurityServices from "./pages/ShieldSecurityServices";
-import ParkingControlSolutions from "./pages/ParkingControlSolutions";
-import PrivateParkingSolutions from "./pages/PrivateParkingSolutions";
-import DorsetCountyHospital from "./pages/DorsetCountyHospital";
-import ProfessionalParkingSolutions from "./pages/ProfessionalParkingSolutions";
-import CanterburyChristChurchUniversity from "./pages/CanterburyChristChurchUniversity";
-import AppealHelp from "./pages/AppealHub";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import AppealHelp from "./pages/AppealHub";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+import EuroCarParks from "./pages/parking/EuroCarParks";
+import EastKentNHS from "./pages/parking/EastKentNHS";
+import AllParkingServices from "./pages/parking/AllParkingServices";
+import AMParkingServices from "./pages/parking/AMParkingServices";
+import ANPR365 from "./pages/parking/ANPR365";
+import ParkingCollectionServices from "./pages/parking/ParkingCollectionServices";
+import APCOAParking from "./pages/parking/APCOAParking";
+import UKParkingAdministration from "./pages/parking/UKParkingAdministration";
+import UKPC from "./pages/parking/UKPC";
+import UKParkingEnforcement from "./pages/parking/UKParkingEnforcement";
+import NSL from "./pages/parking/NSL";
+import OCS from "./pages/parking/OCS";
+import NSGL from "./pages/parking/NSGL";
+import PESS from "./pages/parking/PESS";
+import QPark from "./pages/parking/QPark";
+import SafeDuty from "./pages/parking/SafeDuty";
+import ParkMaven from "./pages/parking/ParkMaven";
+import P4Parking from "./pages/parking/P4Parking";
+import Carparkers from "./pages/parking/Carparkers";
+import ParkingEye from "./pages/parking/ParkingEye";
+import MK1Parking from "./pages/parking/MK1Parking";
+import RCPParking from "./pages/parking/RCPParking";
+import RMCParking from "./pages/parking/RMCParking";
+import CityPermits from "./pages/parking/CityPermits";
+import PremierPark from "./pages/parking/PremierPark";
+import SabaParking from "./pages/parking/SabaParking";
+import LodgeParking from "./pages/parking/LodgeParking";
+import SmartParking from "./pages/parking/SmartParking";
+import CityCarParks from "./pages/parking/CityCarParks";
+import SecureASpace from "./pages/parking/SecureASpace";
+import SelectParking from "./pages/parking/SelectParking";
+import SpringParking from "./pages/parking/SpringParking";
+import MinsterBaywatch from "./pages/parking/MinsterBaywatch";
+import CarParkServices from "./pages/parking/CarParkServices";
+import BritanniaParking from "./pages/parking/BritanniaParking";
+import CivilEnforcement from "./pages/parking/CivilEnforcement";
+import NationalCarParks from "./pages/parking/NationalCarParks";
+import EliteCarParking from "./pages/parking/EliteCarParking";
+import METParkingServices from "./pages/parking/METParkingServices";
+import ComplyParkSolutions from "./pages/parking/ComplyParkSolutions";
+import ObservicesParking from "./pages/parking/ObservicesParking";
+import RFCCarParkManagement from "./pages/parking/RFCCarParkManagement";
+import CapitalCarParkControl from "./pages/parking/CapitalCarParkControl";
+import SecureParkingSolutions from "./pages/parking/SecureParkingSolutions";
+import ShieldSecurityServices from "./pages/parking/ShieldSecurityServices";
+import ParkingControlSolutions from "./pages/parking/ParkingControlSolutions";
+import PrivateParkingSolutions from "./pages/parking/PrivateParkingSolutions";
+import DorsetCountyHospital from "./pages/parking/DorsetCountyHospital";
+import ProfessionalParkingSolutions from "./pages/parking/ProfessionalParkingSolutions";
+import CanterburyChristChurchUniversity from "./pages/parking/CanterburyChristChurchUniversity";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -85,6 +87,10 @@ const App = () => {
         {
           path: "appeal-help",
           element: <AppealHelp />,
+        },
+        {
+          path: "privacy-policy",
+          element: <PrivacyPolicy />,
         },
         {
           path: "euro-car-parks",

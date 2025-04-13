@@ -8,7 +8,7 @@ import ANPR365 from "../pages/parking/ANPR365";
 import ParkingCollectionServices from "../pages/parking/ParkingCollectionServices";
 import APCOAParking from "../pages/parking/APCOAParking";
 import UKParkingAdministration from "../pages/parking/UKParkingAdministration";
-import UKPC from "../pages/parking/UKParkingControl";
+import UKPC from "../pages/parking/UKPC";
 import UKParkingEnforcement from "../pages/parking/UKParkingEnforcement";
 import NSL from "../pages/parking/NSL";
 import OCS from "../pages/parking/OCS";
