@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
@@ -75,7 +76,6 @@ const Blog = () => {
   };
 
   if (isLoading) {
-    
     return (
       <div className="min-h-screen bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,7 +110,6 @@ const Blog = () => {
   }
 
   if (isError) {
-    
     return (
       <div className="min-h-screen bg-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

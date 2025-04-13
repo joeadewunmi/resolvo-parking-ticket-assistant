@@ -1,25 +1,14 @@
+
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
 import { faqs } from "@/data/faqs";
-import { Helmet } from "react-helmet-async";
 
 const APCOAParking = () => {
-  const pageTitle = "Appeal Your APCOA Parking Fine";
-  
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Appeal Your APCOA Parking Fine for Free with Resolvo</title>
-        <meta name="description" content="Got an APCOA Parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-        <meta property="og:title" content="Appeal Your APCOA Parking Fine for Free with Resolvo" />
-        <meta property="og:description" content="Got an APCOA Parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-        <meta name="twitter:title" content="Appeal Your APCOA Parking Fine for Free with Resolvo" />
-        <meta name="twitter:description" content="Got an APCOA Parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-      </Helmet>
-
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">
@@ -33,7 +22,7 @@ const APCOAParking = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                {pageTitle}
+                Appeal Your APCOA Parking Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
                 Got an APCOA Parking ticket? Get a free appeal written in minutes to help you fight it.
