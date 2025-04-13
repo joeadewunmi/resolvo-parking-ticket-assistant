@@ -1,21 +1,21 @@
 
 import React from "react";
-import SafeDuty from "../pages/SafeDuty";
-import ParkMaven from "../pages/ParkMaven";
-import P4Parking from "../pages/P4Parking";
-import Carparkers from "../pages/Carparkers";
-import ParkingEye from "../pages/ParkingEye";
-import MK1Parking from "../pages/MK1Parking";
-import RCPParking from "../pages/RCPParking";
-import RMCParking from "../pages/RMCParking";
-import CityPermits from "../pages/CityPermits";
-import PremierPark from "../pages/PremierPark";
-import SabaParking from "../pages/SabaParking";
-import LodgeParking from "../pages/LodgeParking";
-import SmartParking from "../pages/SmartParking";
-import CityCarParks from "../pages/CityCarParks";
-import SecureASpace from "../pages/SecureASpace";
-import SelectParking from "../pages/SelectParking";
+import SafeDuty from "../pages/parking/SafeDuty";
+import ParkMaven from "../pages/parking/ParkMaven";
+import P4Parking from "../pages/parking/P4Parking";
+import Carparkers from "../pages/parking/Carparkers";
+import ParkingEye from "../pages/parking/ParkingEye";
+import MK1Parking from "../pages/parking/MK1Parking";
+import RCPParking from "../pages/parking/RCPParking";
+import RMCParking from "../pages/parking/RMCParking";
+import CityPermits from "../pages/parking/CityPermits";
+import PremierPark from "../pages/parking/PremierPark";
+import SabaParking from "../pages/parking/SabaParking";
+import LodgeParking from "../pages/parking/LodgeParking";
+import SmartParking from "../pages/parking/SmartParking";
+import CityCarParks from "../pages/parking/CityCarParks";
+import SecureASpace from "../pages/parking/SecureASpace";
+import SelectParking from "../pages/parking/SelectParking";
 
 // Second group of parking companies
 export const parkingCompaniesGroup2 = [

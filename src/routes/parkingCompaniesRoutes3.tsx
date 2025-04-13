@@ -1,24 +1,24 @@
 
 import React from "react";
-import SpringParking from "../pages/SpringParking";
-import MinsterBaywatch from "../pages/MinsterBaywatch";
-import CarParkServices from "../pages/CarParkServices";
-import BritanniaParking from "../pages/BritanniaParking";
-import CivilEnforcement from "../pages/CivilEnforcement";
-import NationalCarParks from "../pages/NationalCarParks";
-import EliteCarParking from "../pages/EliteCarParking";
-import METParkingServices from "../pages/METParkingServices";
-import ComplyParkSolutions from "../pages/ComplyParkSolutions";
-import ObservicesParking from "../pages/ObservicesParking";
-import RFCCarParkManagement from "../pages/RFCCarParkManagement";
-import CapitalCarParkControl from "../pages/CapitalCarParkControl";
-import SecureParkingSolutions from "../pages/SecureParkingSolutions";
-import ShieldSecurityServices from "../pages/ShieldSecurityServices";
-import ParkingControlSolutions from "../pages/ParkingControlSolutions";
-import PrivateParkingSolutions from "../pages/PrivateParkingSolutions";
-import DorsetCountyHospital from "../pages/DorsetCountyHospital";
-import ProfessionalParkingSolutions from "../pages/ProfessionalParkingSolutions";
-import CanterburyChristChurchUniversity from "../pages/CanterburyChristChurchUniversity";
+import SpringParking from "../pages/parking/SpringParking";
+import MinsterBaywatch from "../pages/parking/MinsterBaywatch";
+import CarParkServices from "../pages/parking/CarParkServices";
+import BritanniaParking from "../pages/parking/BritanniaParking";
+import CivilEnforcement from "../pages/parking/CivilEnforcement";
+import NationalCarParks from "../pages/parking/NationalCarParks";
+import EliteCarParking from "../pages/parking/EliteCarParking";
+import METParkingServices from "../pages/parking/METParkingServices";
+import ComplyParkSolutions from "../pages/parking/ComplyParkSolutions";
+import ObservicesParking from "../pages/parking/ObservicesParking";
+import RFCCarParkManagement from "../pages/parking/RFCCarParkManagement";
+import CapitalCarParkControl from "../pages/parking/CapitalCarParkControl";
+import SecureParkingSolutions from "../pages/parking/SecureParkingSolutions";
+import ShieldSecurityServices from "../pages/parking/ShieldSecurityServices";
+import ParkingControlSolutions from "../pages/parking/ParkingControlSolutions";
+import PrivateParkingSolutions from "../pages/parking/PrivateParkingSolutions";
+import DorsetCountyHospital from "../pages/parking/DorsetCountyHospital";
+import ProfessionalParkingSolutions from "../pages/parking/ProfessionalParkingSolutions";
+import CanterburyChristChurchUniversity from "../pages/parking/CanterburyChristChurchUniversity";
 
 // Third group of parking companies
 export const parkingCompaniesGroup3 = [
