@@ -23,15 +23,28 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
 
   // Helper to safely get author name
   const getAuthorName = (author?: Entry<AuthorSkeleton>): string => {
-    return author?.fields?.authorName || '';
+    if (!author || !author.fields || !author.fields.authorName) {
+      return '';
+    }
+    return author.fields.authorName;
   };
 
   // Helper to safely get profile picture URL
   const getProfilePictureUrl = (author?: Entry<AuthorSkeleton>): string | undefined => {
-    if (!author?.fields?.profilePicture?.fields?.file?.url) {
+    if (!author || !author.fields || !author.fields.profilePicture || 
+        !author.fields.profilePicture.fields || !author.fields.profilePicture.fields.file ||
+        !author.fields.profilePicture.fields.file.url) {
       return undefined;
     }
     return `https:${author.fields.profilePicture.fields.file.url}`;
+  };
+
+  // Helper to safely get Twitter handle
+  const getTwitterHandle = (author?: Entry<AuthorSkeleton>): string | undefined => {
+    if (!author || !author.fields) {
+      return undefined;
+    }
+    return author.fields.twitter;
   };
 
   return (
@@ -50,7 +63,9 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
                   />
                 ) : (
                   <AvatarFallback>
-                    {getAuthorName(author) ? getAuthorName(author).substring(0, 2).toUpperCase() : 'AU'}
+                    {getAuthorName(author) 
+                      ? getAuthorName(author).substring(0, 2).toUpperCase() 
+                      : 'AU'}
                   </AvatarFallback>
                 )}
               </Avatar>
@@ -66,14 +81,14 @@ const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostH
           )}
         </div>
         
-        {author?.fields?.twitter && (
+        {author && getTwitterHandle(author) && (
           <a 
-            href={`https://twitter.com/${author.fields.twitter}`}
+            href={`https://twitter.com/${getTwitterHandle(author)}`}
             target="_blank" 
             rel="noopener noreferrer"
             className="text-blue-500 text-sm hover:underline"
           >
-            @{author.fields.twitter}
+            @{getTwitterHandle(author)}
           </a>
         )}
       </div>
