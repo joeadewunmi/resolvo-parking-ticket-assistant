@@ -1,230 +1,160 @@
-import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Entry } from 'contentful';
-import { BlogPostSkeleton, getBlogPostBySlug } from '@/lib/contentful';
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { getBlogPostBySlug, getBlogPosts, renderRichText } from '@/lib/contentful';
+import { Entry, Asset } from 'contentful';
+import { BlogPostSkeleton, AuthorSkeleton } from '@/types/contentful';
+import { Loader2, ArrowLeft } from 'lucide-react';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
-import BlogPostContent from '@/components/blog/BlogPostContent';
 import RelatedPosts from '@/components/blog/RelatedPosts';
-import BlogPostTags from '@/components/blog/BlogPostTags';
-import { Skeleton } from '@/components/ui/skeleton';
-import BlogPostAuthor from '@/components/blog/BlogPostAuthor';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
-import { RefreshCw, ArrowLeft } from 'lucide-react';
+import { Document } from '@contentful/rich-text-types';
+
+type SafeContentfulImage = {
+  url: string;
+  title: string;
+} | null;
+
+// Helper to get estimated read time
+const getEstimatedReadTime = (content: Document): number => {
+  if (!content) return 0;
+  
+  // Extract all text from rich text document
+  const extractTextFromNode = (node: any): string => {
+    if (node.nodeType === 'text') {
+      return node.value || '';
+    }
+    if (node.content) {
+      return node.content.map((childNode: any) => extractTextFromNode(childNode)).join(' ');
+    }
+    return '';
+  };
+  
+  const text = extractTextFromNode(content);
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+};
+
+// Helper to safely get cover image data
+const getCoverImageData = (post: Entry<BlogPostSkeleton> | null): SafeContentfulImage => {
+  if (!post?.fields?.coverImage?.fields?.file?.url) {
+    return null;
+  }
+  
+  return {
+    url: post.fields.coverImage.fields.file.url,
+    title: post.fields.coverImage.fields.title || ''
+  };
+};
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-
-  const { data: post, isLoading, error, refetch, isError } = useQuery<Entry<BlogPostSkeleton> | null>({
-    queryKey: ['blog-post', slug],
-    queryFn: async () => {
-      if (!slug) return null;
-      return getBlogPostBySlug(slug);
-    },
-    enabled: !!slug,
-    refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000, // 5 minutes (matches cache TTL)
-    retry: 2,
-  });
+  const [post, setPost] = useState<Entry<BlogPostSkeleton> | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<Entry<BlogPostSkeleton>[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (post && post.fields) {
-      // Set basic meta tags
-      const title = post.fields.seoTitle || post.fields.title || 'Blog Post';
-      const description = post.fields.seoDescription || '';
-      document.title = `${title} | Resolvo`;
-      
-      // Set description meta tag
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', description);
-      } else {
-        metaDescription = document.createElement('meta');
-        metaDescription.setAttribute('name', 'description');
-        metaDescription.setAttribute('content', description);
-        document.head.appendChild(metaDescription);
+    const fetchBlogPost = async () => {
+      if (!slug) {
+        navigate('/blog');
+        return;
       }
 
-      // Set Open Graph meta tags
-      setOrCreateMetaTag('og:title', title);
-      setOrCreateMetaTag('og:description', description);
-      setOrCreateMetaTag('og:type', 'article');
+      setLoading(true);
+      const fetchedPost = await getBlogPostBySlug(slug);
       
-      // Set Twitter card meta tags
-      setOrCreateMetaTag('twitter:card', 'summary_large_image');
-      setOrCreateMetaTag('twitter:title', title);
-      setOrCreateMetaTag('twitter:description', description);
-
-      // Set featured image as OG image if available
-      if (post.fields.featuredImage?.fields?.file?.url) {
-        const imageUrl = `https:${post.fields.featuredImage.fields.file.url}`;
-        setOrCreateMetaTag('og:image', imageUrl);
-        setOrCreateMetaTag('twitter:image', imageUrl);
+      if (!fetchedPost) {
+        navigate('/blog');
+        return;
       }
-    }
-    
-    // Cleanup function to remove meta tags when component unmounts
-    return () => {
-      // No need to remove standard meta tags, but could reset OG tags if needed
+      
+      setPost(fetchedPost);
+
+      // Fetch related posts
+      const allPosts = await getBlogPosts();
+      setRelatedPosts(allPosts);
+      
+      setLoading(false);
     };
-  }, [post]);
 
-  // Helper function to set or create meta tags
-  const setOrCreateMetaTag = (property: string, content: string) => {
-    let meta = document.querySelector(`meta[property="${property}"]`);
-    if (meta) {
-      meta.setAttribute('content', content);
-    } else {
-      meta = document.createElement('meta');
-      meta.setAttribute('property', property);
-      meta.setAttribute('content', content);
-      document.head.appendChild(meta);
-    }
-  };
+    fetchBlogPost();
+  }, [slug, navigate]);
 
-  const handleRetry = () => {
-    refetch();
-  };
+  // Safe data access helpers
+  const getTitle = (): string => post?.fields?.title || 'Blog Post';
+  const getSubtitle = (): string => post?.fields?.excerpt || '';
+  const getDate = (): string => post?.fields?.date || '';
+  const getAuthor = (): Entry<AuthorSkeleton> | null => post?.fields?.author || null;
+  const getContent = (): Document | null => post?.fields?.content || null;
+  const getCoverImage = (): SafeContentfulImage => getCoverImageData(post);
 
-  const handleBackToBlog = () => {
-    navigate('/blog');
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Skeleton className="h-10 w-3/4 mb-4" />
-          <div className="flex items-center mb-6">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="ml-4">
-              <Skeleton className="h-5 w-40 mb-1" />
-              <Skeleton className="h-4 w-24" />
-            </div>
-          </div>
-          <Skeleton className="w-full h-64 mb-8" />
-          <div className="space-y-4">
-            {[...Array(5)].map((_, index) => (
-              <Skeleton key={index} className="h-4 w-full" />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (isError || !post) {
-    return (
-      <div className="min-h-screen py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Alert className="mb-8 bg-red-50 border border-red-200">
-            <AlertTitle className="text-lg font-semibold text-red-700">
-              Post Not Found
-            </AlertTitle>
-            <AlertDescription className="text-red-600 mt-2">
-              We couldn't find the blog post you're looking for. It may have been removed or the URL might be incorrect.
-            </AlertDescription>
-          </Alert>
-          
-          <div className="flex gap-4 mt-6">
-            <Button 
-              onClick={handleBackToBlog} 
-              variant="secondary"
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Blog
-            </Button>
-            
-            <Button 
-              onClick={handleRetry} 
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              Try Again
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!post.fields) {
-    return (
-      <div className="min-h-screen py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Alert className="mb-8 bg-amber-50 border border-amber-200">
-            <AlertTitle className="text-lg font-semibold text-amber-700">
-              Post Content Not Available
-            </AlertTitle>
-            <AlertDescription className="text-amber-600 mt-2">
-              This post exists but its content couldn't be loaded correctly.
-            </AlertDescription>
-          </Alert>
-          
-          <Button 
-            onClick={handleBackToBlog} 
-            variant="secondary"
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Blog
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  // Safely extract fields with fallback values
-  const title = post.fields.title || '';
-  const publishDate = post.fields.publishDate;
-  const featuredImage = post.fields.featuredImage;
-  const content = post.fields.content;
-  
-  // Add proper type checking or default values
-  const tags = post.fields.tags || '';
-  const authorName = post.fields.authorName;
-  const relatedPost = Array.isArray(post.fields.relatedPost) ? post.fields.relatedPost : [];
-
-  // Ensure content is valid before rendering
-  const hasValidContent = content && content.nodeType && content.content;
+  // SEO data
+  const pageTitle = `${getTitle()} | Resolvo`;
+  const pageDescription = getSubtitle();
+  const coverImage = getCoverImage();
+  const coverImageUrl = coverImage ? `https:${coverImage.url}` : '';
 
   return (
-    <div className="min-h-screen py-12 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <Link 
-            to="/blog" 
-            className="flex items-center text-gray-600 hover:text-primary transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Blog
-          </Link>
-        </div>
-        
-        <BlogPostHeader
-          title={title}
-          publishDate={publishDate}
-          featuredImage={featuredImage}
-          author={authorName}
-        />
-        
-        {hasValidContent && <BlogPostContent content={content} />}
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        {coverImageUrl && <meta property="og:image" content={coverImageUrl} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        {coverImageUrl && <meta name="twitter:image" content={coverImageUrl} />}
+      </Helmet>
 
-        <BlogPostTags tags={tags} />
-        
-        {authorName && (
-          <BlogPostAuthor author={authorName} />
-        )}
+      <div className="min-h-screen bg-white py-12">
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          </div>
+        ) : post ? (
+          <>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Back Button */}
+              <button 
+                onClick={() => navigate('/blog')} 
+                className="inline-flex items-center mb-8 text-primary hover:text-primary/80 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1" />
+                <span>Back to Blog</span>
+              </button>
+              
+              {/* Blog Post Header */}
+              <BlogPostHeader
+                title={getTitle()}
+                subtitle={getSubtitle()}
+                date={getDate()}
+                author={getAuthor()}
+                coverImage={getCoverImage()}
+                estimatedReadTime={getContent() ? getEstimatedReadTime(getContent()!) : undefined}
+              />
 
-        {relatedPost && relatedPost.length > 0 && (
-          <RelatedPosts posts={relatedPost} />
+              {/* Blog Post Content */}
+              <div className="max-w-3xl mx-auto prose prose-lg prose-primary">
+                {renderRichText(getContent())}
+              </div>
+
+              {/* Related Posts */}
+              {relatedPosts.length > 0 && (
+                <RelatedPosts posts={relatedPosts} currentPostId={post.sys.id} />
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-20">
+            <p className="text-lg text-gray-600">Blog post not found.</p>
+          </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 

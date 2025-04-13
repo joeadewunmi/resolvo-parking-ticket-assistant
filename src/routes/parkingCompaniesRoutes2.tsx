@@ -14,8 +14,6 @@ import SabaParking from "../pages/parking/SabaParking";
 import LodgeParking from "../pages/parking/LodgeParking";
 import SmartParking from "../pages/parking/SmartParking";
 import CityCarParks from "../pages/parking/CityCarParks";
-import SecureASpace from "../pages/parking/SecureASpace";
-import SelectParking from "../pages/parking/SelectParking";
 
 // Second group of parking companies
 export const parkingCompaniesGroup2 = [
@@ -74,13 +72,5 @@ export const parkingCompaniesGroup2 = [
   {
     path: "city-car-parks",
     element: <CityCarParks />,
-  },
-  {
-    path: "secure-a-space",
-    element: <SecureASpace />,
-  },
-  {
-    path: "select-parking",
-    element: <SelectParking />,
   },
 ];

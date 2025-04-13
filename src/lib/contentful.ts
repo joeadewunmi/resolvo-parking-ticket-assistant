@@ -1,177 +1,104 @@
 
-import { createClient, Asset, Entry, EntrySkeletonType } from 'contentful';
-import { Document } from '@contentful/rich-text-types';
+import { createClient } from 'contentful';
+import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { BlogPostSkeleton } from '@/types/contentful';
+import { TypeBlogPostFields } from './types';
 
-// Define the blog post fields based on the actual Contentful model
-export interface BlogPostFields {
-  title: string;
-  slug: string;
-  publishDate: string;
-  featuredImage?: Asset; // Use SDK Asset type
-  content: Document;
-  relatedPost?: Entry<BlogPostSkeleton>[];
-  seoTitle?: string;
-  seoDescription?: string;
-  tags?: string; // Or string[] if changed in model
-  authorName?: Entry<AuthorSkeleton>;
-}
-
-// Define the author fields
-export interface AuthorFields {
-  authorName: string;
-  twitter?: string;
-  profilePicture?: Asset;
-}
-
-// Define the tag fields
-export interface TagFields {
-  tagName: string;
-  tagSlug: string;
-}
-
-// Create proper skeleton types for each content type
-export interface BlogPostSkeleton extends EntrySkeletonType {
-  contentTypeId: 'blogPost';
-  fields: BlogPostFields;
-}
-
-export interface AuthorSkeleton extends EntrySkeletonType {
-  contentTypeId: 'author';
-  fields: AuthorFields;
-}
-
-export interface TagSkeleton extends EntrySkeletonType {
-  contentTypeId: 'tag';
-  fields: TagFields;
-}
-
-// Cache implementation for Contentful data
-interface ContentfulCache {
-  blogPosts: {
-    all: Entry<BlogPostSkeleton>[] | null;
-    bySlug: Record<string, Entry<BlogPostSkeleton>>;
-    timestamp: number;
-  }
-}
-
-// Initialize cache
-const cache: ContentfulCache = {
-  blogPosts: {
-    all: null,
-    bySlug: {},
-    timestamp: 0
-  }
-};
-
-// Cache expiration time (5 minutes)
-const CACHE_TTL = 5 * 60 * 1000;
-
-// Check if cache is valid
-const isCacheValid = () => {
-  return cache.blogPosts.timestamp > 0 && 
-         (Date.now() - cache.blogPosts.timestamp) < CACHE_TTL;
-};
-
-// Contentful client setup
-const spaceId = 'fal2hauaxrft';
-const accessToken = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
-
-export const contentfulClient = createClient({
-  space: spaceId,
-  accessToken: accessToken,
+// Initialize Contentful client
+const client = createClient({
+  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || '',
+  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || '',
 });
 
-// Get a single blog post by slug with caching
-export const getBlogPostBySlug = async (
-  slug: string
-): Promise<Entry<BlogPostSkeleton> | null> => {
-  try {
-    // Check cache first
-    if (isCacheValid() && cache.blogPosts.bySlug[slug]) {
-      console.log('Using cached blog post for slug:', slug);
-      return cache.blogPosts.bySlug[slug];
-    }
-
-    // Not in cache, fetch from API
-    const response = await contentfulClient.getEntries<BlogPostSkeleton>({
-      content_type: 'blogPost',
-      'fields.slug': slug, // Query parameter format correctly using dot notation
-      include: 2,
-      limit: 1
-    });
-
-    const post = response.items[0] ?? null;
-    
-    // Update cache if post found
-    if (post) {
-      cache.blogPosts.bySlug[slug] = post;
-      cache.blogPosts.timestamp = Date.now();
-    }
-
-    return post;
-  } catch (error) {
-    console.error('Error fetching blog post by slug:', error);
-    // Return cached version if available, even if expired
-    if (cache.blogPosts.bySlug[slug]) {
-      console.log('Using expired cached blog post for slug:', slug);
-      return cache.blogPosts.bySlug[slug];
-    }
-    throw error;
-  }
+// Rich text options for rendering Contentful rich text
+export const richTextOptions = {
+  renderMark: {
+    [MARKS.BOLD]: (text: React.ReactNode) => <strong>{text}</strong>,
+    [MARKS.ITALIC]: (text: React.ReactNode) => <em>{text}</em>,
+    [MARKS.UNDERLINE]: (text: React.ReactNode) => <u>{text}</u>,
+    [MARKS.CODE]: (text: React.ReactNode) => <code className="px-1 py-0.5 bg-gray-100 rounded">{text}</code>,
+  },
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node: any, children: React.ReactNode) => <p className="mb-6">{children}</p>,
+    [BLOCKS.HEADING_1]: (node: any, children: React.ReactNode) => <h1 className="text-3xl font-bold mb-4 mt-8">{children}</h1>,
+    [BLOCKS.HEADING_2]: (node: any, children: React.ReactNode) => <h2 className="text-2xl font-bold mb-3 mt-6">{children}</h2>,
+    [BLOCKS.HEADING_3]: (node: any, children: React.ReactNode) => <h3 className="text-xl font-bold mb-2 mt-5">{children}</h3>,
+    [BLOCKS.HEADING_4]: (node: any, children: React.ReactNode) => <h4 className="text-lg font-bold mb-2 mt-4">{children}</h4>,
+    [BLOCKS.HEADING_5]: (node: any, children: React.ReactNode) => <h5 className="text-base font-bold mb-2 mt-3">{children}</h5>,
+    [BLOCKS.HEADING_6]: (node: any, children: React.ReactNode) => <h6 className="text-sm font-bold mb-2 mt-3">{children}</h6>,
+    [BLOCKS.UL_LIST]: (node: any, children: React.ReactNode) => <ul className="list-disc ml-6 mb-6">{children}</ul>,
+    [BLOCKS.OL_LIST]: (node: any, children: React.ReactNode) => <ol className="list-decimal ml-6 mb-6">{children}</ol>,
+    [BLOCKS.LIST_ITEM]: (node: any, children: React.ReactNode) => <li className="mb-1">{children}</li>,
+    [BLOCKS.QUOTE]: (node: any, children: React.ReactNode) => (
+      <blockquote className="border-l-4 border-primary pl-4 italic my-6">{children}</blockquote>
+    ),
+    [BLOCKS.HR]: () => <hr className="my-8 border-gray-200" />,
+    [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+      const { title, description, file } = node.data.target.fields;
+      const imageUrl = file?.url;
+      return imageUrl ? (
+        <div className="my-6">
+          <img
+            src={`https:${imageUrl}`}
+            alt={description || title}
+            className="rounded-lg max-w-full h-auto"
+          />
+          {title && <p className="text-sm text-gray-500 mt-2 text-center">{title}</p>}
+        </div>
+      ) : null;
+    },
+    [INLINES.HYPERLINK]: (node: any, children: React.ReactNode) => {
+      const { uri } = node.data;
+      const isInternal = uri.includes('mysite.com'); // Replace with your domain
+      
+      return isInternal ? (
+        <Link to={uri.replace('https://mysite.com', '')} className="text-primary hover:underline">
+          {children}
+        </Link>
+      ) : (
+        <a href={uri} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+          {children}
+        </a>
+      );
+    },
+  },
 };
 
-// Get all blog posts with caching
-export const getAllBlogPosts = async (): Promise<Entry<BlogPostSkeleton>[]> => {
+// Fetch all blog posts
+export const getBlogPosts = async () => {
   try {
-    // Check cache first
-    if (isCacheValid() && cache.blogPosts.all) {
-      console.log('Using cached blog posts list');
-      return cache.blogPosts.all;
-    }
-
-    // Not in cache, fetch from API
-    const response = await contentfulClient.getEntries<BlogPostSkeleton>({
+    const response = await client.getEntries<BlogPostSkeleton>({
       content_type: 'blogPost',
-      order: ['-sys.createdAt'],
+      order: '-fields.date',
+      include: 2, // Include linked entries up to 2 levels deep
     });
-
-    // Update cache
-    cache.blogPosts.all = response.items;
-    cache.blogPosts.timestamp = Date.now();
-    
-    // Also update individual post cache
-    response.items.forEach(post => {
-      if (post.fields && post.fields.slug) {
-        cache.blogPosts.bySlug[post.fields.slug] = post;
-      }
-    });
-
     return response.items;
   } catch (error) {
-    console.error('Error fetching all blog posts:', error);
-    // Return cached version if available, even if expired
-    if (cache.blogPosts.all) {
-      console.log('Using expired cached blog posts list');
-      return cache.blogPosts.all;
-    }
-    throw error;
+    console.error("Error fetching blog posts:", error);
+    return [];
   }
 };
 
-// Clear cache (useful for development or forced refreshes)
-export const clearContentfulCache = () => {
-  cache.blogPosts.all = null;
-  cache.blogPosts.bySlug = {};
-  cache.blogPosts.timestamp = 0;
-  console.log('Contentful cache cleared');
+// Fetch a single blog post by slug
+export const getBlogPostBySlug = async (slug: string) => {
+  try {
+    const response = await client.getEntries<BlogPostSkeleton>({
+      content_type: 'blogPost',
+      'fields.slug': slug,
+      include: 2,
+    });
+    return response.items[0] || null;
+  } catch (error) {
+    console.error(`Error fetching blog post with slug ${slug}:`, error);
+    return null;
+  }
 };
 
-// Add listener for popstate events to handle back button navigation
-if (typeof window !== 'undefined') {
-  window.addEventListener('popstate', () => {
-    // Update cache timestamp to ensure it's still considered valid
-    if (cache.blogPosts.timestamp > 0) {
-      cache.blogPosts.timestamp = Date.now();
-    }
-  });
-}
+// Function to render Contentful rich text to React components
+export const renderRichText = (richText: any) => {
+  if (!richText) return null;
+  return documentToReactComponents(richText, richTextOptions);
+};

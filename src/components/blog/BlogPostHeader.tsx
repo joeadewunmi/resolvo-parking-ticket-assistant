@@ -1,105 +1,81 @@
 
 import React from 'react';
-import { Asset, Entry } from 'contentful';
-import { format } from 'date-fns';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AuthorSkeleton } from '@/lib/contentful';
+import { formatDate } from '@/lib/utils';
+import { Entry } from 'contentful';
+import { AuthorSkeleton } from '@/types/contentful';
 
-interface BlogPostHeaderProps {
+type BlogPostHeaderProps = {
   title: string;
-  publishDate?: string;
-  featuredImage?: Asset;
-  author?: Entry<AuthorSkeleton>;
-}
+  subtitle: string;
+  date: string;
+  author: Entry<AuthorSkeleton> | null;
+  coverImage: {
+    url: string;
+    title: string;
+  } | null;
+  estimatedReadTime?: number;
+};
 
-const BlogPostHeader = ({ title, publishDate, featuredImage, author }: BlogPostHeaderProps) => {
-  // Helper to safely access nested properties
-  const getImageUrl = (asset?: Asset): string | undefined => {
-    if (!asset || !asset.fields || !asset.fields.file || !asset.fields.file.url) {
-      return undefined;
-    }
-    return `https:${asset.fields.file.url}`;
-  };
-
-  // Helper to safely get author name
-  const getAuthorName = (author?: Entry<AuthorSkeleton>): string => {
-    if (!author || !author.fields || !author.fields.authorName) {
-      return '';
-    }
-    return author.fields.authorName;
-  };
-
-  // Helper to safely get profile picture URL
-  const getProfilePictureUrl = (author?: Entry<AuthorSkeleton>): string | undefined => {
-    if (!author || !author.fields || !author.fields.profilePicture || 
-        !author.fields.profilePicture.fields || !author.fields.profilePicture.fields.file ||
-        !author.fields.profilePicture.fields.file.url) {
-      return undefined;
-    }
-    return `https:${author.fields.profilePicture.fields.file.url}`;
-  };
-
-  // Helper to safely get Twitter handle
-  const getTwitterHandle = (author?: Entry<AuthorSkeleton>): string | undefined => {
-    if (!author || !author.fields) {
-      return undefined;
-    }
-    return author.fields.twitter;
-  };
-
+const BlogPostHeader = ({
+  title,
+  subtitle,
+  date,
+  author,
+  coverImage,
+  estimatedReadTime
+}: BlogPostHeaderProps) => {
+  // Safely access author name
+  const authorName = author?.fields?.name || '';
+  
+  // Safely access author image
+  const authorImage = author?.fields?.image?.fields?.file?.url 
+    ? `https:${author?.fields?.image?.fields?.file?.url}`
+    : null;
+    
+  // Safely access cover image
+  const coverImageUrl = coverImage?.url ? `https:${coverImage.url}` : '';
+  
   return (
-    <div className="mb-8">
-      <h1 className="text-4xl font-bold mb-4">{title}</h1>
+    <div className="mb-10">
+      {/* Cover Image */}
+      {coverImageUrl && (
+        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] mb-8 rounded-lg overflow-hidden">
+          <img 
+            src={coverImageUrl} 
+            alt={coverImage?.title || title} 
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
       
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          {author && (
-            <div className="flex items-center">
-              <Avatar className="h-12 w-12">
-                {getProfilePictureUrl(author) ? (
-                  <AvatarImage 
-                    src={getProfilePictureUrl(author)}
-                    alt={getAuthorName(author)}
-                  />
-                ) : (
-                  <AvatarFallback>
-                    {getAuthorName(author) 
-                      ? getAuthorName(author).substring(0, 2).toUpperCase() 
-                      : 'AU'}
-                  </AvatarFallback>
-                )}
-              </Avatar>
-              <div className="ml-4">
-                <p className="font-medium">{getAuthorName(author)}</p>
-                {publishDate && (
-                  <p className="text-gray-500 text-sm">
-                    {format(new Date(publishDate), 'MMMM dd, yyyy')}
-                  </p>
-                )}
-              </div>
+      {/* Title and Meta */}
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+        {subtitle && <p className="text-xl text-gray-600 mb-6">{subtitle}</p>}
+        
+        <div className="flex items-center mb-8">
+          {/* Author Image */}
+          {authorImage && (
+            <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img src={authorImage} alt={authorName} className="w-full h-full object-cover" />
             </div>
           )}
+          
+          {/* Meta Information */}
+          <div>
+            {authorName && <p className="font-medium">{authorName}</p>}
+            <div className="flex items-center text-sm text-gray-500">
+              <span>{formatDate(date)}</span>
+              {estimatedReadTime && (
+                <>
+                  <span className="mx-2">•</span>
+                  <span>{estimatedReadTime} min read</span>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-        
-        {author && getTwitterHandle(author) && (
-          <a 
-            href={`https://twitter.com/${getTwitterHandle(author)}`}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-blue-500 text-sm hover:underline"
-          >
-            @{getTwitterHandle(author)}
-          </a>
-        )}
       </div>
-      
-      {featuredImage && getImageUrl(featuredImage) && (
-        <img
-          src={getImageUrl(featuredImage)}
-          alt={title}
-          className="w-full h-auto max-h-96 object-cover rounded-md mb-8"
-        />
-      )}
     </div>
   );
 };

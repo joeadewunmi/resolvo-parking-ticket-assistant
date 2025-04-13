@@ -1,3 +1,4 @@
+
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { HelmetProvider } from 'react-helmet-async';
@@ -10,6 +11,7 @@ import AppealHelp from "./pages/AppealHub";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
 
+// Import all parking company pages from the parking directory
 import EuroCarParks from "./pages/parking/EuroCarParks";
 import EastKentNHS from "./pages/parking/EastKentNHS";
 import AllParkingServices from "./pages/parking/AllParkingServices";
@@ -92,6 +94,7 @@ const App = () => {
           path: "privacy-policy",
           element: <PrivacyPolicy />,
         },
+        // All parking company routes
         {
           path: "euro-car-parks",
           element: <EuroCarParks />,
