@@ -1,4 +1,47 @@
+# Dynamic SEO proxy for ALL parking company pages
+# This wildcard pattern matches all common formats of parking company URLs
+[[redirects]]
+  from = "/*-parking*"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  
+[[redirects]]
+  from = "/*-park"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  
+[[redirects]]
+  from = "/park*"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
 
+# Individual company paths that don't follow the patterns above
+[[redirects]]
+  from = "/ukpc"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/nsl"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/nsgl"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  
+[[redirects]]
+  from = "/ocs"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  
+[[redirects]]
+  from = "/pess"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+# Default SPA fallback - this should be LAST
 [[redirects]]
   from = "/*"
   to = "/index.html"
