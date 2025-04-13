@@ -3,9 +3,9 @@ import React from 'react';
 import ParkingCompanyTemplate from '@/components/templates/ParkingCompanyTemplate';
 import { generateParkingCompanyFaqs } from '@/data/parkingCompanyFaqs';
 
-const AtlasEnforcement = () => {
-  const companyName = "Atlas Enforcement";
-  const companySlug = "atlas-enforcement";
+const NSGL = () => {
+  const companyName = "NSGL";
+  const companySlug = "nsgl";
   const faqs = generateParkingCompanyFaqs(companyName);
 
   return <ParkingCompanyTemplate 
@@ -15,4 +15,4 @@ const AtlasEnforcement = () => {
   />;
 };
 
-export default AtlasEnforcement;
+export default NSGL;

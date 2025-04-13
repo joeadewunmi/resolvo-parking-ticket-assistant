@@ -3,9 +3,9 @@ import React from 'react';
 import ParkingCompanyTemplate from '@/components/templates/ParkingCompanyTemplate';
 import { generateParkingCompanyFaqs } from '@/data/parkingCompanyFaqs';
 
-const WorkflowDynamics = () => {
-  const companyName = "Workflow Dynamics";
-  const companySlug = "workflow-dynamics";
+const UKParkingEnforcement = () => {
+  const companyName = "UK Parking Enforcement";
+  const companySlug = "uk-parking-enforcement";
   const faqs = generateParkingCompanyFaqs(companyName);
 
   return <ParkingCompanyTemplate 
@@ -15,4 +15,4 @@ const WorkflowDynamics = () => {
   />;
 };
 
-export default WorkflowDynamics;
+export default UKParkingEnforcement;

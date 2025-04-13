@@ -4,21 +4,11 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
-import { euroCarParksFaqs } from "@/data/faqs";
-import { Helmet } from "react-helmet-async";
+import { faqs } from "@/data/faqs";
 
-const ANPR365 = () => {
+const APCOAParking = () => {
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Appeal Your ANPR 365 Parking Fine for Free with Resolvo</title>
-        <meta name="description" content="Got a ANPR 365 parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-        <meta property="og:title" content="Appeal Your ANPR 365 Parking Fine for Free with Resolvo" />
-        <meta property="og:description" content="Got a ANPR 365 parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-        <meta name="twitter:title" content="Appeal Your ANPR 365 Parking Fine for Free with Resolvo" />
-        <meta name="twitter:description" content="Got a ANPR 365 parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back" />
-      </Helmet>
-
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">
@@ -32,10 +22,10 @@ const ANPR365 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Appeal Your ANPR 365 Parking Fine
+                Appeal Your APCOA Parking Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
-                Got an ANPR 365 ticket? Get a free appeal written in minutes to help you fight it.
+                Got an APCOA Parking ticket? Get a free appeal written in minutes to help you fight it.
               </p>
               <div className="mt-8">
                 <a
@@ -53,7 +43,7 @@ const ANPR365 = () => {
             <div className="block">
               <img 
                 src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
-                alt="Parking officer issuing a ticket from ANPR 365" 
+                alt="Parking officer issuing a ticket from APCOA Parking" 
                 className="w-full h-auto rounded-lg shadow-xl" 
               />
             </div>
@@ -82,10 +72,10 @@ const ANPR365 = () => {
                 Don't let a parking ticket ruin your day
               </h2>
               <p className="mt-4 text-lg text-gray-600">
-                ANPR 365 uses automated cameras to issue parking tickets. But many of them can be challenged if you know the rules.
+                APCOA Parking is one of the UK's largest parking operators. But many of their tickets can be challenged if you know the rules.
               </p>
               <p className="mt-4 text-lg text-gray-600">
-                Resolvo is trained on the latest UK parking laws, including the specific regulations that govern automated number plate recognition (ANPR) systems.
+                Resolvo is trained on the latest UK parking laws, including the rules APCOA Parking must follow as a member of the British Parking Association.
               </p>
               <div className="mt-8">
                 <a
@@ -106,7 +96,7 @@ const ANPR365 = () => {
       <div className="py-24 bg-[#FFD700]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
-            How to Appeal an ANPR 365 Fine in 3 Steps
+            How to Appeal an APCOA Parking Fine in 3 Steps
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-lg">
@@ -154,25 +144,23 @@ const ANPR365 = () => {
       <div className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
-            ANPR 365 Fine FAQs
+            APCOA Parking Fine FAQs
           </h2>
           <div className="space-y-6">
-            {euroCarParksFaqs.map((faq, index) => (
+            {faqs.slice(0, 5).map((faq, index) => (
               <div key={index} className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="font-bold text-lg mb-2">{faq.question.replace("Euro Car Parks", "ANPR 365")}</h3>
-                <p className="text-gray-600">{faq.answer.replace(/Euro Car Parks/g, "ANPR 365")}</p>
+                <h3 className="font-bold text-lg mb-2">{faq.question}</h3>
+                <p className="text-gray-600">{faq.answer}</p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <div className="flex flex-col md:flex-row justify-center gap-4">
-              <Link to="/faq" className="inline-flex items-center justify-center text-blue-600 hover:underline">
-                View all frequently asked questions
-              </Link>
-              <Link to="/appeal-hub" className="inline-flex items-center justify-center text-blue-600 hover:underline">
-                Appeal Hub
-              </Link>
-            </div>
+          <div className="text-center mt-12 flex flex-col gap-4">
+            <Link to="/faq" className="inline-flex items-center text-blue-600 hover:underline">
+              View all frequently asked questions
+            </Link>
+            <Link to="/appeal-help" className="inline-flex items-center text-blue-600 hover:underline">
+              Visit our Appeal Hub
+            </Link>
           </div>
         </div>
       </div>
@@ -180,4 +168,4 @@ const ANPR365 = () => {
   );
 };
 
-export default ANPR365;
+export default APCOAParking;

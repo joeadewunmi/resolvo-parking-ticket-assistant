@@ -3,9 +3,9 @@ import React from 'react';
 import ParkingCompanyTemplate from '@/components/templates/ParkingCompanyTemplate';
 import { generateParkingCompanyFaqs } from '@/data/parkingCompanyFaqs';
 
-const AzureParking = () => {
-  const companyName = "Azure Parking";
-  const companySlug = "azure-parking";
+const LodgeParking = () => {
+  const companyName = "Lodge Parking";
+  const companySlug = "lodge-parking";
   const faqs = generateParkingCompanyFaqs(companyName);
 
   return <ParkingCompanyTemplate 
@@ -15,4 +15,4 @@ const AzureParking = () => {
   />;
 };
 
-export default AzureParking;
+export default LodgeParking;

@@ -3,9 +3,9 @@ import React from 'react';
 import ParkingCompanyTemplate from '@/components/templates/ParkingCompanyTemplate';
 import { generateParkingCompanyFaqs } from '@/data/parkingCompanyFaqs';
 
-const UniversityOfEdinburgh = () => {
-  const companyName = "University of Edinburgh";
-  const companySlug = "university-of-edinburgh";
+const ANPR365 = () => {
+  const companyName = "ANPR 365";
+  const companySlug = "anpr-365";
   const faqs = generateParkingCompanyFaqs(companyName);
 
   return <ParkingCompanyTemplate 
@@ -15,4 +15,4 @@ const UniversityOfEdinburgh = () => {
   />;
 };
 
-export default UniversityOfEdinburgh;
+export default ANPR365;

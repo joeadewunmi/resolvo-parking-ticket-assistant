@@ -3,9 +3,9 @@ import React from 'react';
 import ParkingCompanyTemplate from '@/components/templates/ParkingCompanyTemplate';
 import { generateParkingCompanyFaqs } from '@/data/parkingCompanyFaqs';
 
-const BaySentrySolutions = () => {
-  const companyName = "Bay Sentry Solutions";
-  const companySlug = "bay-sentry-solutions";
+const DorsetCountyHospital = () => {
+  const companyName = "Dorset County Hospital Foundation Trust";
+  const companySlug = "dorset-county-hospital";
   const faqs = generateParkingCompanyFaqs(companyName);
 
   return <ParkingCompanyTemplate 
@@ -15,4 +15,4 @@ const BaySentrySolutions = () => {
   />;
 };
 
-export default BaySentrySolutions;
+export default DorsetCountyHospital;

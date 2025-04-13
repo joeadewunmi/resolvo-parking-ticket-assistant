@@ -5,18 +5,12 @@ import { parkingCompaniesGroup2 } from "./parkingCompaniesRoutes2";
 import { parkingCompaniesGroup3 } from "./parkingCompaniesRoutes3";
 import Layout from "../components/layout/Layout";
 import ErrorBoundary from "../components/ErrorBoundary";
-import SEOHead from "../components/SEOHead";
 
 // Route configuration with SEO metadata
-export const routes = [
+export const routeConfig = [
   {
     path: "/",
-    element: (
-      <>
-        <SEOHead />
-        <Layout />
-      </>
-    ),
+    element: <Layout />,
     errorElement: <ErrorBoundary><Layout /></ErrorBoundary>,
     children: [
       ...mainRoutes,
