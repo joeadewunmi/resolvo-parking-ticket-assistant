@@ -82,7 +82,7 @@ export const getBlogPosts = async () => {
   try {
     const response = await client.getEntries({
       content_type: 'blogPost',
-      order: ['-fields.date'],  // Use array format to fix type error
+      order: ['-fields.publishDate'],  // Use correct Field ID for sorting
       include: 2, // Include linked entries up to 2 levels deep
     });
     return response.items as any[];
