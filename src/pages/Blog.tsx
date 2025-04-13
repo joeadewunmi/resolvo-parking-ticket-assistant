@@ -1,37 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Entry } from 'contentful';
+import { Entry, Asset } from 'contentful';
 import { getBlogPosts } from '@/lib/contentful';
-import { BlogPostSkeleton } from '@/types/contentful';
 import { formatDate } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';
 import { Loader2 } from 'lucide-react';
 
+// Define the full Entry type using 'any' for fields for simpler access
+// This avoids complex typing issues but relies on careful access below
+type BlogPostEntry = Entry<any>;
+
 const Blog = () => {
-  const [posts, setPosts] = useState<Entry<BlogPostSkeleton>[]>([]);
+  const [posts, setPosts] = useState<BlogPostEntry[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      // Fetch posts (getBlogPosts returns any[])
       const fetchedPosts = await getBlogPosts();
-      setPosts(fetchedPosts);
+      setPosts(fetchedPosts || []); // Ensure posts is always an array
       setLoading(false);
     };
 
     fetchPosts();
   }, []);
 
-  // Safe access helpers
-  const getBlogTitle = (post: Entry<BlogPostSkeleton>) => post?.fields?.title || '';
-  const getBlogSlug = (post: Entry<BlogPostSkeleton>) => post?.fields?.slug || '';
-  const getBlogExcerpt = (post: Entry<BlogPostSkeleton>) => post?.fields?.excerpt || '';
-  const getBlogDate = (post: Entry<BlogPostSkeleton>) => post?.fields?.date || '';
-  const getBlogAuthor = (post: Entry<BlogPostSkeleton>) => post?.fields?.author?.fields?.name || '';
-  
-  // Safe image URL helper
-  const getBlogCoverImage = (post: Entry<BlogPostSkeleton>) => {
-    return post?.fields?.coverImage?.fields?.file?.url 
-      ? `https:${post.fields.coverImage.fields.file.url}`
+  // Safe access helpers using optional chaining and correct Field IDs
+  // Cast to expected type at the end for clarity
+  const getBlogTitle = (post: BlogPostEntry): string => (post?.fields?.title as string) || '';
+  const getBlogSlug = (post: BlogPostEntry): string => (post?.fields?.slug as string) || '';
+  const getBlogExcerpt = (post: BlogPostEntry): string => (post?.fields?.seoDescription as string) || ''; // Use seoDescription
+  const getBlogDate = (post: BlogPostEntry): string => (post?.fields?.publishDate as string) || ''; // Use publishDate
+  const getBlogAuthor = (post: BlogPostEntry): string => {
+    // Access nested field safely
+    const authorEntry = post?.fields?.authorName as Entry<any>; // Use blogPost's authorName reference field
+    // Access the 'authorName' field WITHIN the linked Author entry
+    return (authorEntry?.fields?.authorName as string) || ''; // Use the correct field ID from the Author model
+  };
+  const getBlogCoverImage = (post: BlogPostEntry): string => {
+    // Access nested asset fields safely
+    const imageAsset = post?.fields?.featuredImage as Asset; // Use featuredImage
+    return imageAsset?.fields?.file?.url
+      ? `https:${imageAsset.fields.file.url}`
       : '';
   };
 
