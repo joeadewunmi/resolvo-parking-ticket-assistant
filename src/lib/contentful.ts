@@ -5,6 +5,11 @@ import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { BlogPostSkeleton } from '@/types/contentful';
 
+// Separate render mark functions
+const renderBold = (text: ReactNode) => React.createElement("strong", {}, text);
+const renderItalic = (text: ReactNode) => React.createElement("em", {}, text);
+const renderUnderline = (text: ReactNode) => React.createElement("u", {}, text);
+
 // Initialize Contentful client
 const client = createClient({
   space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || '',
@@ -14,9 +19,9 @@ const client = createClient({
 // Rich text options for rendering Contentful rich text
 export const richTextOptions = {
   renderMark: {
-    [MARKS.BOLD]: (text: ReactNode) => React.createElement("strong", {}, text),
-    [MARKS.ITALIC]: (text: ReactNode) => React.createElement("em", {}, text),
-    [MARKS.UNDERLINE]: (text: ReactNode) => React.createElement("u", {}, text),
+    [MARKS.BOLD]: renderBold,
+    [MARKS.ITALIC]: renderItalic,
+    [MARKS.UNDERLINE]: renderUnderline,
     [MARKS.CODE]: (text: ReactNode) => React.createElement("code", { className: "px-1 py-0.5 bg-gray-100 rounded" }, text),
   },
   renderNode: {
