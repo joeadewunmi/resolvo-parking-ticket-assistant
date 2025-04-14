@@ -5,17 +5,12 @@ import { formatDate } from '@/lib/utils';
 
 type BlogPostEntry = Entry<any>;
 
-type RelatedPostsProps = {
-  posts: BlogPostEntry[];
-  currentPostId: string;
-};
-
 const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
   // Safe access helpers using optional chaining and casting
   const fields = post?.fields as Record<string, any>;
   const title = (fields?.title as string) || '';
   const slug = (fields?.slug as string) || '';
-  const excerpt = (fields?.excerpt as string) || '';
+  const excerpt = (fields?.seoDescription as string) || '';
   const date = (fields?.publishDate as string) || '';
   
   // Safely extract featured image if available
@@ -41,10 +36,15 @@ const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
   );
 };
 
+interface RelatedPostsProps {
+  posts: BlogPostEntry[];
+  currentPostId: string;
+}
+
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
   // Get the current post to access its related posts
   const currentPost = posts.find(post => post.sys.id === currentPostId);
-  const relatedPostRefs = (currentPost?.fields?.relatedPosts || []) as Entry<any>[];
+  const relatedPostRefs = (currentPost?.fields?.relatedPost || []) as Entry<any>[];
   
   // Get the full post objects for the related post references
   const relatedPosts = relatedPostRefs
@@ -52,19 +52,15 @@ const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
     .filter(Boolean)
     .slice(0, 3);
 
-  if (relatedPosts.length === 0) {
-    return null;
-  }
+  if (relatedPosts.length === 0) return null;
 
   return (
-    <div className="py-12 border-t border-gray-100">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8">Related Articles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {relatedPosts.map(post => (
-            <RelatedPostCard key={post.sys.id} post={post} />
-          ))}
-        </div>
+    <div className="mt-16 pt-8 border-t border-gray-200">
+      <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {relatedPosts.map(post => (
+          <RelatedPostCard key={post.sys.id} post={post} />
+        ))}
       </div>
     </div>
   );

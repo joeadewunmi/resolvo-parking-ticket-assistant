@@ -94,10 +94,12 @@ const BlogPost = () => {
     if (!authorEntry?.fields) return null;
     return {
       name: authorEntry.fields.authorName as string,
-      bio: authorEntry.fields.bio as string,
-      avatar: authorEntry.fields.avatar?.fields?.file?.url
-        ? `https:${authorEntry.fields.avatar.fields.file.url}`
-        : null
+      avatar: authorEntry.fields.ProfilePicture?.fields?.file?.url
+        ? `https:${authorEntry.fields.ProfilePicture.fields.file.url}`
+        : null,
+      socialLinks: {
+        twitter: authorEntry.fields.socialLinks as string
+      }
     };
   };
   const getContent = (): Document | null => fields?.content as Document || null;
