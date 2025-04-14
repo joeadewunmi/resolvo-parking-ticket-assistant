@@ -61,6 +61,17 @@ import PrivateParkingSolutions from "./pages/parking/PrivateParkingSolutions";
 import DorsetCountyHospital from "./pages/parking/DorsetCountyHospital";
 import ProfessionalParkingSolutions from "./pages/parking/ProfessionalParkingSolutions";
 import CanterburyChristChurchUniversity from "./pages/parking/CanterburyChristChurchUniversity";
+import AtlasEnforcement from "./pages/AtlasEnforcement";
+import EternityFireSecurity from "./pages/EternityFireSecurity";
+import KeyParkingUK from "./pages/KeyParkingUK";
+import AzureParking from "./pages/AzureParking";
+import BaySentrySolutions from "./pages/BaySentrySolutions";
+import WestfieldParking from "./pages/WestfieldParking";
+import TotalCarParks from "./pages/TotalCarParks";
+import TotalParkingSolutions from "./pages/TotalParkingSolutions";
+import UniversityOfEdinburgh from "./pages/UniversityOfEdinburgh";
+import UniversityOfKent from "./pages/UniversityOfKent";
+import WorkflowDynamics from "./pages/WorkflowDynamics";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -223,6 +234,14 @@ const App = () => {
           element: <SpringParking />,
         },
         {
+          path: "total-car-parks",
+          element: <TotalCarParks />,
+        },
+        {
+          path: "total-parking-solutions",
+          element: <TotalParkingSolutions />,
+        },
+        {
           path: "minster-baywatch",
           element: <MinsterBaywatch />,
         },
@@ -293,6 +312,42 @@ const App = () => {
         {
           path: "canterbury-christ-church-university",
           element: <CanterburyChristChurchUniversity />,
+        },
+        {
+          path: "atlas-enforcement",
+          element: <AtlasEnforcement />,
+        },
+        {
+          path: "azure-parking",
+          element: <AzureParking />,
+        },
+        {
+          path: "bay-sentry-solutions",
+          element: <BaySentrySolutions />,
+        },
+        {
+          path: "eternity-fire-security",
+          element: <EternityFireSecurity />,
+        },
+        {
+          path: "key-parking-uk",
+          element: <KeyParkingUK />,
+        },
+        {
+          path: "university-of-edinburgh",
+          element: <UniversityOfEdinburgh />,
+        },
+        {
+          path: "university-of-kent",
+          element: <UniversityOfKent />,
+        },
+        {
+          path: "westfield-parking",
+          element: <WestfieldParking />,
+        },
+        {
+          path: "workflow-dynamics",
+          element: <WorkflowDynamics />,
         },
       ],
     },
