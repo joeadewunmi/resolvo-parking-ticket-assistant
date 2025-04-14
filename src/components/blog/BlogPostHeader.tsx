@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatDate } from '@/lib/utils';
-import { Twitter, Linkedin, Globe } from 'lucide-react';
+import { Linkedin, Globe } from 'lucide-react';
 
 type Author = {
   name: string;
@@ -75,7 +75,11 @@ const BlogPostHeader = ({
                       rel="noopener noreferrer"
                       className="text-gray-500 hover:text-primary transition-colors"
                     >
-                      <Twitter className="w-4 h-4" />
+                      <img 
+                        src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
+                        alt="X (formerly Twitter)"
+                        className="w-4 h-4"
+                      />
                     </a>
                   )}
                   {author.socialLinks.linkedin && (

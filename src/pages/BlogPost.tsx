@@ -92,11 +92,16 @@ const BlogPost = () => {
   const getAuthor = () => {
     const authorEntry = fields?.authorName as Entry<any>;
     if (!authorEntry?.fields) return null;
+
+    // Ensure profilePicture is treated as an Asset before accessing its fields
+    const profilePictureAsset = authorEntry.fields.profilePicture as Asset | undefined;
+    const avatarUrl = profilePictureAsset?.fields?.file?.url
+      ? `https:${profilePictureAsset.fields.file.url}`
+      : null;
+
     return {
       name: authorEntry.fields.authorName as string,
-      avatar: authorEntry.fields.ProfilePicture?.fields?.file?.url
-        ? `https:${authorEntry.fields.ProfilePicture.fields.file.url}`
-        : null,
+      avatar: avatarUrl, // Use the safely extracted URL
       socialLinks: {
         twitter: authorEntry.fields.socialLinks as string
       }
