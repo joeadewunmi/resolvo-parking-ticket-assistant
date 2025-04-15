@@ -72,6 +72,16 @@ import TotalParkingSolutions from "./pages/TotalParkingSolutions";
 import UniversityOfEdinburgh from "./pages/UniversityOfEdinburgh";
 import UniversityOfKent from "./pages/UniversityOfKent";
 import WorkflowDynamics from "./pages/WorkflowDynamics";
+// Add imports for the missing pages (combined list)
+import FiscParkingSolutions from "./pages/FiscParkingSolutions";
+import FlashPark from "./pages/FlashPark";
+import GBPManagement from "./pages/GBPManagement";
+import GreenParking from "./pages/GreenParking";
+import HighviewParking from "./pages/HighviewParking";
+import HorizonParking from "./pages/HorizonParking";
+import JDParkingConsultants from "./pages/JDParkingConsultants";
+import LDKSecurityGroup from "./pages/LDKSecurityGroup";
+import LeedsTeachingHospitals from "./pages/LeedsTeachingHospitals";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -348,6 +358,43 @@ const App = () => {
         {
           path: "workflow-dynamics",
           element: <WorkflowDynamics />,
+        },
+        // Add routes for the missing pages (alphabetically)
+        {
+          path: "fisc-parking-solutions",
+          element: <FiscParkingSolutions />,
+        },
+        {
+          path: "flashpark",
+          element: <FlashPark />,
+        },
+        {
+          path: "gbp-management",
+          element: <GBPManagement />,
+        },
+        {
+          path: "green-parking",
+          element: <GreenParking />,
+        },
+        {
+          path: "highview-parking",
+          element: <HighviewParking />,
+        },
+        {
+          path: "horizon-parking",
+          element: <HorizonParking />,
+        },
+        {
+          path: "jd-parking-consultants",
+          element: <JDParkingConsultants />,
+        },
+        {
+          path: "ldk-security-group",
+          element: <LDKSecurityGroup />,
+        },
+        {
+          path: "leeds-teaching-hospitals",
+          element: <LeedsTeachingHospitals />,
         },
       ],
     },
