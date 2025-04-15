@@ -51,7 +51,7 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
                 >
                   Appeal now
                 </a>
-                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 800+ users </p>
+                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 900+ users </p>
                 <p className="mt-1 text-sm text-primary/70">Requires ChatGPT login</p>
               </div>
             </div>
