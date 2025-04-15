@@ -9,6 +9,7 @@ import BlogPost from "./pages/BlogPost";
 import AppealHelp from "./pages/AppealHub";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
+import NotFound from "./pages/NotFound";
 
 // Import all parking company pages from the parking directory
 import EuroCarParks from "./pages/parking/EuroCarParks";
@@ -395,6 +396,11 @@ const App = () => {
         {
           path: "leeds-teaching-hospitals",
           element: <LeedsTeachingHospitals />,
+        },
+        // Catch-all route - MUST BE LAST
+        {
+          path: "*", 
+          element: <NotFound />,
         },
       ],
     },
