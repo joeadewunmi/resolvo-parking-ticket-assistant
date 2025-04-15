@@ -121,6 +121,8 @@ const BlogPost = () => {
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
+        {/* Add canonical tag using the post's slug */}
+        {slug && <link rel="canonical" href={`https://resolvo.uk/blog/${slug}`} />}
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         {coverImageUrl && <meta property="og:image" content={coverImageUrl} />}

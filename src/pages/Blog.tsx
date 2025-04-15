@@ -51,6 +51,7 @@ const Blog = () => {
       <Helmet>
         <title>Blog | Resolvo</title>
         <meta name="description" content="Read our latest articles about parking fines, appeals, and more" />
+        <link rel="canonical" href="https://resolvo.uk/blog" />
       </Helmet>
 
       <div className="min-h-screen bg-white py-12 md:py-16 lg:py-20">
