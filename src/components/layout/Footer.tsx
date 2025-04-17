@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -114,6 +113,10 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-700">
           <p className="text-sm text-center">
             © {new Date().getFullYear()} Resolvo. All rights reserved.
+            <span className="mx-2">|</span>
+            <a href="https://sprunkid.com/" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+              Sprunkid
+            </a>
           </p>
         </div>
       </div>
