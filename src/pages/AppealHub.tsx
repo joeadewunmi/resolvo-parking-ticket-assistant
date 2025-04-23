@@ -1,7 +1,9 @@
 import React from 'react';
-import { Building } from 'lucide-react';
+import { Building, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import FAQSection from '@/components/home/FAQSection';
+import { Card, CardContent } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 // All parking companies with routes
 const parkingCompanies = [
@@ -86,40 +88,78 @@ const sortedCompanies = [...parkingCompanies].sort((a, b) =>
 );
 
 const AppealHub = () => {
+  // Group companies into categories for better organization
+  const chunkedCompanies = sortedCompanies.reduce((acc, company, index) => {
+    const chunkIndex = Math.floor(index / 15);
+    if (!acc[chunkIndex]) acc[chunkIndex] = [];
+    acc[chunkIndex].push(company);
+    return acc;
+  }, [] as typeof sortedCompanies[]);
+
   return (
-    <div className="min-h-screen bg-white py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Appeal Hub</h1>
-          <p className="text-xl text-gray-600">
-            Find the right appeal guide based on who issued your parking ticket
+    <article className="min-h-screen bg-background">
+      <Helmet>
+        <title>Parking Ticket Appeal Hub | Find Your Appeal Guide</title>
+        <meta name="description" content="Find the right appeal guide for your parking ticket. Expert guidance for appealing tickets from all major UK parking companies." />
+        <meta name="keywords" content="parking ticket appeal, parking fine appeal, PCN appeal guide, parking company appeals" />
+        <link rel="canonical" href="https://resolvo.uk/appeal-hub" />
+      </Helmet>
+
+      <div className="container mx-auto px-4 py-12 space-y-12">
+        {/* Hero Section */}
+        <header className="text-center max-w-3xl mx-auto mb-12">
+          <h1 className="text-4xl font-bold text-primary mb-4 tracking-tight">
+            Parking Ticket Appeal Hub
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            Find expert guidance for appealing your parking ticket based on the issuing company
           </p>
-        </div>
-        
-        <div className="space-y-10">
+        </header>
+
+        {/* Main Content */}
+        <main className="space-y-10">
           {/* Private Parking Companies Section */}
-          <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Building className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold text-primary">Appeal a Fine from a Private Parking Company</h2>
+          <section aria-labelledby="companies-heading">
+            <div className="flex items-center gap-3 mb-6">
+              <Building className="h-6 w-6 text-primary" aria-hidden="true" />
+              <h2 id="companies-heading" className="text-2xl font-bold text-primary">
+                Appeal Guides by Company
+              </h2>
             </div>
-            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
-              <ul className="space-y-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {sortedCompanies.map((company, index) => (
-                  <li key={index}>
-                    <Link to={company.path} className="text-blue-600 hover:underline flex items-center">
-                      <span>{company.name}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {chunkedCompanies.map((chunk, index) => (
+                <Card key={index} className="bg-card hover:shadow-lg transition-shadow duration-200">
+                  <CardContent className="p-6">
+                    <ul className="space-y-3">
+                      {chunk.map((company) => (
+                        <li key={company.name}>
+                          <Link
+                            to={company.path}
+                            className="group flex items-center text-foreground hover:text-primary transition-colors duration-200"
+                            title={`View appeal guide for ${company.name}`}
+                          >
+                            <span className="flex-1">{company.name}</span>
+                            <ArrowRight 
+                              className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" 
+                              aria-hidden="true"
+                            />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </section>
-          
+
           {/* Call to Action Section */}
-          <section className="text-center mt-12 bg-gray-50 p-8 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-bold text-primary mb-4">Start Your Appeal Today</h2>
-            <p className="text-lg mb-6">
+          <section aria-labelledby="cta-heading" className="bg-secondary/20 rounded-lg p-8 text-center">
+            <h2 id="cta-heading" className="text-2xl font-bold text-primary mb-4">
+              Start Your Appeal Today
+            </h2>
+            <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
               Don't see your specific parking enforcer? No problem!<br />
               Our AI can help with any type of parking ticket appeal.
             </p>
@@ -127,19 +167,21 @@ const AppealHub = () => {
               href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-8 py-4 rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-medium"
             >
-              Appeal now
+              Start Your Appeal
+              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
             </a>
           </section>
-          
+
           {/* FAQ Section */}
-          <div className="mt-12">
+          <section aria-labelledby="faq-heading" className="max-w-3xl mx-auto">
+            <h2 id="faq-heading" className="sr-only">Frequently Asked Questions</h2>
             <FAQSection limit={4} />
-          </div>
-        </div>
+          </section>
+        </main>
       </div>
-    </div>
+    </article>
   );
 };
 
