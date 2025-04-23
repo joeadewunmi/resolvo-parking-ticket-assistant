@@ -3,6 +3,7 @@ import { mainRoutes } from "./mainRoutes";
 import { parkingCompaniesGroup1 } from "./parkingCompaniesRoutes";
 import { parkingCompaniesGroup2 } from "./parkingCompaniesRoutes2";
 import { parkingCompaniesGroup3 } from "./parkingCompaniesRoutes3";
+import { councilRoutes } from "./councilRoutes";
 import Layout from "../components/layout/Layout";
 import ErrorBoundary from "../components/ErrorBoundary";
 
@@ -17,6 +18,7 @@ export const routeConfig = [
       ...parkingCompaniesGroup1,
       ...parkingCompaniesGroup2,
       ...parkingCompaniesGroup3,
+      ...councilRoutes,
     ],
     meta: {
       title: 'Fight Your Parking Ticket for Free in Minutes',

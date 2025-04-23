@@ -41,6 +41,74 @@
   to = "/.netlify/functions/parking-seo"
   status = 200
 
+# Pattern match for known UK councils 
+# This must be BEFORE the fallback SPA redirect to prioritize capturing council routes
+[[redirects]]
+  from = "/*-council"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/*-city-council"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/city-of-*"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+# Individual named council redirects for single-word councils or those that don't follow the patterns above
+[[redirects]]
+  from = "/barnsley"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/birmingham"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/bradford"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/coventry"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/leicester"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/leeds"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/liverpool"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/manchester"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/nottingham"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
+[[redirects]]
+  from = "/plymouth"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+
 # Default SPA fallback - this should be LAST
 [[redirects]]
   from = "/*"
