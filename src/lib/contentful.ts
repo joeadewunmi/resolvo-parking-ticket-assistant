@@ -5,11 +5,33 @@ import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { BlogPostSkeleton } from '@/types/contentful';
 
-// Initialize Contentful client
+// Default credentials for development (these will be ignored in production when real env vars are set)
+// These are not sensitive as they're only for development with sample data
+const DEV_SPACE_ID = 'fal2hauaxrft';
+const DEV_ACCESS_TOKEN = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
+
+// Debug logging for development environments
+const logEnvironmentInfo = () => {
+  const spaceId = import.meta.env.VITE_CONTENTFUL_SPACE_ID || '';
+  const accessToken = import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || '';
+  
+  if (!spaceId || !accessToken) {
+    console.warn('Contentful credentials missing from environment variables. Using fallback development credentials.');
+  } else {
+    console.log('Contentful credentials found in environment variables.');
+  }
+};
+
+// Initialize Contentful client with fallbacks
 const client = createClient({
-  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || '',
-  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || '',
+  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || DEV_SPACE_ID,
+  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
 });
+
+// Log environment info in non-production environments
+if (import.meta.env.DEV || import.meta.env.MODE === 'development') {
+  logEnvironmentInfo();
+}
 
 // Rich text options for rendering Contentful rich text
 export const richTextOptions = {
@@ -69,7 +91,7 @@ export const richTextOptions = {
   },
 };
 
-// Fetch all blog posts
+// Fetch all blog posts with better error handling
 export const getBlogPosts = async () => {
   try {
     const response = await client.getEntries({
@@ -80,11 +102,36 @@ export const getBlogPosts = async () => {
     return response.items as any[];
   } catch (error) {
     console.error("Error fetching blog posts:", error);
+    if (import.meta.env.DEV || import.meta.env.MODE === 'development') {
+      // Return mock data in development for better DX
+      return [
+        { 
+          sys: { id: 'dev-1' },
+          fields: {
+            title: 'Sample Blog Post',
+            slug: 'sample-blog-post',
+            publishDate: new Date().toISOString(),
+            excerpt: 'This is a sample blog post for development',
+            content: {
+              nodeType: 'document',
+              content: [
+                {
+                  nodeType: 'paragraph',
+                  content: [{ nodeType: 'text', value: 'Sample content - environment variables might be missing', marks: [] }],
+                  data: {}
+                }
+              ],
+              data: {}
+            }
+          }
+        }
+      ];
+    }
     return [];
   }
 };
 
-// Fetch a single blog post by slug
+// Fetch a single blog post by slug with better error handling
 export const getBlogPostBySlug = async (slug: string) => {
   try {
     const response = await client.getEntries({
@@ -95,6 +142,31 @@ export const getBlogPostBySlug = async (slug: string) => {
     return response.items[0] || null;
   } catch (error) {
     console.error(`Error fetching blog post with slug ${slug}:`, error);
+    if (import.meta.env.DEV || import.meta.env.MODE === 'development') {
+      // Return mock data in development for better DX
+      if (slug === 'sample-blog-post') {
+        return {
+          sys: { id: 'dev-1' },
+          fields: {
+            title: 'Sample Blog Post',
+            slug: 'sample-blog-post',
+            publishDate: new Date().toISOString(),
+            excerpt: 'This is a sample blog post for development',
+            content: {
+              nodeType: 'document',
+              content: [
+                {
+                  nodeType: 'paragraph',
+                  content: [{ nodeType: 'text', value: 'Sample content - environment variables might be missing', marks: [] }],
+                  data: {}
+                }
+              ],
+              data: {}
+            }
+          }
+        };
+      }
+    }
     return null;
   }
 };
