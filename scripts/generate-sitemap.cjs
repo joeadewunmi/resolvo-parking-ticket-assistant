@@ -3,57 +3,101 @@
 
 const fs = require('fs');
 const path = require('path');
+const contentful = require('contentful');
+const { councilNames } = require('./council-slugs');
 require('dotenv').config();
 
-// Dynamically import contentful only if needed
-let contentful;
-try {
-  contentful = require('contentful');
-} catch (error) {
-  console.warn('Contentful package not found. Will skip blog posts in sitemap.');
-}
+// Initialize Contentful client only if credentials are available
+const client = process.env.VITE_CONTENTFUL_SPACE_ID && process.env.VITE_CONTENTFUL_ACCESS_TOKEN
+  ? contentful.createClient({
+      space: process.env.VITE_CONTENTFUL_SPACE_ID,
+      accessToken: process.env.VITE_CONTENTFUL_ACCESS_TOKEN,
+    })
+  : null;
 
-// Try to import council names
-let councilNames = [];
-try {
-  const councilModule = require('./council-slugs');
-  councilNames = councilModule.councilNames || [];
-} catch (error) {
-  console.warn('Could not load council names. Will skip council routes in sitemap.');
-}
-
-// Initialize Contentful client only if credentials and package are available
-let client = null;
-const spaceId = process.env.VITE_CONTENTFUL_SPACE_ID || process.env.CONTENTFUL_SPACE_ID;
-const accessToken = process.env.VITE_CONTENTFUL_ACCESS_TOKEN || process.env.CONTENTFUL_ACCESS_TOKEN;
-
-if (contentful && spaceId && accessToken) {
-  try {
-    client = contentful.createClient({ space: spaceId, accessToken });
-    console.log('Contentful client initialized successfully.');
-  } catch (error) {
-    console.warn('Error initializing Contentful client:', error.message);
-  }
-} else {
-  console.warn('Skipping Contentful integration due to missing credentials or package.');
-}
-
-// Get static routes - these are always available
+// Get static routes
 const getStaticRoutes = () => [
   '/',
   '/faq',
   '/appeal-hub',
   '/privacy-policy',
-  '/blog'
+  '/blog',
+  // Parking company routes - CRITICAL FOR SEO
+  '/euro-car-parks',
+  '/ukpc',
+  '/uk-parking-administration',
+  '/uk-parking-enforcement',
+  '/east-kent-nhs',
+  '/all-parking-services',
+  '/am-parking-services',
+  '/anpr-365',
+  '/parking-collection-services',
+  '/apcoa-parking',
+  '/workflow-dynamics',
+  '/flashpark',
+  '/university-of-kent',
+  '/university-of-edinburgh',
+  '/total-parking-solutions',
+  '/total-car-parks',
+  '/spring-parking',
+  '/smart-parking',
+  '/shield-security-services',
+  '/select-parking',
+  '/secure-parking-solutions',
+  '/secure-a-space',
+  '/safe-duty',
+  '/saba-parking',
+  '/rmc-parking',
+  '/rfc-car-park-management',
+  '/rcp-parking',
+  '/q-park',
+  '/atlas-enforcement',
+  '/azure-parking',
+  '/bay-sentry-solutions',
+  '/britannia-parking',
+  '/canterbury-christ-church-university',
+  '/capital-car-park-control',
+  '/car-park-services',
+  '/carparkers',
+  '/city-car-parks',
+  '/city-permits',
+  '/civil-enforcement',
+  '/comply-park-solutions',
+  '/dorset-county-hospital',
+  '/westfield-parking',
+  '/elite-car-parking',
+  '/eternity-fire-security',
+  '/fisc-parking-solutions',
+  '/gbp-management',
+  '/green-parking',
+  '/highview-parking',
+  '/horizon-parking',
+  '/initial-parking',
+  '/jd-parking-consultants',
+  '/key-parking-uk',
+  '/ldk-security-group',
+  '/lodge-parking',
+  '/leeds-teaching-hospitals',
+  '/met-parking-services',
+  '/minster-baywatch',
+  '/mk1-parking',
+  '/national-car-parks',
+  '/nsgl',
+  '/nsl',
+  '/observices-parking',
+  '/ocs',
+  '/p4-parking',
+  '/parkingeye',
+  '/parking-control-solutions',
+  '/parkmaven',
+  '/premier-park',
+  '/private-parking-solutions',
+  '/professional-parking-solutions',
+  '/pess'
 ];
 
 // Get council routes
 const getCouncilRoutes = () => {
-  if (!councilNames.length) {
-    console.warn('No council names available. Skipping council routes.');
-    return [];
-  }
-
   const createSlug = (name) => {
     return name
       .toLowerCase()
@@ -62,48 +106,26 @@ const getCouncilRoutes = () => {
       .replace(/\s+/g, '-');
   };
 
-  console.log(`Generating ${councilNames.length} council routes for sitemap...`);
   return councilNames.map(name => `/${createSlug(name)}`);
 };
 
-// Get blog posts from Contentful with timeout and better error handling
+// Get blog posts from Contentful
 const getBlogPosts = async () => {
   if (!client) {
-    console.warn('Contentful client not available. Skipping blog posts in sitemap.');
+    console.warn('Contentful credentials not found. Skipping blog posts in sitemap.');
     return [];
   }
 
   try {
-    console.log('Fetching blog posts from Contentful...');
-    
-    // Create a promise with timeout
-    const fetchWithTimeout = new Promise(async (resolve, reject) => {
-      // Set 10 second timeout
-      const timeout = setTimeout(() => {
-        reject(new Error('Contentful API request timed out after 10 seconds'));
-      }, 10000);
-      
-      try {
-        const entries = await client.getEntries({
-          content_type: 'blogPost',
-          limit: 1000,
-          order: '-sys.createdAt'
-        });
-        
-        clearTimeout(timeout);
-        resolve(entries);
-      } catch (error) {
-        clearTimeout(timeout);
-        reject(error);
-      }
+    const entries = await client.getEntries({
+      content_type: 'blogPost',
+      limit: 1000,
+      order: '-sys.createdAt'
     });
-    
-    const entries = await fetchWithTimeout;
-    console.log(`Successfully fetched ${entries.items.length} blog posts for sitemap.`);
+
     return entries.items.map(post => `/blog/${post.fields.slug}`);
   } catch (error) {
-    console.error('Error fetching blog posts from Contentful:', error.message);
-    // Return empty array, don't let this error stop the whole process
+    console.error('Error fetching blog posts:', error);
     return [];
   }
 };
@@ -113,14 +135,17 @@ const generateSitemap = async () => {
   try {
     console.log('Starting sitemap generation...');
     const staticRoutes = getStaticRoutes();
-    const councilRoutes = getCouncilRoutes();
+    console.log(`Added ${staticRoutes.length} static routes to sitemap`);
     
-    // Don't let blog posts failure stop the whole process
+    const councilRoutes = getCouncilRoutes();
+    console.log(`Added ${councilRoutes.length} council routes to sitemap`);
+    
     let blogPosts = [];
     try {
       blogPosts = await getBlogPosts();
+      console.log(`Added ${blogPosts.length} blog posts to sitemap`);
     } catch (error) {
-      console.error('Error getting blog posts, continuing with empty blog posts list:', error.message);
+      console.error('Error getting blog posts, continuing with empty blog posts list');
     }
 
     const allRoutes = [
@@ -129,7 +154,7 @@ const generateSitemap = async () => {
       ...blogPosts
     ];
 
-    console.log(`Generating sitemap with ${allRoutes.length} total routes...`);
+    console.log(`Total sitemap URLs: ${allRoutes.length}`);
     const domain = 'https://resolvo.uk';
     const today = new Date().toISOString().split('T')[0];
 
@@ -153,6 +178,10 @@ const generateSitemap = async () => {
       } else if (route === '/appeal-hub') {
         priority = 0.9;
         changefreq = 'weekly';
+      } else if (route.startsWith('/uk') || route.includes('parking')) {
+        // Parking company pages are important for SEO
+        priority = 0.9;
+        changefreq = 'weekly';
       }
 
       xml += '  <url>\n';
@@ -167,7 +196,7 @@ const generateSitemap = async () => {
     return xml;
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    // Create a minimal sitemap with just the homepage in case of errors
+    // Create a minimal sitemap with just the homepage and critical pages
     const domain = 'https://resolvo.uk';
     const today = new Date().toISOString().split('T')[0];
     
@@ -178,6 +207,19 @@ const generateSitemap = async () => {
     xml += `    <lastmod>${today}</lastmod>\n`;
     xml += '    <changefreq>weekly</changefreq>\n';
     xml += '    <priority>1.0</priority>\n';
+    xml += '  </url>\n';
+    // Always include critical parking pages even in fallback
+    xml += '  <url>\n';
+    xml += `    <loc>${domain}/ukpc</loc>\n`;
+    xml += `    <lastmod>${today}</lastmod>\n`;
+    xml += '    <changefreq>weekly</changefreq>\n';
+    xml += '    <priority>0.9</priority>\n';
+    xml += '  </url>\n';
+    xml += '  <url>\n';
+    xml += `    <loc>${domain}/euro-car-parks</loc>\n`;
+    xml += `    <lastmod>${today}</lastmod>\n`;
+    xml += '    <changefreq>weekly</changefreq>\n';
+    xml += '    <priority>0.9</priority>\n';
     xml += '  </url>\n';
     xml += '</urlset>';
     
