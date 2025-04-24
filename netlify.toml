@@ -1,17 +1,17 @@
 # Dynamic SEO proxy for ALL parking company pages
 # This wildcard pattern matches all common formats of parking company URLs
 [[redirects]]
-  from = "/*-parking*"
+  from = "/*-parking"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  
+
 [[redirects]]
-  from = "/*-park"
+  from = "/*-car-park"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  
+
 [[redirects]]
-  from = "/park*"
+  from = "/*-car-parks"
   to = "/.netlify/functions/parking-seo"
   status = 200
 
@@ -109,7 +109,15 @@
   to = "/.netlify/functions/council-seo"
   status = 200
 
-# Default SPA fallback - this should be LAST
+# Council pages redirects - must come before the catch-all
+[[redirects]]
+  from = "/:councilSlug"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  force = false
+  conditions = {Path = "/:councilSlug"}
+
+# SPA catch-all route
 [[redirects]]
   from = "/*"
   to = "/index.html"
