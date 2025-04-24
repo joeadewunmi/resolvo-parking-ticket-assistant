@@ -17,7 +17,6 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
       <Helmet>
         <title>Appeal Your {councilName} Parking Fine for Free Using Resolvo</title>
         <meta name="description" content={`Got a ${councilName} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`} />
-        <link rel="canonical" href={`https://resolvo.uk/${councilSlug}`} />
         <meta property="og:title" content={`Appeal Your ${councilName} Parking Fine for Free Using Resolvo`} />
         <meta property="og:description" content={`Got a ${councilName} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`} />
         <meta name="twitter:title" content={`Appeal Your ${councilName} Parking Fine for Free Using Resolvo`} />
@@ -37,7 +36,7 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h1 className="text-4xl tracking-tight font-extrabold text-primary sm:text-5xl md:text-6xl">
-                Appeal Your {councilName} Parking Fine
+                Fight Your Unfair {councilName} Parking Fine
               </h1>
               <p className="mt-6 text-lg text-primary/80">
                 Got a {councilName} ticket? Get a free appeal written in minutes to help you fight it.
