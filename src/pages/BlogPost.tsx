@@ -116,6 +116,32 @@ const BlogPost = () => {
   const coverImage = getCoverImage();
   const coverImageUrl = coverImage ? `https:${coverImage.url}` : '';
 
+  // Schema.org structured data
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": getTitle(),
+    "description": getSubtitle(),
+    "image": coverImageUrl,
+    "datePublished": post?.fields.publishDate,
+    "author": {
+      "@type": "Person",
+      "name": post?.fields.authorName?.fields.name || "Resolvo"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Resolvo",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://resolvo.uk/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://resolvo.uk/blog/${slug}`
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -130,6 +156,9 @@ const BlogPost = () => {
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
         {coverImageUrl && <meta name="twitter:image" content={coverImageUrl} />}
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-white py-12">
