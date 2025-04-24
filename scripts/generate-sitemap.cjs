@@ -231,17 +231,10 @@ const generateSitemap = async () => {
 // Determine if we're running on Netlify
 const isNetlify = !!process.env.NETLIFY;
 
-// Get output directory - handle both local and Netlify paths
+// Get output directory - always write to public since we're running before the build
 const getOutputDirectory = () => {
-  if (isNetlify) {
-    // On Netlify, we need to write to the publish directory
-    // which should be /opt/build/repo/dist/
-    const publishDir = process.env.PUBLISH_DIR || '/opt/build/repo/dist';
-    return publishDir;
-  } else {
-    // Locally, we write to the public directory
-    return path.join(__dirname, '../public');
-  }
+  // Always write to the public directory since the build process will copy it to dist
+  return path.join(__dirname, '../public');
 };
 
 // Main execution
