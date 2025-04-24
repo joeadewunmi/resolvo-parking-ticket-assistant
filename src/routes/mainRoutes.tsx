@@ -1,10 +1,10 @@
-
 import React from "react";
 import Home from "../pages/Index";
 import Faq from "../pages/FAQ";
 import Blog from "../pages/Blog";
 import BlogPost from "../pages/BlogPost";
 import AppealHelp from "../pages/AppealHub";
+import CouncilAppealHub from "../pages/CouncilAppealHub";
 
 // Main site routes
 export const mainRoutes = [
@@ -27,5 +27,9 @@ export const mainRoutes = [
   {
     path: "appeal-help",
     element: <AppealHelp />,
+  },
+  {
+    path: "council-appeal-hub",
+    element: <CouncilAppealHub />,
   },
 ];

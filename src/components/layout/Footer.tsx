@@ -48,17 +48,17 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/appeal-help" className="text-sm hover:text-accent">
-                  All Appeal Guides
+                  Appeal Hub
+                </Link>
+              </li>
+              <li>
+                <Link to="/council-appeal-hub" className="text-sm hover:text-accent">
+                  Council PCN Appeals
                 </Link>
               </li>
               <li>
                 <Link to="/appeal-help" className="text-sm hover:text-accent">
                   Private Company Appeals
-                </Link>
-              </li>
-              <li>
-                <Link to="/appeal-help" className="text-sm hover:text-accent">
-                  Council PCN Appeals
                 </Link>
               </li>
             </ul>
