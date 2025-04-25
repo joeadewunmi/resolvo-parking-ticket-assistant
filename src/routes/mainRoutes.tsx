@@ -35,7 +35,7 @@ export const mainRoutes = [
     element: <CouncilAppealHub />,
   },
   {
-    path: "council-pcn-appeal",
+    path: "council-pcn-appeal-hub",
     element: <CouncilPCNAppealHub />,
   },
 ];

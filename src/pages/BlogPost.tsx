@@ -1,211 +1,170 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { getBlogPostBySlug, getBlogPosts, renderRichText } from '@/lib/contentful';
-import { Entry, Asset } from 'contentful';
-import { Loader2, ArrowLeft } from 'lucide-react';
-import BlogPostHeader from '@/components/blog/BlogPostHeader';
-import RelatedPosts from '@/components/blog/RelatedPosts';
-import { Document } from '@contentful/rich-text-types';
 
-type BlogPostEntry = Entry<any>;
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getClient } from "../lib/contentful";
+import { BlogPostType, PostMetaType } from "../types/contentful";
+import { Helmet } from "react-helmet-async";
+import BlogPostHeader from "../components/blog/BlogPostHeader";
+import BlogPostContent from "../components/blog/BlogPostContent";
+import BlogPostAuthor from "../components/blog/BlogPostAuthor";
+import BlogPostTags from "../components/blog/BlogPostTags";
+import RelatedPosts from "../components/blog/RelatedPosts";
 
-type SafeContentfulImage = {
-  url: string;
-  title: string;
-} | null;
-
-// Helper to get estimated read time
-const getEstimatedReadTime = (content: Document): number => {
-  if (!content) return 0;
-  
-  // Extract all text from rich text document
-  const extractTextFromNode = (node: any): string => {
-    if (node.nodeType === 'text') {
-      return node.value || '';
-    }
-    if (node.content) {
-      return node.content.map((childNode: any) => extractTextFromNode(childNode)).join(' ');
-    }
-    return '';
-  };
-  
-  const text = extractTextFromNode(content);
-  const wordsPerMinute = 200;
-  const words = text.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
-};
-
-// Helper to safely get cover image data
-const getCoverImageData = (post: BlogPostEntry | null): SafeContentfulImage => {
-  const fields = post?.fields as Record<string, any>;
-  const imageAsset = fields?.featuredImage as { fields?: { file?: { url?: string }, title?: string } };
-  if (!imageAsset?.fields?.file?.url) {
-    return null;
+// Type-check the image field properly
+const getImageUrl = (image: any) => {
+  if (!image) return null;
+  // Check if it's a contentful Asset with fields
+  if (image.fields && image.fields.file) {
+    return `https:${image.fields.file.url}`;
   }
-  
-  return {
-    url: imageAsset.fields.file.url,
-    title: imageAsset.fields.title || ''
-  };
+  // Handle other potential formats
+  return null;
 };
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
-  const [post, setPost] = useState<BlogPostEntry | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<BlogPostEntry[]>([]);
+  const [post, setPost] = useState<BlogPostType | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<PostMetaType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBlogPost = async () => {
-      if (!slug) {
-        navigate('/blog');
-        return;
-      }
+    const fetchPost = async () => {
+      if (!slug) return;
 
-      setLoading(true);
-      const fetchedPost = await getBlogPostBySlug(slug);
-      
-      if (!fetchedPost) {
-        navigate('/blog');
-        return;
-      }
-      
-      setPost(fetchedPost as BlogPostEntry);
+      try {
+        setLoading(true);
+        const client = getClient();
+        
+        // Fetch the blog post
+        const response = await client.getEntries({
+          content_type: "blogPost",
+          "fields.slug": slug,
+          include: 2, // Include linked entries (like author)
+        });
 
-      // Fetch related posts
-      const allPosts = await getBlogPosts();
-      setRelatedPosts(allPosts as BlogPostEntry[]);
-      
-      setLoading(false);
-    };
+        if (response.items.length === 0) {
+          setError("Post not found");
+          setLoading(false);
+          return;
+        }
 
-    fetchBlogPost();
-  }, [slug, navigate]);
+        const postData = response.items[0];
+        setPost(postData as unknown as BlogPostType);
 
-  // Safe data access helpers with proper type casting
-  const fields = post?.fields as Record<string, any>;
-  const getTitle = (): string => (fields?.title as string) || 'Blog Post';
-  const getSubtitle = (): string => (fields?.seoDescription as string) || '';
-  const getDate = (): string => (fields?.publishDate as string) || '';
-  const getAuthor = () => {
-    const authorEntry = fields?.authorName as Entry<any>;
-    if (!authorEntry?.fields) return null;
+        // Fetch related posts (posts with similar tags)
+        if (postData.fields.tags) {
+          const tagsQuery = postData.fields.tags
+            .map((tag: string) => `"${tag}"`)
+            .join(",");
+          
+          const relatedResponse = await client.getEntries({
+            content_type: "blogPost",
+            "fields.slug[ne]": slug, // Exclude current post
+            "fields.tags[in]": tagsQuery,
+            limit: 3,
+            order: "-fields.publishDate",
+          });
 
-    // Ensure profilePicture is treated as an Asset before accessing its fields
-    const profilePictureAsset = authorEntry.fields.profilePicture as Asset | undefined;
-    const avatarUrl = profilePictureAsset?.fields?.file?.url
-      ? `https:${profilePictureAsset.fields.file.url}`
-      : null;
-
-    return {
-      name: authorEntry.fields.authorName as string,
-      avatar: avatarUrl, // Use the safely extracted URL
-      socialLinks: {
-        twitter: authorEntry.fields.socialLinks as string
+          setRelatedPosts(relatedResponse.items as unknown as PostMetaType[]);
+        }
+      } catch (err) {
+        console.error("Error fetching blog post:", err);
+        setError("Error fetching blog post");
+      } finally {
+        setLoading(false);
       }
     };
-  };
-  const getContent = (): Document | null => fields?.content as Document || null;
-  const getCoverImage = (): SafeContentfulImage => getCoverImageData(post);
 
-  // SEO data
-  const pageTitle = `${getTitle()} | Resolvo`;
-  const pageDescription = getSubtitle();
-  const coverImage = getCoverImage();
-  const coverImageUrl = coverImage ? `https:${coverImage.url}` : '';
+    fetchPost();
+    // Reset state when slug changes
+    return () => {
+      setPost(null);
+      setRelatedPosts([]);
+      setError(null);
+    };
+  }, [slug]);
 
-  // Schema.org structured data
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": getTitle(),
-    "description": getSubtitle(),
-    "image": coverImageUrl,
-    "datePublished": post?.fields.publishDate,
-    "author": {
-      "@type": "Person",
-      "name": post?.fields.authorName?.fields.name || "Resolvo"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Resolvo",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://resolvo.uk/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://resolvo.uk/blog/${slug}`
-    }
-  };
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-xl">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !post) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-3xl font-bold text-red-600 mb-4">
+            {error || "Post not found"}
+          </h1>
+          <p className="mb-8">
+            The blog post you're looking for couldn't be found.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const {
+    title,
+    subtitle,
+    author,
+    publishDate,
+    featuredImage,
+    content,
+    tags,
+  } = post.fields;
+
+  const imageUrl = getImageUrl(featuredImage);
 
   return (
-    <>
+    <article className="min-h-screen bg-background">
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        {/* Add canonical tag using the post's slug */}
-        {slug && <link rel="canonical" href={`https://resolvo.uk/blog/${slug}`} />}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
-        {coverImageUrl && <meta property="og:image" content={coverImageUrl} />}
+        <title>{title} | Resolvo Blog</title>
+        <meta name="description" content={subtitle || ""} />
+        {tags && <meta name="keywords" content={tags.join(", ")} />}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={subtitle || ""} />
+        {imageUrl && <meta property="og:image" content={imageUrl} />}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={pageDescription} />
-        {coverImageUrl && <meta name="twitter:image" content={coverImageUrl} />}
-        <script type="application/ld+json">
-          {JSON.stringify(schemaData)}
-        </script>
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={subtitle || ""} />
+        {imageUrl && <meta name="twitter:image" content={imageUrl} />}
       </Helmet>
 
-      <div className="min-h-screen bg-white py-12">
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="h-10 w-10 animate-spin text-primary" />
-          </div>
-        ) : post ? (
-          <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              {/* Back Button */}
-              <button 
-                onClick={() => navigate('/blog')} 
-                className="inline-flex items-center mb-8 text-primary hover:text-primary/80 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                <span>Back to Blog</span>
-              </button>
-              
-              {/* Blog Post Header */}
-              <BlogPostHeader
-                title={getTitle()}
-                subtitle={getSubtitle()}
-                date={getDate()}
-                author={getAuthor()}
-                coverImage={getCoverImage()}
-                estimatedReadTime={getContent() ? getEstimatedReadTime(getContent()!) : undefined}
-              />
-
-              {/* Blog Post Content */}
-              <div className="max-w-3xl mx-auto prose prose-lg prose-primary">
-                {renderRichText(getContent())}
-              </div>
-
-              {/* Related Posts */}
-              {relatedPosts.length > 0 && (
-                <RelatedPosts posts={relatedPosts} currentPostId={post.sys.id} />
-              )}
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          <BlogPostHeader 
+            title={title} 
+            subtitle={subtitle} 
+            publishDate={publishDate} 
+            featuredImage={featuredImage}
+          />
+          
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="md:col-span-3">
+              <BlogPostContent content={content} />
             </div>
-          </>
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-lg text-gray-600">Blog post not found.</p>
+            
+            <aside className="space-y-8">
+              {author && <BlogPostAuthor author={author} />}
+              {tags && tags.length > 0 && <BlogPostTags tags={tags} />}
+            </aside>
           </div>
-        )}
+          
+          {relatedPosts.length > 0 && (
+            <div className="mt-16">
+              <RelatedPosts posts={relatedPosts} />
+            </div>
+          )}
+        </div>
       </div>
-    </>
+    </article>
   );
 };
 
