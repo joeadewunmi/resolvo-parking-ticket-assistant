@@ -6,6 +6,7 @@ import Blog from "../pages/Blog";
 import BlogPost from "../pages/BlogPost";
 import AppealHelp from "../pages/AppealHub";
 import CouncilAppealHub from "../pages/CouncilAppealHub";
+import CouncilPCNAppealHub from "../pages/CouncilPCNAppealHub";
 
 // Main site routes
 export const mainRoutes = [
@@ -32,5 +33,9 @@ export const mainRoutes = [
   {
     path: "council-appeal-hub",
     element: <CouncilAppealHub />,
+  },
+  {
+    path: "council-pcn-appeal",
+    element: <CouncilPCNAppealHub />,
   },
 ];

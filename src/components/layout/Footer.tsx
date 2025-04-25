@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -53,7 +54,12 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/council-appeal-hub" className="text-sm hover:text-accent">
-                  Council PCN Appeals
+                  Council Appeal Hub
+                </Link>
+              </li>
+              <li>
+                <Link to="/council-pcn-appeal" className="text-sm hover:text-accent">
+                  Council PCN Appeal
                 </Link>
               </li>
               <li>
