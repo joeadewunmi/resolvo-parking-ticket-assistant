@@ -43,7 +43,7 @@ const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
 
 interface RelatedPostsProps {
   posts: BlogPostEntry[];
-  currentPostId?: string; // Make this optional
+  currentPostId?: string;
 }
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
