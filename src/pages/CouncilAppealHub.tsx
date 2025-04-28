@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Building, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; 
 import { Helmet } from 'react-helmet-async';
-import { allCouncilData } from '@/data/councilData';
+import { allCouncilData } from '@/data/councilData'; // Import the council data
 
 // Calculate chunks for potential multi-column layout (adjust columns as needed)
 const ITEMS_PER_COLUMN = Math.ceil(allCouncilData.length / 3); // Aim for 3 columns
@@ -12,6 +12,7 @@ for (let i = 0; i < allCouncilData.length; i += ITEMS_PER_COLUMN) {
   chunkedCouncils.push(allCouncilData.slice(i, i + ITEMS_PER_COLUMN));
 }
 
+// Define the component
 const CouncilAppealHub = () => {
   return (
     <>
@@ -28,6 +29,7 @@ const CouncilAppealHub = () => {
 
       <div className="bg-background text-foreground min-h-screen">
         <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+          {/* Header Section */}
           <div className="max-w-5xl mx-auto text-center mb-12 md:mb-16">
             <Building className="mx-auto h-12 w-12 text-primary mb-4" />
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-4">
@@ -38,16 +40,16 @@ const CouncilAppealHub = () => {
             </p>
           </div>
 
-          {/* Render the full list of councils using the imported data */}
+          {/* Council List Section */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {chunkedCouncils.map((chunk, index) => (
               <Card key={index} className="bg-card hover:shadow-lg transition-shadow duration-200">
                 <CardContent className="p-6">
                   <ul className="space-y-3">
                     {chunk.map((council) => (
-                      <li key={council.slug}>
+                      <li key={council.slug}> 
                         <Link
-                          to={council.path}
+                          to={council.path} // Use the path from the data file
                           className="group flex items-center text-foreground hover:text-primary transition-colors duration-200"
                           title={`View appeal guide for ${council.name}`}
                         >
@@ -65,22 +67,9 @@ const CouncilAppealHub = () => {
             ))}
           </div>
         </section>
-
-        {/* Optional: Add a CTA or further info section if desired */}
-        {/* 
-        <section className="py-16 bg-muted/40">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Need Help Appealing?</h2>
-            <p className="text-muted-foreground mb-8">Our AI tool can help you draft a personalised appeal letter in minutes.</p>
-            <Link to="/appeal-help" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-              Get Started Now
-            </Link>
-          </div>
-        </section>
-        */}
       </div>
     </>
   );
 };
 
-export default CouncilAppealHub;
+export default CouncilAppealHub; 
