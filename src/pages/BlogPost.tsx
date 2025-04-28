@@ -1,14 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getClient, renderRichText } from "../lib/contentful";
-import { BlogPost, PostMetaType } from "../types/contentful";
+import { renderRichText } from "../lib/contentful";
+import { BlogPost as BlogPostType, PostMetaType, AuthorFields } from "../types/contentful";
 import { Helmet } from "react-helmet-async";
 import BlogPostHeader from "../components/blog/BlogPostHeader";
 import BlogPostContent from "../components/blog/BlogPostContent";
 import BlogPostAuthor from "../components/blog/BlogPostAuthor";
 import BlogPostTags from "../components/blog/BlogPostTags";
 import RelatedPosts from "../components/blog/RelatedPosts";
+import { createClient } from 'contentful';
 
 // Type-check the image field properly
 const getImageUrl = (image: any) => {
@@ -23,12 +24,12 @@ const getImageUrl = (image: any) => {
 
 // Function to extract author information from the contentful entry
 const extractAuthorInfo = (authorEntry: any) => {
-  if (!authorEntry?.fields) return null;
+  if (!authorEntry?.fields) return { name: 'Unknown' };
   
   const authorFields = authorEntry.fields;
   
   return {
-    name: authorFields.name || '',
+    name: authorFields.name || 'Unknown',
     bio: authorFields.bio || '',
     avatar: authorFields.avatar?.fields?.file?.url 
       ? `https:${authorFields.avatar.fields.file.url}` 
@@ -51,9 +52,20 @@ const prepareCoverImage = (featuredImage: any) => {
   };
 };
 
+// Client initialization with development credentials
+const getClient = () => {
+  const DEV_SPACE_ID = 'fal2hauaxrft';
+  const DEV_ACCESS_TOKEN = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
+  
+  return createClient({
+    space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || DEV_SPACE_ID,
+    accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
+  });
+};
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<BlogPostType | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<PostMetaType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,11 +91,11 @@ const BlogPost = () => {
           return;
         }
 
-        const postData = response.items[0];
-        setPost(postData as unknown as BlogPost);
+        const postData = response.items[0] as unknown as BlogPostType;
+        setPost(postData);
 
         // Fetch related posts (posts with similar tags)
-        if (postData.fields.tags) {
+        if (postData.fields.tags && postData.fields.tags.length > 0) {
           const tagsQuery = postData.fields.tags
             .map((tag: string) => `"${tag}"`)
             .join(",");
@@ -93,7 +105,7 @@ const BlogPost = () => {
             "fields.slug[ne]": slug, // Exclude current post
             "fields.tags[in]": tagsQuery,
             limit: 3,
-            order: "-fields.publishDate",
+            order: "-fields.publishDate" as any,
           });
 
           setRelatedPosts(relatedResponse.items as unknown as PostMetaType[]);
@@ -142,14 +154,16 @@ const BlogPost = () => {
 
   const {
     title,
-    subtitle = '',
-    author,
+    subtitle,
     publishDate,
     featuredImage,
     content,
     tags,
   } = post.fields;
 
+  // Get author entry from post fields
+  const author = post.fields.author;
+  
   // Prepare data for components
   const authorInfo = extractAuthorInfo(author);
   const coverImage = prepareCoverImage(featuredImage);
@@ -157,14 +171,14 @@ const BlogPost = () => {
   return (
     <article className="min-h-screen bg-background">
       <Helmet>
-        <title>{title} | Resolvo Blog</title>
+        <title>{title || ""} | Resolvo Blog</title>
         <meta name="description" content={subtitle || ""} />
         {tags && <meta name="keywords" content={tags.join(", ")} />}
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={title || ""} />
         <meta property="og:description" content={subtitle || ""} />
         {coverImage && <meta property="og:image" content={`https:${coverImage.url}`} />}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
+        <meta name="twitter:title" content={title || ""} />
         <meta name="twitter:description" content={subtitle || ""} />
         {coverImage && <meta name="twitter:image" content={`https:${coverImage.url}`} />}
       </Helmet>
@@ -172,16 +186,16 @@ const BlogPost = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <BlogPostHeader 
-            title={title} 
+            title={title || ""} 
             subtitle={subtitle || ''} 
-            date={publishDate} 
-            author={authorInfo || {name: 'Unknown'}} 
+            date={publishDate || ""} 
+            author={authorInfo} 
             coverImage={coverImage} 
           />
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="md:col-span-3">
-              <BlogPostContent content={content} />
+              {content && <BlogPostContent content={content} />}
             </div>
             
             <aside className="space-y-8">

@@ -53,8 +53,7 @@ const BlogPostHeader = ({
       {/* Title and Meta */}
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
-        {/* Remove subtitle rendering */}
-        {/* {subtitle && <p className="text-xl text-gray-600 mb-6">{subtitle}</p>} */}
+        {subtitle && <p className="text-xl text-gray-600 mb-6">{subtitle}</p>}
         
         <div className="flex items-center mb-8">
           {/* Author Image */}
