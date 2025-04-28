@@ -1,218 +1,187 @@
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { renderRichText } from '@/lib/contentful';
+import { ArrowLeft } from 'lucide-react';
+import type { BlogPost, Author } from '@/types/contentful';
+import { Asset } from 'contentful';
+import { useBlogPostData } from '@/hooks/useBlogPostData';
+import BlogPostView from '@/components/blog/BlogPostView';
 
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { renderRichText } from "../lib/contentful";
-import { BlogPost as BlogPostType, PostMetaType, AuthorFields } from "../types/contentful";
-import { Helmet } from "react-helmet-async";
-import BlogPostHeader from "../components/blog/BlogPostHeader";
-import BlogPostContent from "../components/blog/BlogPostContent";
-import BlogPostAuthor from "../components/blog/BlogPostAuthor";
-import BlogPostTags from "../components/blog/BlogPostTags";
-import RelatedPosts from "../components/blog/RelatedPosts";
-import { createClient } from 'contentful';
+// Export the type for use in BlogPostView
+export type SafeContentfulImage = {
+  url: string;
+  title: string;
+} | null;
 
-// Type-check the image field properly
-const getImageUrl = (image: any) => {
-  if (!image) return null;
-  // Check if it's a contentful Asset with fields
-  if (image.fields && image.fields.file) {
-    return `https:${image.fields.file.url}`;
-  }
-  // Handle other potential formats
+// Helper to get estimated read time
+const getEstimatedReadTime = (content: any): number => {
+  if (!content) return 0;
+  
+  const extractTextFromNode = (node: any): string => {
+    if (node.nodeType === 'text') {
+      return node.value || '';
+    }
+    if (node.content) {
+      return node.content.map((childNode: any) => extractTextFromNode(childNode)).join(' ');
+    }
+    return '';
+  };
+  
+  const text = extractTextFromNode(content);
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.ceil(words / wordsPerMinute);
+};
+
+// Helper using the type guard
+const getCoverImageData = (post: BlogPost | null): SafeContentfulImage => {
+  const featuredImage: Asset | undefined = post?.fields?.featuredImage;
+  const fileUrl = featuredImage?.fields?.file?.url;
+  const title = featuredImage?.fields?.title;
+
+  if (typeof fileUrl === 'string') {
+    return {
+      url: fileUrl, 
+      title: typeof title === 'string' ? title : ''
+    };
+  } 
+  
   return null;
 };
 
-// Function to extract author information from the contentful entry
-const extractAuthorInfo = (authorEntry: any) => {
-  if (!authorEntry?.fields) return { name: 'Unknown' };
-  
-  const authorFields = authorEntry.fields;
-  
-  return {
-    name: authorFields.name || 'Unknown',
-    bio: authorFields.bio || '',
-    avatar: authorFields.avatar?.fields?.file?.url 
-      ? `https:${authorFields.avatar.fields.file.url}` 
-      : undefined,
-    socialLinks: {
-      twitter: authorFields.twitter || undefined,
-      linkedin: authorFields.linkedin || undefined,
-      website: authorFields.website || undefined,
-    }
+// Export the type for use in BlogPostView
+export type AuthorProp = {
+  name: string;
+  avatar: string | null;
+  socialLinks: {
+    twitter: string;
   };
-};
+} | null;
 
-// Function to prepare cover image data from contentful entry
-const prepareCoverImage = (featuredImage: any) => {
-  if (!featuredImage?.fields) return null;
-  
-  return {
-    url: featuredImage.fields.file?.url || '',
-    title: featuredImage.fields.title || '',
-  };
-};
-
-// Client initialization with development credentials
-const getClient = () => {
-  const DEV_SPACE_ID = 'fal2hauaxrft';
-  const DEV_ACCESS_TOKEN = 'FAKkiIuREevtlVoMj1pCO9ySzOUJKSQsVxhNnVt9TUw';
-  
-  return createClient({
-    space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || DEV_SPACE_ID,
-    accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
-  });
-};
-
-const BlogPost = () => {
+const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPostType | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<PostMetaType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  
+  // Use the custom hook to fetch data and manage state
+  const { post, relatedPosts, loading, error } = useBlogPostData(slug);
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      if (!slug) return;
+  // Helper functions now operate on the 'post' state variable from the hook
+  const getTitle = (): string => {
+    const title = post?.fields?.title;
+    return typeof title === 'string' ? title : 'Blog Post';
+  };
+  const getSubtitle = (): string => {
+    const subtitle = post?.fields?.seoDescription;
+    return typeof subtitle === 'string' ? subtitle : '';
+  };
+  const getDate = (): string => {
+    const date = post?.fields?.publishDate;
+    return typeof date === 'string' ? date : '';
+  };
+  
+  const getAuthor = (): AuthorProp => {
+    const authorEntry: Author | undefined = post?.fields?.authorName;
 
-      try {
-        setLoading(true);
-        const client = getClient();
-        
-        // Fetch the blog post
-        const response = await client.getEntries({
-          content_type: "blogPost",
-          "fields.slug": slug,
-          include: 2, // Include linked entries (like author)
-        });
+    if (!authorEntry?.fields) {
+      return null;
+    }
 
-        if (response.items.length === 0) {
-          setError("Post not found");
-          setLoading(false);
-          return;
-        }
+    const avatarAsset: Asset | undefined = authorEntry.fields.avatar;
+    const avatarUrl = avatarAsset?.fields?.file?.url;
+    const name = authorEntry.fields.name;
+    const bio = authorEntry.fields.bio;
 
-        const postData = response.items[0] as unknown as BlogPostType;
-        setPost(postData);
-
-        // Fetch related posts (posts with similar tags)
-        if (postData.fields.tags && postData.fields.tags.length > 0) {
-          const tagsQuery = postData.fields.tags
-            .map((tag: string) => `"${tag}"`)
-            .join(",");
-          
-          const relatedResponse = await client.getEntries({
-            content_type: "blogPost",
-            "fields.slug[ne]": slug, // Exclude current post
-            "fields.tags[in]": tagsQuery,
-            limit: 3,
-            order: "-fields.publishDate" as any,
-          });
-
-          setRelatedPosts(relatedResponse.items as unknown as PostMetaType[]);
-        }
-      } catch (err) {
-        console.error("Error fetching blog post:", err);
-        setError("Error fetching blog post");
-      } finally {
-        setLoading(false);
+    return {
+      name: typeof name === 'string' ? name : 'Resolvo Team', 
+      avatar: typeof avatarUrl === 'string' ? avatarUrl : null,
+      socialLinks: {
+        twitter: typeof bio === 'string' ? bio : '' 
       }
     };
-
-    fetchPost();
-    // Reset state when slug changes
-    return () => {
-      setPost(null);
-      setRelatedPosts([]);
-      setError(null);
-    };
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xl">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !post) {
-    return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl font-bold text-red-600 mb-4">
-            {error || "Post not found"}
-          </h1>
-          <p className="mb-8">
-            The blog post you're looking for couldn't be found.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const {
-    title,
-    subtitle,
-    publishDate,
-    featuredImage,
-    content,
-    tags,
-  } = post.fields;
-
-  // Get author entry from post fields
-  const author = post.fields.author;
+  };
   
-  // Prepare data for components
-  const authorInfo = extractAuthorInfo(author);
-  const coverImage = prepareCoverImage(featuredImage);
+  const getContent = (): any => {
+    const content = post?.fields?.content;
+    return content && typeof content === 'object' && content.nodeType === 'document' ? content : null;
+  };
+  const getCoverImage = (): SafeContentfulImage => getCoverImageData(post);
 
-  return (
-    <article className="min-h-screen bg-background">
-      <Helmet>
-        <title>{title || ""} | Resolvo Blog</title>
-        <meta name="description" content={subtitle || ""} />
-        {tags && <meta name="keywords" content={tags.join(", ")} />}
-        <meta property="og:title" content={title || ""} />
-        <meta property="og:description" content={subtitle || ""} />
-        {coverImage && <meta property="og:image" content={`https:${coverImage.url}`} />}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title || ""} />
-        <meta name="twitter:description" content={subtitle || ""} />
-        {coverImage && <meta name="twitter:image" content={`https:${coverImage.url}`} />}
-      </Helmet>
+  // SEO data
+  const pageTitle = `${getTitle()} | Resolvo`;
+  const pageDescription = getSubtitle();
+  const coverImage = getCoverImage();
+  const coverImageUrl = coverImage?.url ? (coverImage.url.startsWith('https:') ? coverImage.url : `https:${coverImage.url}`) : ''; 
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <BlogPostHeader 
-            title={title || ""} 
-            subtitle={subtitle || ''} 
-            date={publishDate || ""} 
-            author={authorInfo} 
-            coverImage={coverImage} 
-          />
-          
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-3">
-              {content && <BlogPostContent content={content} />}
-            </div>
-            
-            <aside className="space-y-8">
-              {author && <BlogPostAuthor author={author} />}
-              {tags && tags.length > 0 && <BlogPostTags tags={tags} />}
-            </aside>
+  // Schema.org structured data
+  const authorForSchema = getAuthor();
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": getTitle(),
+    "description": getSubtitle(),
+    "image": coverImageUrl,
+    "datePublished": getDate() || undefined,
+    "author": {
+      "@type": "Person",
+      "name": authorForSchema?.name || "Resolvo Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Resolvo",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://resolvo.uk/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://resolvo.uk/blog/${slug}` 
+    }
+  };
+  
+  // Handle error state from the hook
+  if (error) {
+      // Option 1: Navigate away (similar to old behavior, but more explicit)
+      // useEffect(() => { navigate('/blog'); }, [navigate]); // Needs useEffect if navigating
+      // Option 2: Show an error message
+      return (
+          <div className="min-h-screen bg-white py-12 text-center text-red-600">
+              <p>Error loading blog post: {error.message}</p>
+              <button 
+                  onClick={() => navigate('/blog')} 
+                  className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              >
+                  <ArrowLeft className="h-4 w-4 mr-1" />
+                  Back to Blog
+              </button>
           </div>
-          
-          {relatedPosts.length > 0 && (
-            <div className="mt-16">
-              <RelatedPosts posts={relatedPosts} currentPostId={post.sys.id} />
-            </div>
-          )}
-        </div>
-      </div>
-    </article>
+      );
+  }
+
+  // Render the view component, passing all necessary data and functions
+  return (
+    <BlogPostView 
+      loading={loading}
+      post={post}
+      relatedPosts={relatedPosts}
+      slug={slug}
+      pageTitle={pageTitle}
+      pageDescription={pageDescription}
+      coverImageUrl={coverImageUrl}
+      schemaData={schemaData}
+      onNavigateBack={() => navigate('/blog')}
+      // Pass helper functions
+      getTitle={getTitle}
+      getSubtitle={getSubtitle}
+      getDate={getDate}
+      getAuthor={getAuthor}
+      getContent={getContent}
+      getCoverImage={getCoverImage}
+      renderRichText={renderRichText} // Pass the imported function
+      getEstimatedReadTime={getEstimatedReadTime} // Pass the local function
+    />
   );
 };
 
-export default BlogPost;
+export default BlogPostPage;
+

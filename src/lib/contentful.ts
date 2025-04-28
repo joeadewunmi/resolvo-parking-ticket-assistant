@@ -3,7 +3,7 @@ import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { BlogPost } from '@/types/contentful';
+import { BlogPostSkeleton } from '@/types/contentful';
 
 // Default credentials for development (these will be ignored in production when real env vars are set)
 // These are not sensitive as they're only for development with sample data
@@ -28,7 +28,7 @@ const client = createClient({
   accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
 });
 
-// Export getClient function to expose the client
+// Export getClient function for compatibility
 export const getClient = () => client;
 
 // Log environment info in non-production environments
@@ -94,15 +94,15 @@ export const richTextOptions = {
   },
 };
 
-// Function to fetch all blog posts with better error handling
+// Fetch all blog posts with better error handling
 export const getBlogPosts = async () => {
   try {
     const response = await client.getEntries({
       content_type: 'blogPost',
-      order: ['-fields.publishDate'],  // Use publishDate instead of date
-      include: 2, // Include linked entries up to 2 levels deep
+      order: ['-fields.publishDate'],
+      include: 2,
     });
-    return response.items as any[];
+    return response.items;
   } catch (error) {
     console.error("Error fetching blog posts:", error);
     if (import.meta.env.DEV || import.meta.env.MODE === 'development') {
@@ -134,7 +134,7 @@ export const getBlogPosts = async () => {
   }
 };
 
-// Function to fetch a single blog post by slug with better error handling
+// Fetch a single blog post by slug with better error handling
 export const getBlogPostBySlug = async (slug: string) => {
   try {
     const response = await client.getEntries({

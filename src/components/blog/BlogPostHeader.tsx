@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { formatDate } from '@/lib/utils';
 import { Linkedin, Globe } from 'lucide-react';
@@ -53,7 +52,8 @@ const BlogPostHeader = ({
       {/* Title and Meta */}
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
-        {subtitle && <p className="text-xl text-gray-600 mb-6">{subtitle}</p>}
+        {/* Remove subtitle rendering */}
+        {/* {subtitle && <p className="text-xl text-gray-600 mb-6">{subtitle}</p>} */}
         
         <div className="flex items-center mb-8">
           {/* Author Image */}
@@ -77,7 +77,7 @@ const BlogPostHeader = ({
                       className="text-gray-500 hover:text-primary transition-colors"
                     >
                       <img 
-                        src="/lovable-uploads/1f7e4561-dbf3-4f0e-83f0-c890179634ce.png"
+                        src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
                         alt="X (formerly Twitter)"
                         className="w-4 h-4"
                       />

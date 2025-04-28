@@ -1,26 +1,21 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Entry } from 'contentful';
 import { formatDate } from '@/lib/utils';
-import { BlogPostFields } from '@/types/contentful';
 
-type BlogPostEntry = Entry<BlogPostFields>;
+type BlogPostEntry = Entry<any>;
 
 const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
-  if (!post?.fields) {
-    return null;
-  }
-  
-  // Safe access helpers using optional chaining
-  const title = post.fields.title || '';
-  const slug = post.fields.slug || '';
-  const excerpt = post.fields.seoDescription || '';
-  const date = post.fields.publishDate || '';
+  // Safe access helpers using optional chaining and casting
+  const fields = post?.fields as Record<string, any>;
+  const title = (fields?.title as string) || '';
+  const slug = (fields?.slug as string) || '';
+  const excerpt = (fields?.seoDescription as string) || '';
+  const date = (fields?.publishDate as string) || '';
   
   // Safely extract featured image if available
-  const featuredImage = post.fields.featuredImage?.fields?.file?.url
-    ? `https:${post.fields.featuredImage.fields.file.url}`
+  const featuredImage = fields?.featuredImage?.fields?.file?.url
+    ? `https:${fields.featuredImage.fields.file.url}`
     : null;
     
   return (
@@ -43,28 +38,27 @@ const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
 
 interface RelatedPostsProps {
   posts: BlogPostEntry[];
-  currentPostId?: string;
+  currentPostId: string;
 }
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
-  if (!posts || posts.length === 0) return null;
+  // Get the current post to access its related posts
+  const currentPost = posts.find(post => post.sys.id === currentPostId);
+  const relatedPostRefs = (currentPost?.fields?.relatedPost || []) as Entry<any>[];
   
-  // Filter out the current post if currentPostId is provided
-  const filteredPosts = currentPostId 
-    ? posts.filter(post => post.sys.id !== currentPostId)
-    : posts;
-    
-  // If no posts left after filtering, return null
-  if (filteredPosts.length === 0) return null;
+  // Get the full post objects for the related post references
+  const relatedPosts = relatedPostRefs
+    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
+    .filter(Boolean)
+    .slice(0, 3);
 
-  // Just show up to 3 posts
-  const displayPosts = filteredPosts.slice(0, 3);
+  if (relatedPosts.length === 0) return null;
 
   return (
     <div className="mt-16 pt-8 border-t border-gray-200">
       <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {displayPosts.map(post => (
+        {relatedPosts.map(post => (
           <RelatedPostCard key={post.sys.id} post={post} />
         ))}
       </div>

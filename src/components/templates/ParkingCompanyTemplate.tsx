@@ -15,7 +15,7 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Appeal Your {companyName} Fine for Free with Resolvo</title>
+        <title> Beat Your {companyName} Parking Ticket using Resolvo</title>
         <meta name="description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
         <meta property="og:title" content={`Appeal Your ${companyName} Fine for Free with Resolvo`} />
         <meta property="og:description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />

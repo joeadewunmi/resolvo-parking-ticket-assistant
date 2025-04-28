@@ -1,118 +1,85 @@
-
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Building, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Helmet } from 'react-helmet-async';
+import { allCouncilData } from '@/data/councilData';
 
-// All council slugs from the scripts/council-slugs.js file
-const councils = [
-  { name: "Barnsley Council", path: "/barnsley" },
-  { name: "Birmingham City Council", path: "/birmingham" },
-  { name: "Bradford Council", path: "/bradford" },
-  { name: "Coventry City Council", path: "/coventry" },
-  { name: "Leeds City Council", path: "/leeds" },
-  { name: "Leicester City Council", path: "/leicester" },
-  { name: "Liverpool City Council", path: "/liverpool" },
-  { name: "Manchester City Council", path: "/manchester" },
-  { name: "Nottingham City Council", path: "/nottingham" },
-  { name: "Plymouth City Council", path: "/plymouth" }
-];
-
-// Sort councils alphabetically
-const sortedCouncils = [...councils].sort((a, b) => 
-  a.name.localeCompare(b.name)
-);
+// Calculate chunks for potential multi-column layout (adjust columns as needed)
+const ITEMS_PER_COLUMN = Math.ceil(allCouncilData.length / 3); // Aim for 3 columns
+const chunkedCouncils = [];
+for (let i = 0; i < allCouncilData.length; i += ITEMS_PER_COLUMN) {
+  chunkedCouncils.push(allCouncilData.slice(i, i + ITEMS_PER_COLUMN));
+}
 
 const CouncilAppealHub = () => {
-  // Group councils into categories for better organization
-  const chunkedCouncils = sortedCouncils.reduce((acc, council, index) => {
-    const chunkIndex = Math.floor(index / 15);
-    if (!acc[chunkIndex]) acc[chunkIndex] = [];
-    acc[chunkIndex].push(council);
-    return acc;
-  }, [] as typeof sortedCouncils[]);
-
   return (
-    <article className="min-h-screen bg-background">
+    <>
       <Helmet>
-        <title>Council PCN Appeal Hub | Find Your Council Appeal Guide</title>
-        <meta name="description" content="Find the right appeal guide for your council parking ticket. Expert guidance for appealing PCNs from all major UK councils." />
-        <meta name="keywords" content="council PCN appeal, parking fine appeal, council parking ticket appeal guide" />
+        <title>Council Parking Ticket Appeal Information | Resolvo</title>
+        <meta name="description" content="Find information and resources to appeal parking tickets from specific UK councils. Get help with your PCN appeal." />
         <link rel="canonical" href="https://resolvo.uk/council-appeal-hub" />
+        <meta property="og:title" content="Council Parking Ticket Appeal Information | Resolvo" />
+        <meta property="og:description" content="Find information and resources to appeal parking tickets from specific UK councils." />
+        <meta property="og:url" content="https://resolvo.uk/council-appeal-hub" />
+        <meta name="twitter:title" content="Council Parking Ticket Appeal Information | Resolvo" />
+        <meta name="twitter:description" content="Find information and resources to appeal parking tickets from specific UK councils." />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12 space-y-12">
-        {/* Hero Section */}
-        <header className="text-center max-w-3xl mx-auto mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4 tracking-tight">
-            Council PCN Appeal Hub
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Find expert guidance for appealing your council parking ticket
-          </p>
-        </header>
-
-        {/* Main Content */}
-        <main className="space-y-10">
-          {/* Councils Section */}
-          <section aria-labelledby="councils-heading">
-            <div className="flex items-center gap-3 mb-6">
-              <Building className="h-6 w-6 text-primary" aria-hidden="true" />
-              <h2 id="councils-heading" className="text-2xl font-bold text-primary">
-                Appeal Guides by Council
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {chunkedCouncils.map((chunk, index) => (
-                <Card key={index} className="bg-card hover:shadow-lg transition-shadow duration-200">
-                  <CardContent className="p-6">
-                    <ul className="space-y-3">
-                      {chunk.map((council) => (
-                        <li key={council.name}>
-                          <Link
-                            to={council.path}
-                            className="group flex items-center text-foreground hover:text-primary transition-colors duration-200"
-                            title={`View appeal guide for ${council.name}`}
-                          >
-                            <span className="flex-1">{council.name}</span>
-                            <ArrowRight 
-                              className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" 
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-
-          {/* Call to Action Section */}
-          <section aria-labelledby="cta-heading" className="bg-secondary/20 rounded-lg p-8 text-center">
-            <h2 id="cta-heading" className="text-2xl font-bold text-primary mb-4">
-              Start Your Appeal Today
-            </h2>
-            <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Don't see your council listed? No problem!<br />
-              Our AI can help with any type of council parking ticket appeal.
+      <div className="bg-background text-foreground min-h-screen">
+        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto text-center mb-12 md:mb-16">
+            <Building className="mx-auto h-12 w-12 text-primary mb-4" />
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-4">
+              UK Council Parking Appeal Hub
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Select your local council from the list below to find specific information and resources for appealing parking charge notices (PCNs).
             </p>
-            <a
-              href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-medium"
-            >
-              Start Your Appeal
-              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-            </a>
-          </section>
-        </main>
+          </div>
+
+          {/* Render the full list of councils using the imported data */}
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {chunkedCouncils.map((chunk, index) => (
+              <Card key={index} className="bg-card hover:shadow-lg transition-shadow duration-200">
+                <CardContent className="p-6">
+                  <ul className="space-y-3">
+                    {chunk.map((council) => (
+                      <li key={council.slug}>
+                        <Link
+                          to={council.path}
+                          className="group flex items-center text-foreground hover:text-primary transition-colors duration-200"
+                          title={`View appeal guide for ${council.name}`}
+                        >
+                          <span className="flex-1">{council.name}</span>
+                          <ArrowRight 
+                            className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" 
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Optional: Add a CTA or further info section if desired */}
+        {/* 
+        <section className="py-16 bg-muted/40">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl font-bold mb-4">Need Help Appealing?</h2>
+            <p className="text-muted-foreground mb-8">Our AI tool can help you draft a personalised appeal letter in minutes.</p>
+            <Link to="/appeal-help" className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+              Get Started Now
+            </Link>
+          </div>
+        </section>
+        */}
       </div>
-    </article>
+    </>
   );
 };
 

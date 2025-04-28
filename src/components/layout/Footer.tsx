@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -54,12 +53,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/council-appeal-hub" className="text-sm hover:text-accent">
-                  Council Appeal Hub
-                </Link>
-              </li>
-              <li>
-                <Link to="/council-pcn-appeal-hub" className="text-sm hover:text-accent">
-                  Council PCN Appeal
+                  Council PCN Appeals
                 </Link>
               </li>
               <li>
@@ -83,7 +77,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/1f7e4561-dbf3-4f0e-83f0-c890179634ce.png"
+                  src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
@@ -96,7 +90,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/dd718b70-5a1a-4a62-9842-be6a0f9ce389.png"
+                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
                   alt="TikTok"
                   className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
                 />
@@ -119,6 +113,10 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-700">
           <p className="text-sm text-center">
             © {new Date().getFullYear()} Resolvo. All rights reserved.
+            <span className="mx-2">|</span>
+            <a href="https://sprunkid.com/" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
+              Sprunkid
+            </a>
           </p>
         </div>
       </div>

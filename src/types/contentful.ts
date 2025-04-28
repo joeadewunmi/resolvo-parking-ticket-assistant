@@ -1,41 +1,30 @@
-
-import { Asset, Entry, EntrySkeletonType } from 'contentful';
+import { Entry, EntrySkeletonType, EntryFieldTypes } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
-export interface BlogPostFields {
-  title: string;
-  slug: string;
-  publishDate: string;
-  content: Document;
-  subtitle?: string;
-  seoDescription?: string;
-  featuredImage?: Asset;
-  relatedPosts?: Entry<BlogPostFields>[];
-  author?: Entry<AuthorFields>;
-  tags?: string[];
-}
+// Define the skeleton for Author
+export type AuthorSkeleton = EntrySkeletonType<{
+  name: EntryFieldTypes.Symbol;
+  bio?: EntryFieldTypes.Text;
+  avatar?: EntryFieldTypes.AssetLink;
+}>;
 
-export interface AuthorFields {
-  name: string;
-  bio?: string;
-  avatar?: Asset;
-  twitter?: string;
-  linkedin?: string;
-  website?: string;
-}
+// Define the skeleton for BlogPost
+export type BlogPostSkeleton = EntrySkeletonType<{
+  title: EntryFieldTypes.Symbol;
+  slug: EntryFieldTypes.Symbol;
+  publishDate: EntryFieldTypes.Date;
+  content: EntryFieldTypes.RichText;
+  seoDescription?: EntryFieldTypes.Text;
+  featuredImage?: EntryFieldTypes.AssetLink;
+  relatedPost?: EntryFieldTypes.AssetLink;
+  authorName?: EntryFieldTypes.EntryLink<AuthorSkeleton>;
+  tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+}>;
 
-// Define the complete entry types
-export interface BlogPostSkeleton extends EntrySkeletonType {
-  fields: BlogPostFields;
-  contentTypeId: string;
-}
+// Use the skeletons to define the Entry types
+// Specify Modifiers for link resolution if needed (e.g., 'WITHOUT_LINK_RESOLUTION', 'WITH_LINK_RESOLUTION')
+// Or omit for default behavior which depends on client configuration/`include` parameter
+export type BlogPost = Entry<BlogPostSkeleton>;
+export type Author = Entry<AuthorSkeleton>;
 
-export interface AuthorSkeleton extends EntrySkeletonType {
-  fields: AuthorFields;
-  contentTypeId: string;
-}
-
-// Type aliases for better usability
-export type BlogPost = Entry<BlogPostFields>;
-export type Author = Entry<AuthorFields>;
-export type PostMetaType = Entry<BlogPostFields>;
+// Removed old interfaces and confusing type aliases 
