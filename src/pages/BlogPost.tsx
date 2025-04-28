@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getClient } from "../lib/contentful";
-import { BlogPostType, PostMetaType } from "../types/contentful";
+import { getClient, renderRichText } from "../lib/contentful";
+import { BlogPost, PostMetaType } from "../types/contentful";
 import { Helmet } from "react-helmet-async";
 import BlogPostHeader from "../components/blog/BlogPostHeader";
 import BlogPostContent from "../components/blog/BlogPostContent";
@@ -21,9 +21,39 @@ const getImageUrl = (image: any) => {
   return null;
 };
 
+// Function to extract author information from the contentful entry
+const extractAuthorInfo = (authorEntry: any) => {
+  if (!authorEntry?.fields) return null;
+  
+  const authorFields = authorEntry.fields;
+  
+  return {
+    name: authorFields.name || '',
+    bio: authorFields.bio || '',
+    avatar: authorFields.avatar?.fields?.file?.url 
+      ? `https:${authorFields.avatar.fields.file.url}` 
+      : undefined,
+    socialLinks: {
+      twitter: authorFields.twitter || undefined,
+      linkedin: authorFields.linkedin || undefined,
+      website: authorFields.website || undefined,
+    }
+  };
+};
+
+// Function to prepare cover image data from contentful entry
+const prepareCoverImage = (featuredImage: any) => {
+  if (!featuredImage?.fields) return null;
+  
+  return {
+    url: featuredImage.fields.file?.url || '',
+    title: featuredImage.fields.title || '',
+  };
+};
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPostType | null>(null);
+  const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<PostMetaType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +80,7 @@ const BlogPost = () => {
         }
 
         const postData = response.items[0];
-        setPost(postData as unknown as BlogPostType);
+        setPost(postData as unknown as BlogPost);
 
         // Fetch related posts (posts with similar tags)
         if (postData.fields.tags) {
@@ -112,7 +142,7 @@ const BlogPost = () => {
 
   const {
     title,
-    subtitle,
+    subtitle = '',
     author,
     publishDate,
     featuredImage,
@@ -120,7 +150,9 @@ const BlogPost = () => {
     tags,
   } = post.fields;
 
-  const imageUrl = getImageUrl(featuredImage);
+  // Prepare data for components
+  const authorInfo = extractAuthorInfo(author);
+  const coverImage = prepareCoverImage(featuredImage);
 
   return (
     <article className="min-h-screen bg-background">
@@ -130,20 +162,21 @@ const BlogPost = () => {
         {tags && <meta name="keywords" content={tags.join(", ")} />}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={subtitle || ""} />
-        {imageUrl && <meta property="og:image" content={imageUrl} />}
+        {coverImage && <meta property="og:image" content={`https:${coverImage.url}`} />}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={subtitle || ""} />
-        {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+        {coverImage && <meta name="twitter:image" content={`https:${coverImage.url}`} />}
       </Helmet>
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <BlogPostHeader 
             title={title} 
-            subtitle={subtitle} 
-            publishDate={publishDate} 
-            featuredImage={featuredImage}
+            subtitle={subtitle || ''} 
+            date={publishDate} 
+            author={authorInfo || {name: 'Unknown'}} 
+            coverImage={coverImage} 
           />
           
           <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -159,7 +192,7 @@ const BlogPost = () => {
           
           {relatedPosts.length > 0 && (
             <div className="mt-16">
-              <RelatedPosts posts={relatedPosts} />
+              <RelatedPosts posts={relatedPosts} currentPostId={post.sys.id} />
             </div>
           )}
         </div>

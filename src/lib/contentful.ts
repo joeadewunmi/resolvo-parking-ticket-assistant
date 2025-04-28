@@ -3,7 +3,7 @@ import { BLOCKS, MARKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { BlogPostSkeleton } from '@/types/contentful';
+import { BlogPost } from '@/types/contentful';
 
 // Default credentials for development (these will be ignored in production when real env vars are set)
 // These are not sensitive as they're only for development with sample data
@@ -27,6 +27,9 @@ const client = createClient({
   space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || DEV_SPACE_ID,
   accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
 });
+
+// Export getClient function to expose the client
+export const getClient = () => client;
 
 // Log environment info in non-production environments
 if (import.meta.env.DEV || import.meta.env.MODE === 'development') {
@@ -91,7 +94,7 @@ export const richTextOptions = {
   },
 };
 
-// Fetch all blog posts with better error handling
+// Function to fetch all blog posts with better error handling
 export const getBlogPosts = async () => {
   try {
     const response = await client.getEntries({
@@ -131,7 +134,7 @@ export const getBlogPosts = async () => {
   }
 };
 
-// Fetch a single blog post by slug with better error handling
+// Function to fetch a single blog post by slug with better error handling
 export const getBlogPostBySlug = async (slug: string) => {
   try {
     const response = await client.getEntries({

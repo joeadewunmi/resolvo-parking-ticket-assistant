@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Entry } from 'contentful';
@@ -38,19 +39,27 @@ const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
 
 interface RelatedPostsProps {
   posts: BlogPostEntry[];
-  currentPostId: string;
+  currentPostId?: string; // Make this optional
 }
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
-  // Get the current post to access its related posts
-  const currentPost = posts.find(post => post.sys.id === currentPostId);
-  const relatedPostRefs = (currentPost?.fields?.relatedPost || []) as Entry<any>[];
+  // If we have a currentPostId, get the related posts, otherwise show all posts
+  let relatedPosts = posts;
   
-  // Get the full post objects for the related post references
-  const relatedPosts = relatedPostRefs
-    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
-    .filter(Boolean)
-    .slice(0, 3);
+  if (currentPostId) {
+    // Get the current post to access its related posts
+    const currentPost = posts.find(post => post.sys.id === currentPostId);
+    const relatedPostRefs = (currentPost?.fields?.relatedPost || []) as Entry<any>[];
+    
+    // Get the full post objects for the related post references
+    relatedPosts = relatedPostRefs
+      .map(ref => posts.find(post => post.sys.id === ref.sys.id))
+      .filter(Boolean)
+      .slice(0, 3);
+  } else {
+    // Just show the first 3 posts if no currentPostId is provided
+    relatedPosts = posts.slice(0, 3);
+  }
 
   if (relatedPosts.length === 0) return null;
 

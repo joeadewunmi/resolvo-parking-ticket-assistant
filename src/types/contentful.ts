@@ -1,3 +1,4 @@
+
 import { Asset, Entry, EntrySkeletonType } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
@@ -8,6 +9,7 @@ export interface BlogPostFields extends EntrySkeletonType {
     slug: string;
     publishDate: string;
     content: Document;
+    subtitle?: string;
     seoDescription?: string;
     featuredImage?: Asset;
     relatedPost?: Asset;
@@ -27,7 +29,9 @@ export interface AuthorFields extends EntrySkeletonType {
 
 export type BlogPost = Entry<BlogPostFields>;
 export type Author = Entry<AuthorFields>;
+export type BlogPostType = BlogPost; // For backward compatibility
+export type PostMetaType = Entry<any>; // Generic type for related posts
 
 // Type aliases for backward compatibility
 export type BlogPostSkeleton = BlogPost;
-export type AuthorSkeleton = Author; 
+export type AuthorSkeleton = Author;
