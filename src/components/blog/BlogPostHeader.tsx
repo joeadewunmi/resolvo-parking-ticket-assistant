@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { formatDate } from '@/lib/utils';
 import { Linkedin, Globe } from 'lucide-react';
@@ -77,7 +78,7 @@ const BlogPostHeader = ({
                       className="text-gray-500 hover:text-primary transition-colors"
                     >
                       <img 
-                        src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
+                        src="/lovable-uploads/1f7e4561-dbf3-4f0e-83f0-c890179634ce.png"
                         alt="X (formerly Twitter)"
                         className="w-4 h-4"
                       />

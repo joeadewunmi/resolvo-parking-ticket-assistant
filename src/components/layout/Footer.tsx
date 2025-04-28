@@ -83,7 +83,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
+                  src="/lovable-uploads/1f7e4561-dbf3-4f0e-83f0-c890179634ce.png"
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
                 />
@@ -96,7 +96,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
+                  src="/lovable-uploads/b8fddfd4-74d0-44f2-baaf-c1770abde058.png"
                   alt="TikTok"
                   className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
                 />
@@ -119,10 +119,6 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-700">
           <p className="text-sm text-center">
             © {new Date().getFullYear()} Resolvo. All rights reserved.
-            <span className="mx-2">|</span>
-            <a href="https://sprunkid.com/" target="_blank" rel="noopener noreferrer" className="hover:text-accent">
-              Sprunkid
-            </a>
           </p>
         </div>
       </div>
