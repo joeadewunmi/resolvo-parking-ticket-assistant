@@ -1,4 +1,3 @@
-
 import React from "react";
 import Home from "../pages/Index";
 import Faq from "../pages/FAQ";
@@ -30,7 +29,7 @@ export const mainRoutes = [
     element: <AppealHelp />,
   },
   {
-    path: "council-appeal-hub",
+    path: "local-authorities",
     element: <CouncilAppealHub />,
   },
 ];
