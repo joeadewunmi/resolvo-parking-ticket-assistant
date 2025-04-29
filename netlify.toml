@@ -41,6 +41,18 @@
   to = "/.netlify/functions/parking-seo"
   status = 200
 
+# Special exception for council appeal hub page to prevent it being caught by council patterns
+[[redirects]]
+  from = "/council-appeal-hub"
+  to = "/index.html"
+  status = 200
+
+# Special exception for the new local authorities page
+[[redirects]]
+  from = "/local-authorities"
+  to = "/index.html"
+  status = 200
+
 # Pattern match for known UK councils 
 # This must be BEFORE the fallback SPA redirect to prioritize capturing council routes
 [[redirects]]

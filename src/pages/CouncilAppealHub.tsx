@@ -19,10 +19,10 @@ const CouncilAppealHub = () => {
       <Helmet>
         <title>Council Parking Ticket Appeal Information | Resolvo</title>
         <meta name="description" content="Find information and resources to appeal parking tickets from specific UK councils. Get help with your PCN appeal." />
-        <link rel="canonical" href="https://resolvo.uk/council-appeal-hub" />
+        <link rel="canonical" href="https://resolvo.uk/local-authorities" />
         <meta property="og:title" content="Council Parking Ticket Appeal Information | Resolvo" />
         <meta property="og:description" content="Find information and resources to appeal parking tickets from specific UK councils." />
-        <meta property="og:url" content="https://resolvo.uk/council-appeal-hub" />
+        <meta property="og:url" content="https://resolvo.uk/local-authorities" />
         <meta name="twitter:title" content="Council Parking Ticket Appeal Information | Resolvo" />
         <meta name="twitter:description" content="Find information and resources to appeal parking tickets from specific UK councils." />
       </Helmet>
