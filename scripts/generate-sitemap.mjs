@@ -3,15 +3,19 @@
 
 import fs from 'fs';
 import path from 'path';
-import contentful from 'contentful';
+import { fileURLToPath } from 'url';
+import { createClient } from 'contentful';
 import { councilNames } from './council-slugs.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Initialize Contentful client only if credentials are available
 const client = process.env.VITE_CONTENTFUL_SPACE_ID && process.env.VITE_CONTENTFUL_ACCESS_TOKEN
-  ? contentful.createClient({
+  ? createClient({
       space: process.env.VITE_CONTENTFUL_SPACE_ID,
       accessToken: process.env.VITE_CONTENTFUL_ACCESS_TOKEN,
     })
@@ -135,9 +139,7 @@ const getBlogPosts = async () => {
     const entries = await client.getEntries({
       content_type: 'blogPost',
       limit: 1000,
-      order: '-sys.createdAt',
-      // Only get published entries
-      'sys.status': 'published'
+      order: '-sys.createdAt'
     });
 
     // Filter out any entries without slugs and ensure canonical format

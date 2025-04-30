@@ -91,9 +91,5 @@ console.log("\nTotal councils:", slugs.length);
 console.log("\nArray of all council slugs:");
 console.log(JSON.stringify(slugs.map(item => item.slug), null, 2));
 
-// Export councilNames for use in other files
-module.exports = {
-  councilNames,
-  createSlug,
-  slugs
-}; 
+// Export the variables
+export { councilNames, createSlug, slugs }; 

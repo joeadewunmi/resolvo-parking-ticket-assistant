@@ -31,13 +31,28 @@ const getPostFields = (post: BlogPost) => {
 
 // Helper function to get related posts
 const getRelatedPosts = (posts: BlogPost[], currentPostId: string): BlogPost[] => {
+  console.log('getRelatedPosts function called with posts:', posts);
+  console.log('Current Post ID:', currentPostId);
+  
   const currentPost = posts.find(post => post.sys.id === currentPostId);
+  console.log('Current Post Found:', currentPost);
+  
   if (!currentPost) return [];
 
   const relatedPostRefs = (currentPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
-  return relatedPostRefs
-    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
+  console.log('Related Post Refs in component:', relatedPostRefs);
+  
+  const mappedPosts = relatedPostRefs
+    .map(ref => {
+      console.log('Processing ref:', ref);
+      const foundPost = posts.find(post => post.sys.id === ref.sys.id);
+      console.log('Found post for ref:', foundPost);
+      return foundPost;
+    })
     .filter((post): post is BlogPost => post !== undefined);
+    
+  console.log('Final mapped posts:', mappedPosts);
+  return mappedPosts;
 };
 
 const RelatedPostCard = ({ post }: { post: BlogPost }) => {
