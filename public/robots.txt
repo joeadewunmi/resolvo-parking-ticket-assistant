@@ -3,6 +3,9 @@
 # Explicitly allow all web crawlers
 User-agent: *
 Allow: /
+Allow: /*/$
+Allow: /councils/
+Allow: /councils/*
 
 # Explicit allowance for Bingbot
 User-agent: Bingbot
