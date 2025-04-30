@@ -1,11 +1,11 @@
 import { Entry, EntrySkeletonType, EntryFieldTypes } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
-// Define the skeleton for Author
+// Define the skeleton for Author using correct Field IDs
 export type AuthorSkeleton = EntrySkeletonType<{
-  name: EntryFieldTypes.Symbol;
-  bio?: EntryFieldTypes.Text;
-  avatar?: EntryFieldTypes.AssetLink;
+  authorName: EntryFieldTypes.Symbol;
+  socialLinks?: EntryFieldTypes.Symbol;
+  profilePicture?: EntryFieldTypes.AssetLink;
 }>;
 
 // Define the skeleton for BlogPost
@@ -16,7 +16,7 @@ export type BlogPostSkeleton = EntrySkeletonType<{
   content: EntryFieldTypes.RichText;
   seoDescription?: EntryFieldTypes.Text;
   featuredImage?: EntryFieldTypes.AssetLink;
-  relatedPost?: EntryFieldTypes.AssetLink;
+  relatedPost?: EntryFieldTypes.EntryLink<BlogPostSkeleton>;
   authorName?: EntryFieldTypes.EntryLink<AuthorSkeleton>;
   tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }>;

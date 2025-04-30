@@ -1,30 +1,55 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Entry } from 'contentful';
+import type { BlogPost } from '@/types/contentful';
 import { formatDate } from '@/lib/utils';
+import type { Entry } from 'contentful';
+import { Asset } from 'contentful';
 
-type BlogPostEntry = Entry<any>;
+// Type for safe contentful image
+type SafeContentfulImage = {
+  url: string;
+  title: string;
+} | null;
 
-const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
-  // Safe access helpers using optional chaining and casting
-  const fields = post?.fields as Record<string, any>;
-  const title = (fields?.title as string) || '';
-  const slug = (fields?.slug as string) || '';
-  const excerpt = (fields?.seoDescription as string) || '';
-  const date = (fields?.publishDate as string) || '';
-  
-  // Safely extract featured image if available
-  const featuredImage = fields?.featuredImage?.fields?.file?.url
-    ? `https:${fields.featuredImage.fields.file.url}`
-    : null;
+// Helper function to safely get post fields
+const getPostFields = (post: BlogPost) => {
+  const featuredImage = post?.fields?.featuredImage as Asset | undefined;
+  const fileUrl = featuredImage?.fields?.file?.url;
+  const title = featuredImage?.fields?.title;
+
+  return {
+    title: (post?.fields?.title as string) || '',
+    slug: (post?.fields?.slug as string) || '',
+    excerpt: (post?.fields?.seoDescription as string) || '',
+    date: (post?.fields?.publishDate as string) || '',
+    featuredImage: typeof fileUrl === 'string' ? {
+      url: `https:${fileUrl}`,
+      title: typeof title === 'string' ? title : ''
+    } : null
+  };
+};
+
+// Helper function to get related posts
+const getRelatedPosts = (posts: BlogPost[], currentPostId: string): BlogPost[] => {
+  const currentPost = posts.find(post => post.sys.id === currentPostId);
+  if (!currentPost) return [];
+
+  const relatedPostRefs = (currentPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
+  return relatedPostRefs
+    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
+    .filter((post): post is BlogPost => post !== undefined);
+};
+
+const RelatedPostCard = ({ post }: { post: BlogPost }) => {
+  const { title, slug, excerpt, date, featuredImage } = getPostFields(post);
     
   return (
     <Link to={`/blog/${slug}`} className="block group">
       {featuredImage && (
         <div className="aspect-video w-full overflow-hidden rounded-lg mb-3">
           <img 
-            src={featuredImage}
-            alt={title}
+            src={featuredImage.url}
+            alt={featuredImage.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
         </div>
@@ -37,27 +62,19 @@ const RelatedPostCard = ({ post }: { post: BlogPostEntry }) => {
 };
 
 interface RelatedPostsProps {
-  posts: BlogPostEntry[];
+  posts: BlogPost[];
   currentPostId: string;
 }
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
-  // Get the current post to access its related posts
-  const currentPost = posts.find(post => post.sys.id === currentPostId);
-  const relatedPostRefs = (currentPost?.fields?.relatedPost || []) as Entry<any>[];
-  
-  // Get the full post objects for the related post references
-  const relatedPosts = relatedPostRefs
-    .map(ref => posts.find(post => post.sys.id === ref.sys.id))
-    .filter(Boolean)
-    .slice(0, 3);
+  const relatedPosts = getRelatedPosts(posts, currentPostId);
 
   if (relatedPosts.length === 0) return null;
 
   return (
-    <div className="mt-16 pt-8 border-t border-gray-200">
+    <div className="mt-12">
       <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {relatedPosts.map(post => (
           <RelatedPostCard key={post.sys.id} post={post} />
         ))}
