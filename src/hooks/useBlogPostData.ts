@@ -51,7 +51,7 @@ export const useBlogPostData = (slug: string | undefined): UseBlogPostDataReturn
           setPost(fetchedPost);
 
           // Get the related posts from the post's relatedPost field
-          const relatedPostRefs = (fetchedPost.fields?.['Related Post'] as unknown as Entry<any>[]) || [];
+          const relatedPostRefs = (fetchedPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
           
           // If there are no related posts, fetch some recent posts as fallback
           if (relatedPostRefs.length === 0) {

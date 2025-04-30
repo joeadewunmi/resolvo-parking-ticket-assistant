@@ -16,7 +16,7 @@ export type BlogPostSkeleton = EntrySkeletonType<{
   content: EntryFieldTypes.RichText;
   seoDescription?: EntryFieldTypes.Text;
   featuredImage?: EntryFieldTypes.AssetLink;
-  relatedPost?: EntryFieldTypes.EntryLink<BlogPostSkeleton>;
+  relatedPost?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<BlogPostSkeleton>>;
   authorName?: EntryFieldTypes.EntryLink<AuthorSkeleton>;
   tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }>;

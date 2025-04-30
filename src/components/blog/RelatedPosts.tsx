@@ -34,7 +34,7 @@ const getRelatedPosts = (posts: BlogPost[], currentPostId: string): BlogPost[] =
   const currentPost = posts.find(post => post.sys.id === currentPostId);
   if (!currentPost) return [];
 
-  const relatedPostRefs = (currentPost.fields?.['Related Post'] as unknown as Entry<any>[]) || [];
+  const relatedPostRefs = (currentPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
   return relatedPostRefs
     .map(ref => posts.find(post => post.sys.id === ref.sys.id))
     .filter((post): post is BlogPost => post !== undefined);
