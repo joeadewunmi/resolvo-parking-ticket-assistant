@@ -191,6 +191,7 @@ const BlogPostPage = () => {
       loading={loading}
       post={post}
       relatedPosts={relatedPosts}
+      currentPostId={post?.sys.id || ''}
       slug={slug}
       pageTitle={pageTitle}
       pageDescription={pageDescription}

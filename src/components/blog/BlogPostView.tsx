@@ -12,6 +12,7 @@ interface BlogPostViewProps {
   loading: boolean;
   post: BlogPost | null;
   relatedPosts: BlogPost[];
+  currentPostId: string;
   slug: string | undefined;
   pageTitle: string;
   pageDescription: string;
@@ -33,6 +34,7 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
   loading,
   post,
   relatedPosts,
+  currentPostId,
   slug,
   pageTitle,
   pageDescription,
@@ -86,20 +88,20 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
               </button>
               
               <BlogPostHeader
-                title={getTitle()}        // Use passed prop function
-                subtitle={getSubtitle()}  // Use passed prop function
-                date={getDate()}          // Use passed prop function
-                author={getAuthor()}      // Use passed prop function
-                coverImage={getCoverImage()}// Use passed prop function
-                estimatedReadTime={getEstimatedReadTime(getContent())} // Use passed prop functions
+                title={getTitle()}
+                subtitle={getSubtitle()}
+                date={getDate()}
+                author={getAuthor()}
+                coverImage={getCoverImage()}
+                estimatedReadTime={getEstimatedReadTime(getContent())}
               />
 
               <div className="max-w-3xl mx-auto prose prose-lg prose-primary">
-                {renderRichText(getContent())} // Use passed prop function
+                {renderRichText(getContent())}
               </div>
 
               {relatedPosts.length > 0 && (
-                <RelatedPosts posts={relatedPosts} currentPostId={post.sys.id} /> 
+                <RelatedPosts posts={relatedPosts} currentPostId={currentPostId} /> 
               )}
             </div>
           </>
