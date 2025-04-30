@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getClient } from '@/lib/contentful';
 import type { BlogPost, BlogPostSkeleton } from '@/types/contentful';
+import type { Entry } from 'contentful';
 
 interface UseBlogPostDataReturn {
   post: BlogPost | null;
@@ -15,63 +16,63 @@ export const useBlogPostData = (slug: string | undefined): UseBlogPostDataReturn
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null); // Add error state
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // Reset state when slug changes
     setPost(null);
     setRelatedPosts([]);
     setLoading(true);
     setError(null);
 
     if (!slug) {
-      // Optionally handle missing slug case, e.g., navigate or set error
-      // For now, just stop loading and return empty state
-      setLoading(false); 
-      // navigate('/404'); // Or navigate to a not-found page
+      setLoading(false);
       return;
     }
 
-    let isMounted = true; // Flag to prevent state updates on unmounted component
+    let isMounted = true;
 
     const fetchBlogPost = async () => {
       try {
         const client = getClient();
-        // Fetch the main post
+        // Fetch the main post with related posts included
         const response = await client.getEntries<BlogPostSkeleton>({
           content_type: 'blogPost',
           'fields.slug': slug,
-          include: 2,
+          include: 2, // Include linked entries (related posts)
         });
 
-        if (!isMounted) return; // Exit if component unmounted during fetch
+        if (!isMounted) return;
 
         const fetchedPost = response.items[0];
         if (!fetchedPost) {
-          // Handle post not found - navigate or set specific error
-          // navigate('/404');
           setError(new Error('Blog post not found'));
-          setPost(null); // Ensure post is null
+          setPost(null);
         } else {
           setPost(fetchedPost);
 
-          // Fetch related posts only after finding the main post
-          const allPostsResponse = await client.getEntries<BlogPostSkeleton>({
-            content_type: 'blogPost',
-            order: ['-fields.publishDate'],
-            include: 2, // Adjust include based on what RelatedPosts needs
-          });
+          // Get the related posts from the post's relatedPost field
+          const relatedPostRefs = (fetchedPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
           
-          if (!isMounted) return; // Check again after second fetch
-
-          const filteredRelatedPosts = allPostsResponse.items.filter(p => p.sys.id !== fetchedPost.sys.id);
-          setRelatedPosts(filteredRelatedPosts);
+          // If there are no related posts, fetch some recent posts as fallback
+          if (relatedPostRefs.length === 0) {
+            const allPostsResponse = await client.getEntries<BlogPostSkeleton>({
+              content_type: 'blogPost',
+              order: ['-fields.publishDate'],
+              limit: 3,
+              'sys.id[ne]': fetchedPost.sys.id,
+              include: 2,
+            });
+            
+            if (!isMounted) return;
+            setRelatedPosts(allPostsResponse.items);
+          } else {
+            setRelatedPosts(relatedPostRefs as BlogPost[]);
+          }
         }
       } catch (err) {
         if (!isMounted) return;
         console.error('Error fetching blog post:', err);
         setError(err instanceof Error ? err : new Error('Failed to fetch blog post'));
-        // Optionally navigate on error: navigate('/error');
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -81,11 +82,10 @@ export const useBlogPostData = (slug: string | undefined): UseBlogPostDataReturn
 
     fetchBlogPost();
 
-    // Cleanup function to set isMounted flag to false when component unmounts
     return () => {
       isMounted = false;
     };
-  }, [slug, navigate]); // Keep navigate in dependency array if used for navigation on error/not found
+  }, [slug, navigate]);
 
   return { post, relatedPosts, loading, error };
 }; 
