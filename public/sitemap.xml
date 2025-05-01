@@ -4,7 +4,7 @@
     <loc>https://resolvo.uk/</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>1</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/faq</loc>
@@ -51,8 +51,8 @@
   <url>
     <loc>https://resolvo.uk/am-parking-services</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/anpr-365</loc>
@@ -63,8 +63,8 @@
   <url>
     <loc>https://resolvo.uk/apcoa-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/atlas-enforcement</loc>
@@ -75,8 +75,8 @@
   <url>
     <loc>https://resolvo.uk/azure-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/bay-sentry-solutions</loc>
@@ -87,8 +87,8 @@
   <url>
     <loc>https://resolvo.uk/britannia-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/capital-car-park-control</loc>
@@ -147,8 +147,8 @@
   <url>
     <loc>https://resolvo.uk/elite-car-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/eternity-fire-security</loc>
@@ -165,8 +165,8 @@
   <url>
     <loc>https://resolvo.uk/fisc-parking-solutions</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/flashpark</loc>
@@ -183,32 +183,32 @@
   <url>
     <loc>https://resolvo.uk/green-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/highview-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/horizon-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/jd-parking-consultants</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/key-parking-uk</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/ldk-security-group</loc>
@@ -225,14 +225,14 @@
   <url>
     <loc>https://resolvo.uk/lodge-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/met-parking-services</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/minster-baywatch</loc>
@@ -243,8 +243,8 @@
   <url>
     <loc>https://resolvo.uk/mk1-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/national-car-parks</loc>
@@ -261,8 +261,8 @@
   <url>
     <loc>https://resolvo.uk/observices-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/ocs</loc>
@@ -273,26 +273,26 @@
   <url>
     <loc>https://resolvo.uk/p4-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/parking-collection-services</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/parking-control-solutions</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/parkingeye</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/parkmaven</loc>
@@ -315,8 +315,8 @@
   <url>
     <loc>https://resolvo.uk/private-parking-solutions</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/q-park</loc>
@@ -327,8 +327,8 @@
   <url>
     <loc>https://resolvo.uk/rcp-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/rfc-car-park-management</loc>
@@ -339,14 +339,14 @@
   <url>
     <loc>https://resolvo.uk/rmc-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/saba-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/safe-duty</loc>
@@ -363,14 +363,14 @@
   <url>
     <loc>https://resolvo.uk/secure-parking-solutions</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/select-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/shield-security-services</loc>
@@ -381,14 +381,14 @@
   <url>
     <loc>https://resolvo.uk/smart-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/spring-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/total-car-parks</loc>
@@ -399,26 +399,26 @@
   <url>
     <loc>https://resolvo.uk/total-parking-solutions</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/uk-parking-administration</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/uk-parking-enforcement</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/ukpc</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/university-of-edinburgh</loc>
@@ -435,8 +435,8 @@
   <url>
     <loc>https://resolvo.uk/westfield-parking</loc>
     <lastmod>2025-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://resolvo.uk/workflow-dynamics</loc>
@@ -699,8 +699,11 @@
   <url>
     <loc>https://resolvo.uk/camden</loc>
     <lastmod>2025-05-01</lastmod>
-   Sitemap successfully written to /Users/user/Desktop/resolvo-parking-ticket-assistant/public/sitemap.xml
-.uk/cannock-chase</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://resolvo.uk/cannock-chase</loc>
     <lastmod>2025-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

@@ -158,17 +158,12 @@ const getBlogPosts = async () => {
 // Generate sitemap XML
 const generateSitemap = async () => {
   try {
-    console.log('Starting sitemap generation...');
     const staticRoutes = getStaticRoutes();
-    console.log(`Added ${staticRoutes.length} static routes to sitemap`);
-    
     const councilRoutes = getCouncilRoutes();
-    console.log(`Added ${councilRoutes.length} council routes to sitemap`);
-    
     let blogPosts = [];
+    
     try {
       blogPosts = await getBlogPosts();
-      console.log(`Added ${blogPosts.length} blog posts to sitemap`);
     } catch (error) {
       console.error('Error getting blog posts, continuing with empty blog posts list');
     }
@@ -179,7 +174,6 @@ const generateSitemap = async () => {
       ...blogPosts
     ];
 
-    console.log(`Total sitemap URLs: ${allRoutes.length}`);
     const domain = 'https://resolvo.uk';
     const today = new Date().toISOString().split('T')[0];
 
@@ -203,102 +197,37 @@ const generateSitemap = async () => {
       } else if (route === '/appeal-hub') {
         priority = 0.9;
         changefreq = 'weekly';
-      } else if (route.startsWith('/uk') || route.includes('parking')) {
-        // Parking company pages are important for SEO
+      } else if (route === '/all-parking-services') {
         priority = 0.9;
         changefreq = 'weekly';
       }
 
       xml += '  <url>\n';
       xml += `    <loc>${domain}${route}</loc>\n`;
-      xml += `    <lastmod>${today}</lastmod>\n`;
+      xml += `    <lastmod>2025-05-01</lastmod>\n`;
       xml += `    <changefreq>${changefreq}</changefreq>\n`;
-      xml += `    <priority>${priority.toFixed(1)}</priority>\n`;
+      xml += `    <priority>${priority}</priority>\n`;
       xml += '  </url>\n';
     });
 
     xml += '</urlset>';
-    return xml;
+
+    const outputPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+    fs.writeFileSync(outputPath, xml);
+
+    // Log statistics after writing the file
+    console.log('\nSitemap Generation Statistics:');
+    console.log(`- Static Routes: ${staticRoutes.length}`);
+    console.log(`- Council Routes: ${councilRoutes.length}`);
+    console.log(`- Blog Posts: ${blogPosts.length}`);
+    console.log(`- Total URLs: ${allRoutes.length}`);
+    console.log(`\nSitemap successfully written to ${outputPath}`);
+
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    // Create a minimal sitemap with just the homepage and critical pages
-    const domain = 'https://resolvo.uk';
-    const today = new Date().toISOString().split('T')[0];
-    
-    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-    xml += '  <url>\n';
-    xml += `    <loc>${domain}/</loc>\n`;
-    xml += `    <lastmod>${today}</lastmod>\n`;
-    xml += '    <changefreq>weekly</changefreq>\n';
-    xml += '    <priority>1.0</priority>\n';
-    xml += '  </url>\n';
-    // Always include critical parking pages even in fallback
-    xml += '  <url>\n';
-    xml += `    <loc>${domain}/ukpc</loc>\n`;
-    xml += `    <lastmod>${today}</lastmod>\n`;
-    xml += '    <changefreq>weekly</changefreq>\n';
-    xml += '    <priority>0.9</priority>\n';
-    xml += '  </url>\n';
-    xml += '  <url>\n';
-    xml += `    <loc>${domain}/euro-car-parks</loc>\n`;
-    xml += `    <lastmod>${today}</lastmod>\n`;
-    xml += '    <changefreq>weekly</changefreq>\n';
-    xml += '    <priority>0.9</priority>\n';
-    xml += '  </url>\n';
-    xml += '</urlset>';
-    
-    console.log('Generated fallback minimal sitemap due to errors');
-    return xml;
+    process.exit(1);
   }
 };
 
-// Determine if we're running on Netlify
-const isNetlify = !!process.env.NETLIFY;
-
-// Get output directory - always write to public since we're running before the build
-const getOutputDirectory = () => {
-  // Always write to the public directory since the build process will copy it to dist
-  return path.join(__dirname, '../public');
-};
-
-// Main execution
-async function main() {
-  try {
-    console.log('Starting sitemap generation script...');
-    console.log(`Running in ${isNetlify ? 'Netlify' : 'local'} environment`);
-    
-    const sitemap = await generateSitemap();
-    const outputDir = getOutputDirectory();
-    
-    console.log(`Writing sitemap to ${outputDir}`);
-    
-    // Ensure output directory exists
-    if (!fs.existsSync(outputDir)) {
-      console.log(`Creating output directory: ${outputDir}`);
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-
-    // Write sitemap file
-    const sitemapPath = path.join(outputDir, 'sitemap.xml');
-    fs.writeFileSync(sitemapPath, sitemap, 'utf8');
-
-    console.log(`Sitemap successfully written to ${sitemapPath}`);
-    process.exit(0); // Explicitly exit with success
-  } catch (error) {
-    console.error('Critical error in sitemap generation:', error);
-    // Even in case of critical error, exit with success to prevent build failure
-    // This way the build completes but we just might not have a sitemap
-    process.exit(0); 
-  }
-}
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (error) => {
-  console.error('Unhandled promise rejection in sitemap generator:', error);
-  // Exit with success to prevent build failure
-  process.exit(0);
-});
-
-// Run the main function
-main();
+// Run the generator
+generateSitemap();
