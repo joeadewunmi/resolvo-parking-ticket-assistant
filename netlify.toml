@@ -53,6 +53,12 @@
   to = "/index.html"
   status = 200
 
+# Special exception for the councils list page
+[[redirects]]
+  from = "/councils"
+  to = "/index.html"
+  status = 200
+
 # Pattern match for known UK councils 
 # This must be BEFORE the fallback SPA redirect to prioritize capturing council routes
 [[redirects]]

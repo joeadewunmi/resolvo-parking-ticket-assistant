@@ -30,7 +30,8 @@ const getStaticRoutes = () => {
     '/appeal-hub',
     '/privacy-policy',
     '/blog',
-    '/appeal-help'
+    '/appeal-help',
+    '/councils'
   ];
 
   // Canonical parking company routes - verified and cleaned list
@@ -196,7 +197,7 @@ const generateSitemap = async () => {
       } else if (route.startsWith('/blog/')) {
         priority = 0.9;
         changefreq = 'weekly';
-      } else if (route === '/blog') {
+      } else if (route === '/blog' || route === '/councils') {
         priority = 0.9;
         changefreq = 'daily';
       } else if (route === '/appeal-hub') {

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -34,6 +33,9 @@ const Navbar = () => {
               </Link>
               <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 FAQs
+              </Link>
+              <Link to="/councils" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+                Councils
               </Link>
               <a
                 href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
@@ -79,6 +81,13 @@ const Navbar = () => {
               onClick={toggleMenu}
             >
               FAQs
+            </Link>
+            <Link
+              to="/councils"
+              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
+              onClick={toggleMenu}
+            >
+              Councils
             </Link>
             <a
               href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"

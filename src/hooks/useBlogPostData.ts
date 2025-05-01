@@ -50,16 +50,48 @@ export const useBlogPostData = (slug: string | undefined): UseBlogPostDataReturn
         } else {
           setPost(fetchedPost);
 
-          // Get the related posts from the post's relatedPost field
-          console.log('Blog Post Fields:', fetchedPost.fields);
-          console.log('Related Post Field:', fetchedPost.fields?.relatedPost);
+          // Add detailed logging
+          console.log('=== BLOG POST DEBUG ===');
+          console.log('Fetched Post:', fetchedPost);
+          console.log('Related Posts Field:', fetchedPost.fields?.relatedPost);
           
-          const relatedPostRefs = (fetchedPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
-          console.log('Related Post Refs:', relatedPostRefs);
-          console.log('Related Post Refs Length:', relatedPostRefs.length);
+          // Get the related posts - handle as Entry References array
+          const relatedPostLinks = fetchedPost.fields?.relatedPost || [];
           
-          // If there are no related posts, fetch some recent posts as fallback
-          if (relatedPostRefs.length === 0) {
+          if (relatedPostLinks.length > 0) {
+            // Since include: 2 is set, these should be resolved entries
+            const resolvedPosts = relatedPostLinks
+              .filter(ref => {
+                if (!ref || typeof ref !== 'object') return false;
+                
+                // Check if it's a resolved entry
+                if ('sys' in ref && 'fields' in ref) {
+                  return ref.sys?.type === 'Entry' && 
+                         ref.sys?.contentType?.sys?.id === 'blogPost' &&
+                         !!ref.fields?.title;
+                }
+                return false;
+              })
+              .map(ref => ref as unknown as BlogPost);
+
+            console.log('Resolved Posts:', resolvedPosts);
+            if (resolvedPosts.length > 0) {
+              setRelatedPosts(resolvedPosts);
+            } else {
+              // If no valid resolved posts, fetch fallback
+              const fallbackPosts = await client.getEntries<BlogPostSkeleton>({
+                content_type: 'blogPost',
+                order: ['-fields.publishDate'],
+                limit: 3,
+                'sys.id[ne]': fetchedPost.sys.id,
+                include: 2,
+              });
+              
+              if (!isMounted) return;
+              setRelatedPosts(fallbackPosts.items as unknown as BlogPost[]);
+            }
+          } else {
+            // If no related posts, fetch recent posts as fallback
             const allPostsResponse = await client.getEntries<BlogPostSkeleton>({
               content_type: 'blogPost',
               order: ['-fields.publishDate'],
@@ -69,9 +101,7 @@ export const useBlogPostData = (slug: string | undefined): UseBlogPostDataReturn
             });
             
             if (!isMounted) return;
-            setRelatedPosts(allPostsResponse.items);
-          } else {
-            setRelatedPosts(relatedPostRefs as BlogPost[]);
+            setRelatedPosts(allPostsResponse.items as unknown as BlogPost[]);
           }
         }
       } catch (err) {

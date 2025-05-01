@@ -5,6 +5,7 @@ import Blog from "../pages/Blog";
 import BlogPost from "../pages/BlogPost";
 import AppealHelp from "../pages/AppealHub";
 import CouncilAppealHub from "../pages/CouncilAppealHub";
+import CouncilList from "../pages/CouncilList";
 
 // Main site routes
 export const mainRoutes = [
@@ -31,5 +32,9 @@ export const mainRoutes = [
   {
     path: "local-authorities",
     element: <CouncilAppealHub />,
+  },
+  {
+    path: "councils",
+    element: <CouncilList />,
   },
 ];

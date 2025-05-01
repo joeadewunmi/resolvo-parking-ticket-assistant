@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import type { BlogPost } from '@/types/contentful';
 import { formatDate } from '@/lib/utils';
-import type { Entry } from 'contentful';
 import { Asset } from 'contentful';
 
 // Type for safe contentful image
@@ -27,32 +26,6 @@ const getPostFields = (post: BlogPost) => {
       title: typeof title === 'string' ? title : ''
     } : null
   };
-};
-
-// Helper function to get related posts
-const getRelatedPosts = (posts: BlogPost[], currentPostId: string): BlogPost[] => {
-  console.log('getRelatedPosts function called with posts:', posts);
-  console.log('Current Post ID:', currentPostId);
-  
-  const currentPost = posts.find(post => post.sys.id === currentPostId);
-  console.log('Current Post Found:', currentPost);
-  
-  if (!currentPost) return [];
-
-  const relatedPostRefs = (currentPost.fields?.relatedPost as unknown as Entry<any>[]) || [];
-  console.log('Related Post Refs in component:', relatedPostRefs);
-  
-  const mappedPosts = relatedPostRefs
-    .map(ref => {
-      console.log('Processing ref:', ref);
-      const foundPost = posts.find(post => post.sys.id === ref.sys.id);
-      console.log('Found post for ref:', foundPost);
-      return foundPost;
-    })
-    .filter((post): post is BlogPost => post !== undefined);
-    
-  console.log('Final mapped posts:', mappedPosts);
-  return mappedPosts;
 };
 
 const RelatedPostCard = ({ post }: { post: BlogPost }) => {
@@ -82,15 +55,16 @@ interface RelatedPostsProps {
 }
 
 const RelatedPosts = ({ posts, currentPostId }: RelatedPostsProps) => {
-  const relatedPosts = getRelatedPosts(posts, currentPostId);
+  // No need for getRelatedPosts function anymore as posts are already resolved
+  // The posts prop now contains the resolved related posts from useBlogPostData
 
-  if (relatedPosts.length === 0) return null;
+  if (posts.length === 0) return null;
 
   return (
     <div className="mt-12">
       <h2 className="text-2xl font-bold mb-6">Related Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {relatedPosts.map(post => (
+        {posts.map(post => (
           <RelatedPostCard key={post.sys.id} post={post} />
         ))}
       </div>
