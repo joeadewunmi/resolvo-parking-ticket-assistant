@@ -37,4 +37,8 @@ export const mainRoutes = [
     path: "councils",
     element: <CouncilList />,
   },
+  {
+    path: "council-appeal-hub",
+    element: <CouncilAppealHub />,
+  },
 ];
