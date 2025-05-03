@@ -57,11 +57,6 @@ const Footer = () => {
                   Councils
                 </Link>
               </li>
-              <li>
-                <Link to="/appeal-help" className="text-sm hover:text-accent">
-                  Private Company Appeals
-                </Link>
-              </li>
             </ul>
           </div>
           <div>
