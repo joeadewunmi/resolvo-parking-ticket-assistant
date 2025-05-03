@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -90,9 +91,9 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <img 
-                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
+                  src="/lovable-uploads/687648e2-32e1-416c-84d6-090d70f1482e.png"
                   alt="TikTok"
-                  className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
+                  className="h-5 w-5 mr-2"
                 />
                 Follow us on TikTok
               </a>
