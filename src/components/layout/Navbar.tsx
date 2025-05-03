@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import TrackingButton from "@/components/ui/TrackingButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,70 +40,59 @@ const Navbar = () => {
               <Link to="/councils" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
                 Councils
               </Link>
-              <a
+              <TrackingButton
                 href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-                target="_blank"
-                rel="noopener noreferrer"
+                eventName="appeal_click"
+                eventCategory="engagement"
+                eventLabel="navbar_appeal_button"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90"
               >
-                <Button>Appeal now</Button>
-              </a>
+                Appeal now
+              </TrackingButton>
             </div>
           </div>
-
-          <div className="flex items-center sm:hidden">
+          
+          <div className="-mr-2 flex items-center sm:hidden">
             <button
               onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-900 hover:text-accent"
+              type="button"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100"
+              aria-controls="mobile-menu"
+              aria-expanded={isOpen}
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <span className="sr-only">Open main menu</span>
+              {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {isOpen && (
-        <div className="sm:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link
-              to="/"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
-              onClick={toggleMenu}
-            >
-              Home
-            </Link>
-            <Link
-              to="/blog"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
-              onClick={toggleMenu}
-            >
-              Blog
-            </Link>
-            <Link
-              to="/faq"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
-              onClick={toggleMenu}
-            >
-              FAQs
-            </Link>
-            <Link
-              to="/councils"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-accent"
-              onClick={toggleMenu}
-            >
-              Councils
-            </Link>
-            <a
-              href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block px-3 py-2"
-              onClick={toggleMenu}
-            >
-              <Button className="w-full">Appeal now</Button>
-            </a>
-          </div>
+      {/* Mobile menu, show/hide based on menu state */}
+      <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`} id="mobile-menu">
+        <div className="pt-2 pb-3 space-y-1">
+          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+            Home
+          </Link>
+          <Link to="/blog" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+            Blog
+          </Link>
+          <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+            FAQs
+          </Link>
+          <Link to="/councils" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+            Councils
+          </Link>
+          <TrackingButton
+            href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+            eventName="appeal_click"
+            eventCategory="engagement"
+            eventLabel="mobile_appeal_button"
+            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-50"
+          >
+            Appeal now
+          </TrackingButton>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

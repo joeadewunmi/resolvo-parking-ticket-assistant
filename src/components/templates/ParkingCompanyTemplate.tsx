@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
 import { Helmet } from "react-helmet-async";
+import TrackingButton from "@/components/ui/TrackingButton";
 
 interface ParkingCompanyTemplateProps {
   companyName: string;
@@ -42,14 +43,15 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
                 Got a {companyName} ticket? Get a free appeal written in minutes to help you fight it.
               </p>
               <div className="mt-8">
-                <a
+                <TrackingButton
                   href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  eventName="appeal_click"
+                  eventCategory="engagement"
+                  eventLabel={`${companySlug}_hero_section`}
                   className="inline-flex items-center px-8 py-4 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                 >
                   Appeal now
-                </a>
+                </TrackingButton>
                 <p className="mt-2 text-sm text-primary/70 font-bold">Used by 900+ users </p>
                 <p className="mt-1 text-sm text-primary/70">Requires ChatGPT login</p>
               </div>
@@ -96,14 +98,15 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
                 Resolvo is trained on the latest UK parking laws, including the rules {companyName} must follow as a member of the British Parking Association.
               </p>
               <div className="mt-8">
-                <a
+                <TrackingButton
                   href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  eventName="appeal_click"
+                  eventCategory="engagement"
+                  eventLabel={`${companySlug}_appeal_section`}
                   className="inline-flex items-center px-6 py-3 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300"
                 >
                   Appeal now
-                </a>
+                </TrackingButton>
               </div>
             </div>
           </div>
@@ -146,14 +149,15 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
             </div>
           </div>
           <div className="text-center mt-16">
-            <a
+            <TrackingButton
               href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-              target="_blank"
-              rel="noopener noreferrer"
+              eventName="appeal_click"
+              eventCategory="engagement"
+              eventLabel={`${companySlug}_steps_section`}
               className="inline-flex items-center px-8 py-4 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Appeal now
-            </a>
+            </TrackingButton>
           </div>
         </div>
       </div>

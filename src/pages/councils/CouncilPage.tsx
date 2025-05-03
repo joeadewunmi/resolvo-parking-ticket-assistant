@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import CouncilTemplate from '@/components/templates/CouncilTemplate';
 import { generateCouncilFaqs } from '@/data/councilFaqs';
+import NotFound from '@/pages/NotFound';
+import { isValidCouncil } from '@/utils/validation';
 
 // Helper function to format council slug to a display name
 const formatCouncilName = (slug: string): string => {
@@ -16,8 +18,10 @@ const CouncilPage = () => {
   // Get the council slug from the URL parameters
   const { councilSlug } = useParams<{ councilSlug: string }>();
   
-  if (!councilSlug) {
-    return <div>Council not found</div>;
+  // Handle invalid or missing slug
+  if (!councilSlug || !isValidCouncil(councilSlug)) {
+    console.log(`Invalid council slug: ${councilSlug}`);
+    return <NotFound />;
   }
   
   // Format the council name from the slug

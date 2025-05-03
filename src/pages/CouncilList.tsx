@@ -36,6 +36,23 @@ const CouncilList = () => {
           name="description" 
           content="Find information about parking ticket appeals for all UK councils. Get help with your council parking ticket appeal."
         />
+        <link rel="canonical" href="https://resolvo.uk/councils" />
+        
+        {/* Open Graph Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://resolvo.uk/councils" />
+        <meta property="og:title" content="UK Council Parking Appeals | Resolvo" />
+        <meta property="og:description" content="Find information about parking ticket appeals for all UK councils. Get help with your council parking ticket appeal." />
+        <meta property="og:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
+        <meta property="og:locale" content="en_GB" />
+        
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="resolvo.uk" />
+        <meta property="twitter:url" content="https://resolvo.uk/councils" />
+        <meta name="twitter:title" content="UK Council Parking Appeals | Resolvo" />
+        <meta name="twitter:description" content="Find information about parking ticket appeals for all UK councils. Get help with your council parking ticket appeal." />
+        <meta name="twitter:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -71,13 +88,13 @@ const CouncilList = () => {
         </div>
 
         {/* Alphabet navigation */}
-        <div className="sticky bottom-0 bg-white shadow-lg mt-8 p-4 rounded-lg">
-          <div className="flex flex-wrap justify-center gap-2">
+        <div className="sticky bottom-4 bg-white rounded-lg shadow-lg p-3 mt-8 overflow-x-auto">
+          <div className="flex justify-center space-x-2">
             {sortedLetters.map((letter) => (
               <a
                 key={letter}
                 href={`#${letter}`}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors duration-200"
+                className="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors"
               >
                 {letter}
               </a>
