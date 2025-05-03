@@ -8,5 +8,6 @@
 /councils             /index.html   200
 /privacy-policy       /index.html   200
 
-# All other routes should 404 if they aren't handled by netlify.toml
-/*                    /404.html     404
+# Changed the fallback in this file to also point to the SPA
+# Netlify.toml should still handle the final 404 and specific redirects
+/*                    /index.html     200
