@@ -53,8 +53,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/local-authorities" className="text-sm hover:text-accent">
-                  Council PCN Appeals
+                <Link to="/councils" className="text-sm hover:text-accent">
+                  Councils
                 </Link>
               </li>
               <li>
