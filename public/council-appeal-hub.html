@@ -54,7 +54,7 @@
             <a href="/blog" class="px-3 py-2 text-sm font-medium text-gray-900 hover:text-accent">Blog</a>
             <a href="/faq" class="px-3 py-2 text-sm font-medium text-gray-900 hover:text-accent">FAQs</a>
             <a href="/councils" class="px-3 py-2 text-sm font-medium text-gray-900 hover:text-accent">Councils</a>
-            <a href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90">Appeal now</a>
+            <a href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90" onclick="gtag('event', 'appeal_click', { 'event_category': 'engagement', 'event_label': 'council_appeal_hub_navbar' });">Appeal now</a>
           </nav>
         </div>
       </div>
@@ -77,57 +77,118 @@
           <p class="text-lg text-muted-foreground max-w-3xl mx-auto">
             Select your local council from the list below to find specific information and resources for appealing parking charge notices (PCNs).
           </p>
+          <div class="mt-8">
+            <a href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo" class="px-6 py-3 bg-primary text-white rounded-lg" onclick="gtag('event', 'appeal_click', { 'event_category': 'engagement', 'event_label': 'council_appeal_hub_hero' });">
+              Appeal now
+            </a>
+          </div>
         </div>
 
         <!-- Council List Section -->
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Council cards will be populated here -->
-          <!-- This is a simplified static version -->
-          <div class="bg-card hover:shadow-lg transition-shadow duration-200 rounded-lg border bg-card shadow-sm">
-            <div class="p-6">
-              <h2 class="font-medium text-lg mb-3">England - Metropolitan Boroughs</h2>
-              <ul class="space-y-3">
-                <li><a href="/barnsley" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Barnsley</a></li>
-                <li><a href="/birmingham" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Birmingham</a></li>
-                <li><a href="/leeds" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Leeds</a></li>
-                <li><a href="/liverpool" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Liverpool</a></li>
-                <li><a href="/manchester" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Manchester</a></li>
-                <li><a href="/newcastle-upon-tyne" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Newcastle Upon Tyne</a></li>
-                <li><a href="/sheffield" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Sheffield</a></li>
-                <li><a href="/more" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">View more...</a></li>
-              </ul>
+        <div class="max-w-6xl mx-auto">
+          <div class="bg-white rounded-lg shadow-sm p-6 md:p-8">
+            <!-- A section -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-primary mb-4" id="A">A</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/aberdeen-city" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Aberdeen City</a>
+                <a href="/aberdeenshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Aberdeenshire</a>
+                <a href="/adur" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Adur</a>
+                <a href="/amber-valley" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Amber Valley</a>
+                <a href="/angus" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Angus</a>
+                <a href="/antrim-and-newtownabbey" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Antrim and Newtownabbey</a>
+                <a href="/ards-and-north-down" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Ards and North Down</a>
+                <a href="/argyll-and-bute" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Argyll and Bute</a>
+                <a href="/armagh-city-banbridge-and-craigavon" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Armagh City, Banbridge and Craigavon</a>
+                <a href="/arun" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Arun</a>
+                <a href="/ashfield" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Ashfield</a>
+                <a href="/ashford" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Ashford</a>
+              </div>
+            </div>
+            
+            <!-- B section -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-primary mb-4" id="B">B</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/barking-and-dagenham" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Barking and Dagenham</a>
+                <a href="/barnet" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Barnet</a>
+                <a href="/barnsley" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Barnsley</a>
+                <a href="/belfast" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Belfast</a>
+                <a href="/bexley" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bexley</a>
+                <a href="/birmingham" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Birmingham</a>
+                <a href="/blaenau-gwent" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Blaenau Gwent</a>
+                <a href="/bolton" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bolton</a>
+                <a href="/bradford" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bradford</a>
+                <a href="/brent" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Brent</a>
+                <a href="/bridgend" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bridgend</a>
+                <a href="/bromley" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bromley</a>
+                <a href="/bury" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Bury</a>
+              </div>
+            </div>
+
+            <!-- C section -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-primary mb-4" id="C">C</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/caerphilly" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Caerphilly</a>
+                <a href="/calderdale" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Calderdale</a>
+                <a href="/camden" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Camden</a>
+                <a href="/cardiff" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Cardiff</a>
+                <a href="/carmarthenshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Carmarthenshire</a>
+                <a href="/causeway-coast-and-glens" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Causeway Coast and Glens</a>
+                <a href="/ceredigion" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Ceredigion</a>
+                <a href="/clackmannanshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Clackmannanshire</a>
+                <a href="/conwy" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Conwy</a>
+                <a href="/coventry" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Coventry</a>
+                <a href="/croydon" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Croydon</a>
+              </div>
+            </div>
+
+            <!-- D section -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-primary mb-4" id="D">D</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/denbighshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Denbighshire</a>
+                <a href="/derry-city-and-strabane" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Derry City and Strabane</a>
+                <a href="/dudley" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Dudley</a>
+                <a href="/dumfries-and-galloway" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Dumfries and Galloway</a>
+                <a href="/dundee-city" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Dundee City</a>
+              </div>
+            </div>
+
+            <!-- E section -->
+            <div class="mb-8">
+              <h2 class="text-2xl font-bold text-primary mb-4" id="E">E</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a href="/ealing" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Ealing</a>
+                <a href="/east-ayrshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">East Ayrshire</a>
+                <a href="/east-dunbartonshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">East Dunbartonshire</a>
+                <a href="/east-lothian" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">East Lothian</a>
+                <a href="/east-renfrewshire" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">East Renfrewshire</a>
+                <a href="/edinburgh" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Edinburgh</a>
+                <a href="/enfield" class="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary">Enfield</a>
+              </div>
+            </div>
+
+            <!-- View all prompt -->
+            <div class="text-center mt-12">
+              <p class="text-primary">
+                <a href="/councils" class="font-medium hover:underline">
+                  View complete A-Z council listing
+                </a>
+              </p>
             </div>
           </div>
 
-          <div class="bg-card hover:shadow-lg transition-shadow duration-200 rounded-lg border bg-card shadow-sm">
-            <div class="p-6">
-              <h2 class="font-medium text-lg mb-3">London Boroughs</h2>
-              <ul class="space-y-3">
-                <li><a href="/camden" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Camden</a></li>
-                <li><a href="/croydon" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Croydon</a></li>
-                <li><a href="/islington" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Islington</a></li>
-                <li><a href="/kensington-and-chelsea" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Kensington and Chelsea</a></li>
-                <li><a href="/lambeth" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Lambeth</a></li>
-                <li><a href="/tower-hamlets" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Tower Hamlets</a></li>
-                <li><a href="/westminster" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Westminster</a></li>
-                <li><a href="/more" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">View more...</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="bg-card hover:shadow-lg transition-shadow duration-200 rounded-lg border bg-card shadow-sm">
-            <div class="p-6">
-              <h2 class="font-medium text-lg mb-3">Counties & Unitary Authorities</h2>
-              <ul class="space-y-3">
-                <li><a href="/bristol" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Bristol</a></li>
-                <li><a href="/cornwall" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Cornwall</a></li>
-                <li><a href="/leicester" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Leicester</a></li>
-                <li><a href="/nottingham" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Nottingham</a></li>
-                <li><a href="/plymouth" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Plymouth</a></li>
-                <li><a href="/surrey" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">Surrey</a></li>
-                <li><a href="/york" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">York</a></li>
-                <li><a href="/councils" class="group flex items-center text-foreground hover:text-primary transition-colors duration-200">View all councils</a></li>
-              </ul>
+          <!-- Alphabet navigation -->
+          <div class="sticky bottom-4 bg-white rounded-lg shadow-lg p-3 mt-8 overflow-x-auto">
+            <div class="flex justify-center space-x-2">
+              <a href="#A" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">A</a>
+              <a href="#B" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">B</a>
+              <a href="#C" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">C</a>
+              <a href="#D" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">D</a>
+              <a href="#E" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">E</a>
+              <a href="/councils" class="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors">...</a>
             </div>
           </div>
         </div>
