@@ -5,29 +5,30 @@
   to = "/index.html"
   status = 200
 
-[[redirects]]
-  from = "/local-authorities"
-  to = "/index.html"
-  status = 200
-  force = true
+# We now serve these pages directly as static files, so we don't need these redirects
+# [[redirects]]
+#   from = "/local-authorities"
+#   to = "/index.html"
+#   status = 200
+#   force = true
 
-[[redirects]]
-  from = "/councils"
-  to = "/index.html"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/councils"
+#   to = "/index.html"
+#   status = 200
+#   force = true
 
-[[redirects]]
-  from = "/council-appeal-hub"
-  to = "/index.html"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/council-appeal-hub"
+#   to = "/index.html"
+#   status = 200
+#   force = true
 
-[[redirects]]
-  from = "/council-list"
-  to = "/index.html"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/council-list"
+#   to = "/index.html"
+#   status = 200
+#   force = true
 
 [[redirects]]
   from = "/appeal-help"
@@ -97,29 +98,16 @@
   status = 200
 
 # Known council patterns - STRICT matching only
+# Removed the conditions that excluded hub pages since these are now static files
 [[redirects]]
   from = "/*-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Path = [
-    "/*-council",
-    "!local-authorities",
-    "!councils",
-    "!council-appeal-hub",
-    "!council-list"
-  ]}
 
 [[redirects]]
   from = "/*-city-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Path = [
-    "/*-city-council",
-    "!local-authorities",
-    "!councils",
-    "!council-appeal-hub",
-    "!council-list"
-  ]}
 
 [[redirects]]
   from = "/city-of-*"

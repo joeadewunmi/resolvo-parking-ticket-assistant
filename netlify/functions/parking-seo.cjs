@@ -72,7 +72,7 @@ function generateParkingPageHTML(company) {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <a href="/" class="flex items-center">
-            <img src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" alt="Resolvo Logo" class="h-8">
+            <img src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" alt="Resolvo Logo" class="h-8" width="32" height="32">
           </a>
         </div>
       </div>
@@ -145,6 +145,26 @@ const knownCompanies = {
 };
 
 /**
+ * Validates if a slug represents a valid parking company
+ * This is crucial for preventing random URLs from generating landing pages
+ */
+function isValidParkingCompany(slug) {
+  // Check if it's in our known companies list
+  if (knownCompanies[slug]) return true;
+  
+  // Check if it matches common parking company patterns
+  const validPatterns = [
+    /-parking$/,           // ends with -parking
+    /-car-park$/,          // ends with -car-park
+    /-car-parks$/,         // ends with -car-parks
+    /^park-/,              // starts with park-
+    /-park$/               // ends with -park
+  ];
+  
+  return validPatterns.some(pattern => pattern.test(slug));
+}
+
+/**
  * Format slug to company name if not in our known list
  * Converts slugs like "parking-collection-services" to "Parking Collection Services"
  */
@@ -164,33 +184,70 @@ function formatCompanyName(slug) {
  * The main Netlify Function handler
  */
 exports.handler = async (event) => {
-  // Get path from event
-  const path = event.path;
-  
-  // Extract the slug - remove leading slash and any trailing slashes
-  const slug = path.replace(/^\//, '').replace(/\/$/, '');
-  
-  // Create company data
-  const companyName = formatCompanyName(slug);
-  const company = { name: companyName, slug };
-  
-  // Check user agent to identify search engine bots
-  const userAgent = event.headers['user-agent'] || '';
-  const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(userAgent);
-  
-  // Cache duration - longer for bots to reduce function invocations
-  const cacheDuration = isBot ? 3600 : 600; // 1 hour for bots, 10 minutes for users
-  
-  // Generate the HTML
-  const html = generateParkingPageHTML(company);
-  
-  // Return the HTML with appropriate caching headers
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'text/html; charset=UTF-8',
-      'Cache-Control': `public, max-age=0, s-maxage=${cacheDuration}`
-    },
-    body: html
-  };
+  try {
+    // Get path from event
+    const path = event.path;
+    
+    // Extract the slug - remove leading slash and any trailing slashes
+    const slug = path.replace(/^\//, '').replace(/\/$/, '');
+    
+    // Validate if this is a legitimate parking company
+    if (!isValidParkingCompany(slug)) {
+      console.log(`Invalid parking company slug requested: ${slug}`);
+      return {
+        statusCode: 404,
+        headers: {
+          'Content-Type': 'text/html',
+          'Cache-Control': 'public, max-age=0, must-revalidate'
+        },
+        body: await require('fs').promises.readFile('./public/404.html', 'utf8')
+      };
+    }
+    
+    // Create company data
+    const companyName = formatCompanyName(slug);
+    const company = { name: companyName, slug };
+    
+    // Check user agent to identify search engine bots
+    const userAgent = event.headers['user-agent'] || '';
+    const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(userAgent);
+    
+    // Cache duration - longer for bots to reduce function invocations
+    const cacheDuration = isBot ? 3600 : 600; // 1 hour for bots, 10 minutes for users
+    
+    // Generate the HTML
+    const html = generateParkingPageHTML(company);
+    
+    // Return the HTML with appropriate caching headers
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=UTF-8',
+        'Cache-Control': `public, max-age=0, s-maxage=${cacheDuration}`
+      },
+      body: html
+    };
+  } catch (error) {
+    console.error('Error generating parking company page:', error);
+    
+    // Return a graceful error page
+    return {
+      statusCode: 500,
+      headers: {
+        'Content-Type': 'text/html',
+        'Cache-Control': 'no-store'
+      },
+      body: `
+        <!DOCTYPE html>
+        <html>
+          <head><title>Error - Resolvo</title></head>
+          <body>
+            <h1>Something went wrong</h1>
+            <p>Please try again later or contact support if the problem persists.</p>
+            <a href="/">Return to homepage</a>
+          </body>
+        </html>
+      `
+    };
+  }
 }; 
