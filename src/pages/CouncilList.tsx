@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { councilNames } from '../../scripts/council-slugs.js';
 
 const CouncilList = () => {
-  const location = useLocation();
-  const scrollTimeout = useRef<NodeJS.Timeout>();
 
   // Function to create URL-friendly slug
   const createSlug = (name: string) => {
@@ -18,67 +16,8 @@ const CouncilList = () => {
       .replace(/^-|-$/g, '');
   };
 
-  // Group councils by first letter
-  const groupedCouncils = councilNames.reduce((acc: { [key: string]: string[] }, council) => {
-    const firstLetter = council[0].toUpperCase();
-    if (!acc[firstLetter]) {
-      acc[firstLetter] = [];
-    }
-    acc[firstLetter].push(council);
-    return acc;
-  }, {});
-
-  // Sort the letters
-  const sortedLetters = Object.keys(groupedCouncils).sort();
-
-  // Handle smooth scrolling when clicking letter links
-  const scrollToSection = (letter: string) => {
-    const section = document.getElementById(letter);
-    if (section) {
-      // Clear any existing scroll timeout
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-
-      // Get the header height (assuming it's 64px, adjust if different)
-      const headerHeight = 64;
-      
-      // Calculate the element's position relative to the viewport
-      const elementPosition = section.getBoundingClientRect().top;
-      
-      // Calculate the offset position
-      const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 24;
-
-      // Scroll to the section with smooth behavior
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-
-      // Update URL hash after scrolling
-      scrollTimeout.current = setTimeout(() => {
-        window.history.replaceState(null, '', `#${letter}`);
-      }, 500);
-    }
-  };
-
-  // Handle initial hash in URL
-  useEffect(() => {
-    if (location.hash) {
-      const letter = location.hash.replace('#', '');
-      // Add a small delay to ensure the page is fully rendered
-      setTimeout(() => {
-        scrollToSection(letter);
-      }, 100);
-    }
-    
-    // Cleanup timeout on unmount
-    return () => {
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-    };
-  }, [location]);
+  // Sort all council names alphabetically
+  const sortedCouncilNames = [...councilNames].sort();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -118,41 +57,22 @@ const CouncilList = () => {
           </p>
         </div>
 
+        {/* Display all councils in a single alphabetical list */}
         <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
-          {sortedLetters.map((letter) => (
-            <div key={letter} className="mb-8 scroll-mt-24" id={letter}>
-              <h2 className="text-2xl font-bold text-primary mb-4">
-                {letter}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {groupedCouncils[letter].sort().map((council) => (
-                  <Link
-                    key={council}
-                    to={`/${createSlug(council)}`}
-                    className="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary"
-                  >
-                    {council}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Alphabet navigation */}
-        <div className="sticky bottom-4 bg-white rounded-lg shadow-lg p-3 mt-8 overflow-x-auto z-10">
-          <div className="flex justify-center space-x-2">
-            {sortedLetters.map((letter) => (
-              <button
-                key={letter}
-                onClick={() => scrollToSection(letter)}
-                className="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {sortedCouncilNames.map((council) => (
+              <Link
+                key={council}
+                to={`/${createSlug(council)}`}
+                className="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary"
               >
-                {letter}
-              </button>
+                {council}
+              </Link>
             ))}
           </div>
         </div>
+
+        {/* Removed the Alphabet navigation */}
       </div>
     </div>
   );
