@@ -1,34 +1,119 @@
-
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const handleWhatsAppShare = () => {
+    const message = "Check out Resolvo - Fight unfair parking tickets with AI-powered appeals!";
+    const url = window.location.href;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message + " " + url)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
-    <footer className="bg-gray-800 text-white py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-4 md:mb-0">
-            <p>© {new Date().getFullYear()} Resolvo. All rights reserved.</p>
+    <footer className="bg-primary text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xl font-bold mb-4">Resolvo</h3>
+            <p className="text-sm">
+              Fight Your Unfair Parking Fine For Free In Minutes
+            </p>
           </div>
-          <div className="flex space-x-6 items-center">
-            <Link to="/faq" className="text-gray-300 hover:text-white">
-              FAQ
-            </Link>
-            <Link to="/appeal-help" className="text-gray-300 hover:text-white">
-              Appeal Hub
-            </Link>
-            <a 
-              href="https://www.tiktok.com/@resolvo.uk" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-              className="inline-flex items-center justify-center w-8 h-8 text-gray-300 hover:text-white transition-colors"
-            >
-              <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M16.708 0.027c1.745-0.027 3.48-0.011 5.213-0.027 0.105 2.041 0.839 4.12 2.333 5.563 1.491 1.479 3.6 2.156 5.652 2.385v5.369c-1.923-0.063-3.855-0.463-5.6-1.291-0.76-0.344-1.468-0.787-2.161-1.24-0.009 3.896 0.016 7.787-0.025 11.667-0.104 1.864-0.719 3.719-1.803 5.255-1.744 2.557-4.771 4.224-7.88 4.276-1.907 0.109-3.812-0.411-5.437-1.369-2.693-1.588-4.588-4.495-4.864-7.615-0.032-0.667-0.043-1.333-0.016-1.984 0.24-2.537 1.495-4.964 3.443-6.615 2.208-1.923 5.301-2.839 8.197-2.297 0.027 1.975-0.052 3.948-0.052 5.923-1.323-0.428-2.869-0.308-4.025 0.495-0.844 0.547-1.485 1.385-1.819 2.333-0.276 0.676-0.197 1.427-0.181 2.145 0.317 2.188 2.421 4.027 4.667 3.828 1.489-0.016 2.916-0.88 3.692-2.145 0.251-0.443 0.532-0.896 0.547-1.417 0.131-2.385 0.079-4.76 0.095-7.145 0.011-5.375-0.016-10.735 0.025-16.093z"/>
-              </svg>
-            </a>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="text-sm hover:text-accent">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog" className="text-sm hover:text-accent">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-sm hover:text-accent">
+                  FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" className="text-sm hover:text-accent">
+                  Privacy Policy
+                </Link>
+              </li>
+            </ul>
           </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Appeal Hub</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/appeal-help" className="text-sm hover:text-accent">
+                  Appeal Hub
+                </Link>
+              </li>
+              <li>
+                <Link to="/local-authorities" className="text-sm hover:text-accent">
+                  Council PCN Appeals
+                </Link>
+              </li>
+              <li>
+                <Link to="/appeal-help" className="text-sm hover:text-accent">
+                  Private Company Appeals
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-4">Contact</h3>
+            <p className="text-sm mb-4">
+              Questions? Reach out to us at<br />
+              resolvoparking@gmail.com
+            </p>
+            <div className="flex flex-col space-y-4">
+              <a
+                href="https://x.com/resolvoparking"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <img 
+                  src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
+                  alt="X (formerly Twitter)"
+                  className="h-5 w-5 mr-2 brightness-0 invert"
+                />
+                Follow us on Twitter
+              </a>
+              <a
+                href="https://www.tiktok.com/@resolvoparking1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <img 
+                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
+                  alt="TikTok"
+                  className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
+                />
+                Follow us on TikTok
+              </a>
+              <button
+                onClick={handleWhatsAppShare}
+                className="inline-flex items-center text-sm hover:text-accent"
+              >
+                <img 
+                  src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
+                  alt="WhatsApp"
+                  className="h-5 w-5 mr-2 brightness-0 invert"
+                />
+                Share on WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 pt-8 border-t border-gray-700">
+          <p className="text-sm text-center">
+            © {new Date().getFullYear()} Resolvo. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
