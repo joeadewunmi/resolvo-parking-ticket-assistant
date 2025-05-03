@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { councilNames } from '../../scripts/council-slugs.js';
 
 const CouncilList = () => {
   const location = useLocation();
+  const scrollTimeout = useRef<NodeJS.Timeout>();
 
   // Function to create URL-friendly slug
   const createSlug = (name: string) => {
@@ -34,7 +35,30 @@ const CouncilList = () => {
   const scrollToSection = (letter: string) => {
     const section = document.getElementById(letter);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // Clear any existing scroll timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      // Get the header height (assuming it's 64px, adjust if different)
+      const headerHeight = 64;
+      
+      // Calculate the element's position relative to the viewport
+      const elementPosition = section.getBoundingClientRect().top;
+      
+      // Calculate the offset position
+      const offsetPosition = elementPosition + window.pageYOffset - headerHeight - 24;
+
+      // Scroll to the section with smooth behavior
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      // Update URL hash after scrolling
+      scrollTimeout.current = setTimeout(() => {
+        window.history.replaceState(null, '', `#${letter}`);
+      }, 500);
     }
   };
 
@@ -42,14 +66,18 @@ const CouncilList = () => {
   useEffect(() => {
     if (location.hash) {
       const letter = location.hash.replace('#', '');
-      const section = document.getElementById(letter);
-      if (section) {
-        // Add a small delay to ensure the page is fully rendered
-        setTimeout(() => {
-          section.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      // Add a small delay to ensure the page is fully rendered
+      setTimeout(() => {
+        scrollToSection(letter);
+      }, 100);
     }
+    
+    // Cleanup timeout on unmount
+    return () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
   }, [location]);
 
   return (
@@ -112,13 +140,13 @@ const CouncilList = () => {
         </div>
 
         {/* Alphabet navigation */}
-        <div className="sticky bottom-4 bg-white rounded-lg shadow-lg p-3 mt-8 overflow-x-auto">
+        <div className="sticky bottom-4 bg-white rounded-lg shadow-lg p-3 mt-8 overflow-x-auto z-10">
           <div className="flex justify-center space-x-2">
             {sortedLetters.map((letter) => (
               <button
                 key={letter}
                 onClick={() => scrollToSection(letter)}
-                className="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors"
+                className="w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
               >
                 {letter}
               </button>
