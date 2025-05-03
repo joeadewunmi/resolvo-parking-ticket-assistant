@@ -1,5 +1,12 @@
 
 import { faqs } from "@/data/faqs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "@/components/ui/accordion";
+import { ChevronDown } from "lucide-react";
 
 interface FAQSectionProps {
   limit?: number;
@@ -14,14 +21,22 @@ const FAQSection = ({ limit }: FAQSectionProps) => {
         <h2 className="text-3xl font-extrabold text-primary text-center mb-12">
           Resolvo FAQs
         </h2>
-        <div className="space-y-6">
+        <Accordion type="single" collapsible className="w-full space-y-4">
           {displayedFaqs.map((faq, index) => (
-            <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-sm">
-              <h3 className="font-bold text-lg mb-2">{faq.question}</h3>
-              <p className="text-gray-600 whitespace-pre-line">{faq.answer}</p>
-            </div>
+            <AccordionItem 
+              key={index} 
+              value={`item-${index}`} 
+              className="border border-gray-200 rounded-lg overflow-hidden"
+            >
+              <AccordionTrigger className="text-left font-medium py-4 px-5 hover:bg-gray-50 transition-colors">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="px-5 pb-4 pt-2 text-gray-600 bg-gray-50 whitespace-pre-line">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </div>
   );
