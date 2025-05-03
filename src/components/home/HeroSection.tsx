@@ -36,7 +36,9 @@ const HeroSection = () => {
             <img 
               src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
               alt='Photo by Caspar Rae on Unsplash - A parking enforcement officer in a high-visibility yellow jacket issuing a ticket to a white Volkswagen car in a parking lot' 
-              className="w-full h-auto rounded-lg shadow-xl" 
+              className="w-full h-auto rounded-lg shadow-xl"
+              width="600"
+              height="400"
             />
           </div>
         </div>

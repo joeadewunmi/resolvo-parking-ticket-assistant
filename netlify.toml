@@ -1,3 +1,58 @@
+# List of valid React app routes - these MUST be served by the SPA
+# These MUST come before any council or parking routes to ensure proper rendering
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/local-authorities"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/councils"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/council-appeal-hub"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/council-list"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/appeal-help"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/faq"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Dynamic SEO proxy for ALL parking company pages
 # This wildcard pattern matches all common formats of parking company URLs
 [[redirects]]
@@ -41,67 +96,37 @@
   to = "/.netlify/functions/parking-seo"
   status = 200
 
-# List of valid React app routes
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/local-authorities"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/councils"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/appeal-help"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/faq"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/*"
-  to = "/index.html"
-  status = 200
-  force = true
-
-# Pattern match for known UK councils - AFTER the React routes
+# Known council patterns - STRICT matching only
 [[redirects]]
   from = "/*-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Path = ["/*-council", "!local-authorities", "!councils", "!council-appeal-hub"]}
+  conditions = {Path = [
+    "/*-council",
+    "!local-authorities",
+    "!councils",
+    "!council-appeal-hub",
+    "!council-list"
+  ]}
 
 [[redirects]]
   from = "/*-city-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Path = ["/*-city-council", "!local-authorities", "!councils", "!council-appeal-hub"]}
+  conditions = {Path = [
+    "/*-city-council",
+    "!local-authorities",
+    "!councils",
+    "!council-appeal-hub",
+    "!council-list"
+  ]}
 
 [[redirects]]
   from = "/city-of-*"
   to = "/.netlify/functions/council-seo"
   status = 200
 
-# Individual named council redirects for single-word councils
+# Explicitly listed single-word councils ONLY
 [[redirects]]
   from = "/barnsley"
   to = "/.netlify/functions/council-seo"
@@ -152,42 +177,11 @@
   to = "/.netlify/functions/council-seo"
   status = 200
 
-# Handle unknown paths with 404
+# Handle all unknown paths with 404 - MUST BE LAST
 [[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
-  force = true
-  conditions = {Path = [
-    "!/*-parking",
-    "!/*-car-park",
-    "!/*-car-parks",
-    "!/ukpc",
-    "!/nsl",
-    "!/nsgl",
-    "!/ocs",
-    "!/pess",
-    "!/",
-    "!/local-authorities",
-    "!/councils",
-    "!/appeal-help",
-    "!/faq",
-    "!/blog",
-    "!/blog/*",
-    "!/*-council",
-    "!/*-city-council",
-    "!/city-of-*",
-    "!/barnsley",
-    "!/birmingham",
-    "!/bradford",
-    "!/coventry",
-    "!/leicester",
-    "!/leeds",
-    "!/liverpool",
-    "!/manchester",
-    "!/nottingham",
-    "!/plymouth"
-  ]}
 
 # Ensure sitemap.xml and robots.txt are properly served
 [[headers]]

@@ -17,10 +17,23 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
       <Helmet>
         <title>Appeal Your {councilName} Parking Fine for Free Using Resolvo</title>
         <meta name="description" content={`Got a ${councilName} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`} />
+        <link rel="canonical" href={`https://resolvo.uk/${councilSlug}`} />
+        
+        {/* Open Graph Tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://resolvo.uk/${councilSlug}`} />
         <meta property="og:title" content={`Appeal Your ${councilName} Parking Fine for Free Using Resolvo`} />
         <meta property="og:description" content={`Got a ${councilName} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`} />
+        <meta property="og:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
+        <meta property="og:locale" content="en_GB" />
+        
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="resolvo.uk" />
+        <meta property="twitter:url" content={`https://resolvo.uk/${councilSlug}`} />
         <meta name="twitter:title" content={`Appeal Your ${councilName} Parking Fine for Free Using Resolvo`} />
         <meta name="twitter:description" content={`Got a ${councilName} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`} />
+        <meta name="twitter:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
       </Helmet>
 
       {/* Hero Section */}

@@ -19,6 +19,8 @@ const Navbar = () => {
                 src="/lovable-uploads/de7ac283-e809-42cf-a7a3-b92c9a12a975.png" 
                 alt="Resolvo Logo" 
                 className="h-8 w-8"
+                width="32"
+                height="32"
               />
             </Link>
           </div>
