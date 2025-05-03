@@ -1,9 +1,11 @@
+
 import React from 'react';
-import { Building, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Building, ArrowRight } from 'lucide-react';
 import FAQSection from '@/components/home/FAQSection';
 import { Card, CardContent } from '@/components/ui/card';
 import { Helmet } from 'react-helmet-async';
+import TrackingButton from '@/components/ui/TrackingButton';
 
 // All parking companies with routes
 const parkingCompanies = [
@@ -88,16 +90,23 @@ const sortedCompanies = [...parkingCompanies].sort((a, b) =>
 );
 
 const AppealHub = () => {
-  // Group companies into categories for better organization
-  const chunkedCompanies = sortedCompanies.reduce((acc, company, index) => {
-    const chunkIndex = Math.floor(index / 15);
-    if (!acc[chunkIndex]) acc[chunkIndex] = [];
-    acc[chunkIndex].push(company);
+  // Group companies by first letter for better organization
+  const groupedCompanies = sortedCompanies.reduce((acc, company) => {
+    // Get first letter of company name (ignoring "The" if present)
+    const firstLetter = company.name.replace(/^The\s+/i, '').charAt(0).toUpperCase();
+    
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = [];
+    }
+    acc[firstLetter].push(company);
     return acc;
-  }, [] as typeof sortedCompanies[]);
+  }, {} as Record<string, typeof sortedCompanies>);
+  
+  // Get sorted letters for alphabetical navigation
+  const letters = Object.keys(groupedCompanies).sort();
 
   return (
-    <article className="min-h-screen bg-background">
+    <article className="min-h-screen bg-gray-50">
       <Helmet>
         <title>Parking Ticket Appeal Hub | Find Your Appeal Guide</title>
         <meta name="description" content="Find the right appeal guide for your parking ticket. Expert guidance for appealing tickets from all major UK parking companies." />
@@ -105,9 +114,10 @@ const AppealHub = () => {
         <link rel="canonical" href="https://resolvo.uk/appeal-hub" />
       </Helmet>
 
-      <div className="container mx-auto px-4 py-12 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Hero Section */}
         <header className="text-center max-w-3xl mx-auto mb-12">
+          <Building className="mx-auto h-12 w-12 text-primary mb-4" aria-hidden="true" />
           <h1 className="text-4xl font-bold text-primary mb-4 tracking-tight">
             Parking Ticket Appeal Hub
           </h1>
@@ -118,41 +128,56 @@ const AppealHub = () => {
 
         {/* Main Content */}
         <main className="space-y-10">
-          {/* Private Parking Companies Section */}
-          <section aria-labelledby="companies-heading">
-            <div className="flex items-center gap-3 mb-6">
-              <Building className="h-6 w-6 text-primary" aria-hidden="true" />
-              <h2 id="companies-heading" className="text-2xl font-bold text-primary">
-                Appeal Guides by Company
-              </h2>
+          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
+            {/* Alphabetical Navigation */}
+            <div className="sticky top-4 z-10 bg-white rounded-lg shadow-lg p-3 mb-8 overflow-x-auto">
+              <div className="flex justify-center flex-wrap gap-2">
+                {letters.map(letter => (
+                  <a 
+                    key={letter}
+                    href={`#${letter}`}
+                    className="w-8 h-8 flex items-center justify-center text-sm font-medium rounded-full bg-gray-100 hover:bg-primary hover:text-white transition-colors"
+                  >
+                    {letter}
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {chunkedCompanies.map((chunk, index) => (
-                <Card key={index} className="bg-card hover:shadow-lg transition-shadow duration-200">
-                  <CardContent className="p-6">
-                    <ul className="space-y-3">
-                      {chunk.map((company) => (
-                        <li key={company.name}>
-                          <Link
-                            to={company.path}
-                            className="group flex items-center text-foreground hover:text-primary transition-colors duration-200"
-                            title={`View appeal guide for ${company.name}`}
-                          >
-                            <span className="flex-1">{company.name}</span>
-                            <ArrowRight 
-                              className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" 
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
+            {/* Companies grouped by letter */}
+            {letters.map(letter => (
+              <div key={letter} className="mb-8" id={letter}>
+                <h2 className="text-2xl font-bold text-primary mb-4">{letter}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {groupedCompanies[letter].map((company) => (
+                    <Link
+                      key={company.path}
+                      to={company.path}
+                      className="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 text-gray-700 hover:text-primary flex items-center justify-between"
+                      title={`View appeal guide for ${company.name.replace(' Appeal Guide', '')}`}
+                    >
+                      <span>{company.name.replace(' Appeal Guide', '')}</span>
+                      <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" aria-hidden="true" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {/* Council PCNs Link */}
+            <div className="mt-10 pt-6 border-t border-gray-200">
+              <div className="text-center">
+                <h3 className="text-lg font-medium text-primary mb-2">Looking for Council Parking Tickets?</h3>
+                <Link 
+                  to="/councils" 
+                  className="inline-flex items-center text-blue-600 hover:underline"
+                >
+                  View Council PCN Appeal Information
+                  <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
-          </section>
+          </div>
 
           {/* Call to Action Section */}
           <section aria-labelledby="cta-heading" className="bg-secondary/20 rounded-lg p-8 text-center">
@@ -163,15 +188,16 @@ const AppealHub = () => {
               Don't see your specific parking enforcer? No problem!<br />
               Our AI can help with any type of parking ticket appeal.
             </p>
-            <a
+            <TrackingButton
               href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-              target="_blank"
-              rel="noopener noreferrer"
+              eventName="appeal_click"
+              eventCategory="engagement"
+              eventLabel="appeal_hub_cta"
               className="inline-flex items-center px-8 py-4 rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl text-lg font-medium"
             >
               Start Your Appeal
               <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-            </a>
+            </TrackingButton>
           </section>
 
           {/* FAQ Section */}
