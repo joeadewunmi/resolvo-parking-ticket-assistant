@@ -40,33 +40,26 @@ function isValidCouncil(slug) {
   if (!/^[a-z0-9-]+$/.test(slug)) {
     return false;
   }
+
+  // Extract the base name for pattern matching
+  let baseName = slug;
   
-  // Direct match in our valid councils list
-  if (validCouncils.has(slug)) return true;
-  
-  // Valid patterns only (explicitly reject any non-matching pattern)
-  const isCouncilPattern = slug.endsWith('-council') || 
-                          slug.endsWith('-city-council') || 
-                          slug.startsWith('city-of-');
-  
-  if (!isCouncilPattern) {
-    return false;
+  // Handle all supported patterns
+  if (slug.endsWith('-city-council')) {
+    baseName = slug.replace(/-city-council$/, '');
+  } else if (slug.endsWith('-council')) {
+    baseName = slug.replace(/-council$/, '');
+  } else if (slug.startsWith('city-of-')) {
+    baseName = slug.replace(/^city-of-/, '');
   }
   
-  // For pattern matches, verify the base name exists in our council list
-  if (isCouncilPattern) {
-    // Extract the base name
-    const baseName = slug
-      .replace(/-council$/, '')
-      .replace(/-city-council$/, '')
-      .replace(/^city-of-/, '');
-    
-    // Only accept base names that are in our valid councils list
+  // Handle multi-word patterns
+  if (baseName.includes('-and-') || baseName.includes('-upon-')) {
     return validCouncils.has(baseName);
   }
   
-  // If we get here, it's not a valid council
-  return false;
+  // For single word councils, check if the base name exists
+  return validCouncils.has(baseName);
 }
 
 /**
@@ -110,8 +103,8 @@ function generateStructuredData(council) {
  * Generate SEO-friendly HTML for council pages
  */
 function generateCouncilPageHTML(council) {
-  const title = `Appeal Your ${council.name} Parking Fine for Free Using Resolvo`;
-  const description = `Got a ${council.name} parking ticket? Use Resolvo to generate a free appeal letter in minutes. Based on the latest UK parking rules.`;
+  const title = `Appeal Your ${council.name} Parking Ticket Appeal for Free with Resolvo`;
+  const description = `Got a parking fine from ${council.name}? Get a winning appeal letter for free to help you fight it`;
   const h1 = `Appeal Your ${council.name} Parking Fine`;
   
   // Generate structured data
@@ -345,7 +338,8 @@ exports.handler = async (event) => {
         'Content-Type': 'text/html; charset=UTF-8',
         'Cache-Control': `public, max-age=${cacheDuration}, s-maxage=${cacheDuration * 2}`,
         'X-Council-Name': councilName,
-        'X-Cache-Status': 'Miss'
+        'X-Cache-Status': 'Miss',
+        'X-Robots-Tag': 'index, follow'
       },
       body: html
     };

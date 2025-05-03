@@ -211,11 +211,23 @@ function isValidParkingCompany(slug) {
     return false;
   }
   
-  // Check if it's in our known companies list - explicit matches only
+  // Check if it's in our known companies list - explicit matches first
   if (knownCompanies[slug]) return true;
   
-  // We're only accepting explicitly known companies now
-  // We don't want to generate pages for arbitrary patterns
+  // Check for valid patterns
+  const validPatterns = [
+    /-parking$/,           // ends with -parking
+    /-car-park$/,         // ends with -car-park
+    /-car-parks$/,        // ends with -car-parks
+    /^parking-/,          // starts with parking-
+    /^park-/             // starts with park-
+  ];
+  
+  // Only accept pattern matches if they're in our known companies list
+  if (validPatterns.some(pattern => pattern.test(slug))) {
+    return knownCompanies[slug] !== undefined;
+  }
+  
   return false;
 }
 

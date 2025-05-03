@@ -5,31 +5,6 @@
   to = "/index.html"
   status = 200
 
-# We now serve these pages directly as static files, so we don't need these redirects
-# [[redirects]]
-#   from = "/local-authorities"
-#   to = "/index.html"
-#   status = 200
-#   force = true
-
-# [[redirects]]
-#   from = "/councils"
-#   to = "/index.html"
-#   status = 200
-#   force = true
-
-# [[redirects]]
-#   from = "/council-appeal-hub"
-#   to = "/index.html"
-#   status = 200
-#   force = true
-
-# [[redirects]]
-#   from = "/council-list"
-#   to = "/index.html"
-#   status = 200
-#   force = true
-
 [[redirects]]
   from = "/appeal-help"
   to = "/index.html"
@@ -54,129 +29,29 @@
   status = 200
   force = true
 
-# STRICT PATTERNS for parking company pages - only match known formats  
-# The Netlify function will provide additional validation to ensure only legitimate companies are processed
 [[redirects]]
-  from = "/apcoa-parking"
-  to = "/.netlify/functions/parking-seo"
+  from = "/local-authorities"
+  to = "/index.html"
   status = 200
+  force = true
 
 [[redirects]]
-  from = "/euro-car-parks"
-  to = "/.netlify/functions/parking-seo"
+  from = "/councils"
+  to = "/index.html"
   status = 200
+  force = true
 
 [[redirects]]
-  from = "/parkingeye"
-  to = "/.netlify/functions/parking-seo"
+  from = "/council-appeal-hub"
+  to = "/index.html"
   status = 200
+  force = true
 
 [[redirects]]
-  from = "/smart-parking"
-  to = "/.netlify/functions/parking-seo"
+  from = "/council-list"
+  to = "/index.html"
   status = 200
-
-[[redirects]]
-  from = "/rcp-parking"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-
-# Individual company paths
-[[redirects]]
-  from = "/ukpc"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-
-[[redirects]]
-  from = "/nsl"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-
-[[redirects]]
-  from = "/nsgl"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-  
-[[redirects]]
-  from = "/ocs"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-  
-[[redirects]]
-  from = "/pess"
-  to = "/.netlify/functions/parking-seo"
-  status = 200
-
-# Known council patterns - STRICT matching only with regex conditions
-# This ensures only valid council patterns are processed by the function
-[[redirects]]
-  from = "/*-council"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-  conditions = {Pattern = ["/[a-z]+-council$"]}
-
-[[redirects]]
-  from = "/*-city-council"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-  conditions = {Pattern = ["/[a-z]+-city-council$"]}
-
-[[redirects]]
-  from = "/city-of-*"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-  conditions = {Pattern = ["/city-of-[a-z]+$"]}
-
-# Explicitly listed single-word councils ONLY
-[[redirects]]
-  from = "/barnsley"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/birmingham"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/bradford"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/coventry"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/leicester"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/leeds"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/liverpool"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/manchester"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/nottingham"
-  to = "/.netlify/functions/council-seo"
-  status = 200
-
-[[redirects]]
-  from = "/plymouth"
-  to = "/.netlify/functions/council-seo"
-  status = 200
+  force = true
 
 # Common static files that should be served directly
 [[redirects]]
@@ -194,20 +69,303 @@
   to = "/favicon.ico"
   status = 200
 
-# Serve our static HTML pages for the hub pages
+# COUNCIL REDIRECTS
+# Handle all council URL patterns in order of specificity
+# IMPORTANT: These must come after all React app routes to prevent conflicts
+
+# 1. Handle city-council pattern (e.g., leeds-city-council)
 [[redirects]]
-  from = "/local-authorities"
-  to = "/local-authorities.html"
+  from = "/*-city-council"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z]+-city-council$"]}
+
+# 2. Handle council suffix pattern (e.g., leeds-council)
+[[redirects]]
+  from = "/*-council"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z]+-council$"]}
+
+# 3. Handle city-of prefix pattern (e.g., city-of-leeds)
+[[redirects]]
+  from = "/city-of-*"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/city-of-[a-z]+$"]}
+
+# 4. Handle multi-word patterns with hyphens
+[[redirects]]
+  from = "/*-and-*"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z]+-and-[a-z-]+$"]}
+
+[[redirects]]
+  from = "/*-upon-*"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z]+-upon-[a-z-]+$"]}
+
+# 5. Handle single-word councils (must come after more specific patterns)
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/council-seo"
+  status = 200
+  conditions = {Pattern = ["/^[a-z]+$"]}
+
+# PARKING COMPANY REDIRECTS
+# Handle all parking company URL patterns in order of specificity
+
+# 1. Handle -parking suffix pattern (e.g., apcoa-parking)
+[[redirects]]
+  from = "/*-parking"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z0-9]+-parking$"]}
+
+# 2. Handle -car-parks suffix pattern (e.g., city-car-parks)
+[[redirects]]
+  from = "/*-car-parks"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z0-9]+-car-parks$"]}
+
+# 3. Handle -car-park suffix pattern (e.g., national-car-park)
+[[redirects]]
+  from = "/*-car-park"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  conditions = {Pattern = ["/[a-z0-9]+-car-park$"]}
+
+# 4. Handle parking- prefix pattern (e.g., parking-eye)
+[[redirects]]
+  from = "/parking-*"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  conditions = {Pattern = ["/parking-[a-z0-9-]+$"]}
+
+# 5. Handle park- prefix pattern (e.g., park-maven)
+[[redirects]]
+  from = "/park-*"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+  conditions = {Pattern = ["/park-[a-z0-9-]+$"]}
+
+# 6. Handle specific parking companies that don't match patterns
+[[redirects]]
+  from = "/parkingeye"
+  to = "/.netlify/functions/parking-seo"
   status = 200
 
 [[redirects]]
-  from = "/councils"
-  to = "/councils.html"
+  from = "/ukpc"
+  to = "/.netlify/functions/parking-seo"
   status = 200
 
 [[redirects]]
-  from = "/council-appeal-hub"
-  to = "/council-appeal-hub.html"
+  from = "/nsl"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/minster-baywatch"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/uk-parking-control"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/uk-parking-enforcement"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/uk-parking-administration"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/all-parking-services"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/am-parking-services"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/anpr-365"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/atlas-enforcement"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/bay-sentry-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/capital-car-park-control"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/carparkers"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/city-permits"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/civil-enforcement"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/comply-park-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/dorset-county-hospital"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/east-kent-nhs"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/eternity-fire-security"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/fisc-parking-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/flashpark"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/gbp-management"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/jd-parking-consultants"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/key-parking-uk"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/ldk-security-group"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/leeds-teaching-hospitals"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/met-parking-services"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/ocs"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/p4-parking"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/pess"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/private-parking-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/q-park"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/rfc-car-park-management"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/rmc-parking"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/safe-duty"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/secure-a-space"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/secure-parking-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/shield-security-services"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/total-parking-solutions"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/university-of-edinburgh"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/university-of-kent"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/workflow-dynamics"
+  to = "/.netlify/functions/parking-seo"
   status = 200
 
 # Handle all unknown paths with 404 - MUST BE LAST
