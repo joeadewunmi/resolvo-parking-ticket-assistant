@@ -1,5 +1,6 @@
-
+import React from 'react';
 import { Link } from "react-router-dom";
+import LazyImage from '@/components/ui/LazyImage'; // Import LazyImage
 
 const Footer = () => {
   const handleWhatsAppShare = () => {
@@ -14,7 +15,16 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Resolvo</h3>
+            <div className="flex items-center space-x-2">
+              <LazyImage 
+                src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
+                alt="Resolvo Logo" 
+                className="h-8 w-8" 
+                width={32} 
+                height={32}
+              />
+              <span className="text-xl font-bold text-white">Resolvo</span>
+            </div>
             <p className="text-sm">
               Fight Your Unfair Parking Fine For Free In Minutes
             </p>
@@ -72,10 +82,12 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <img 
+                <LazyImage 
                   src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
+                  width={20}
+                  height={20}
                 />
                 Follow us on Twitter
               </a>
@@ -85,10 +97,12 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <img 
-                  src="/lovable-uploads/687648e2-32e1-416c-84d6-090d70f1482e.png"
+                <LazyImage 
+                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
                   alt="TikTok"
-                  className="h-5 w-5 mr-2"
+                  className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
+                  width={20}
+                  height={20}
                 />
                 Follow us on TikTok
               </a>
@@ -96,10 +110,12 @@ const Footer = () => {
                 onClick={handleWhatsAppShare}
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <img 
+                <LazyImage 
                   src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
                   alt="WhatsApp"
                   className="h-5 w-5 mr-2 brightness-0 invert"
+                  width={20}
+                  height={20}
                 />
                 Share on WhatsApp
               </button>
@@ -110,6 +126,11 @@ const Footer = () => {
           <p className="text-sm text-center">
             © {new Date().getFullYear()} Resolvo. All rights reserved.
           </p>
+        </div>
+        <div className="flex justify-center space-x-4">
+          <LazyImage src="/icons/visa.svg" alt="Visa" className="h-6" width={38} height={24} />
+          <LazyImage src="/icons/mastercard.svg" alt="Mastercard" className="h-6" width={38} height={24} />
+          <LazyImage src="/icons/amex.svg" alt="American Express" className="h-6" width={38} height={24} />
         </div>
       </div>
     </footer>

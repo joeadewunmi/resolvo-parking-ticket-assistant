@@ -1,4 +1,8 @@
+import React from 'react';
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import TrackingButton from "@/components/ui/TrackingButton";
+import LazyImage from '@/components/ui/LazyImage';
 
 const HeroSection = () => {
   return (
@@ -33,12 +37,13 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="block">
-            <img 
+            <LazyImage 
               src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
-              alt='Photo by Caspar Rae on Unsplash - A parking enforcement officer in a high-visibility yellow jacket issuing a ticket to a white Volkswagen car in a parking lot' 
+              alt="Hero image of someone appealing a parking ticket"
               className="w-full h-auto rounded-lg shadow-xl"
-              width="600"
-              height="400"
+              width={600}
+              height={400}
+              fetchPriority="high"
             />
           </div>
         </div>

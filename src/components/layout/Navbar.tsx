@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrackingButton from "@/components/ui/TrackingButton";
+import LazyImage from '@/components/ui/LazyImage';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,19 +13,18 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center space-x-2">
-              <span className="text-2xl font-bold text-primary">Resolvo</span>
-              <img 
-                src="/lovable-uploads/de7ac283-e809-42cf-a7a3-b92c9a12a975.png" 
-                alt="Resolvo Logo" 
-                className="h-8 w-8"
-                width="32"
-                height="32"
-              />
-            </Link>
-          </div>
+        <div className="flex justify-between h-16 items-center">
+          <Link to="/" className="flex items-center gap-2">
+            <LazyImage 
+              src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
+              alt="Resolvo Logo" 
+              className="h-10 w-10" 
+              width={40} 
+              height={40}
+              fetchPriority="high"
+            />
+            <span className="font-bold text-xl text-primary">Resolvo</span>
+          </Link>
           
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <div className="flex space-x-4 items-center">

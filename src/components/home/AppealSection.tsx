@@ -1,5 +1,7 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import TrackingButton from "@/components/ui/TrackingButton";
+import LazyImage from '@/components/ui/LazyImage';
 
 const AppealSection = () => {
   return (
@@ -9,13 +11,13 @@ const AppealSection = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
             <div className="relative">
-              <img 
+              <LazyImage 
                 src="/lovable-uploads/65a99b15-80e2-4483-80cb-824db7613e33.png" 
                 alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
                 className="rounded-lg shadow-2xl w-full h-auto object-cover object-top"
                 style={{ maxHeight: "600px" }}
-                width="540"
-                height="720"
+                width={540}
+                height={720}
               />
               <p className="text-center mt-4 text-gray-600 text-sm">Written by Resolvo</p>
             </div>

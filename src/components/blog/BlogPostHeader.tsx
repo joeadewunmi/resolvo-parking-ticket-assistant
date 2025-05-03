@@ -1,6 +1,8 @@
 import React from 'react';
 import { formatDate } from '@/lib/utils';
-import { Linkedin, Globe } from 'lucide-react';
+import { Linkedin, Globe, Calendar, Clock, UserCircle } from 'lucide-react';
+import { SafeContentfulImage, AuthorProp } from '@/pages/BlogPost';
+import LazyImage from '@/components/ui/LazyImage';
 
 type Author = {
   name: string;
@@ -39,12 +41,14 @@ const BlogPostHeader = ({
   return (
     <div className="mb-10">
       {/* Cover Image */}
-      {coverImageUrl && (
-        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] mb-8 rounded-lg overflow-hidden">
-          <img 
-            src={coverImageUrl} 
-            alt={coverImage?.title || title} 
+      {coverImage && coverImage.url && (
+        <div className="my-8 aspect-[16/9] w-full overflow-hidden rounded-lg">
+          <LazyImage 
+            src={coverImage.url.startsWith('//') ? `https:${coverImage.url}` : coverImage.url}
+            alt={coverImage.title || title}
             className="w-full h-full object-cover"
+            width={1200}
+            height={675}
           />
         </div>
       )}
@@ -58,8 +62,14 @@ const BlogPostHeader = ({
         <div className="flex items-center mb-8">
           {/* Author Image */}
           {author?.avatar && (
-            <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
-              <img src={author.avatar} alt={author.name} className="w-full h-full object-cover" />
+            <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <LazyImage 
+                src={author.avatar} 
+                alt={author.name} 
+                className="w-full h-full object-cover" 
+                width={40}
+                height={40}
+              />
             </div>
           )}
           

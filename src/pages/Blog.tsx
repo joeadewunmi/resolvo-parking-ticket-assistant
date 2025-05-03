@@ -5,6 +5,7 @@ import { getBlogPosts } from '@/lib/contentful';
 import { formatDate } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';
 import { Loader2 } from 'lucide-react';
+import LazyImage from '@/components/ui/LazyImage';
 
 // Define the full Entry type using 'any' for fields for simpler access
 // This avoids complex typing issues but relies on careful access below
@@ -19,7 +20,8 @@ const Blog = () => {
       // Fetch posts (getBlogPosts returns any[])
       const fetchedPosts = await getBlogPosts();
       console.log('Blog post data:', fetchedPosts[0]?.fields); // Log the first post's fields
-      setPosts(fetchedPosts || []); // Ensure posts is always an array
+      // Explicitly cast to any[] to bypass stricter type checking for Contentful Entry
+      setPosts((fetchedPosts as any[]) || []); // Ensure posts is always an array
       setLoading(false);
     };
 
@@ -85,7 +87,7 @@ const Blog = () => {
                       {/* Image */}
                       {getBlogCoverImage(posts[0]) && (
                         <div className="aspect-[16/9] overflow-hidden rounded-lg">
-                          <img 
+                          <LazyImage 
                             src={getBlogCoverImage(posts[0])} 
                             alt={getBlogTitle(posts[0])}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -128,7 +130,7 @@ const Blog = () => {
                       {/* Image */}
                       {getBlogCoverImage(post) && (
                         <div className="aspect-[16/9] overflow-hidden rounded-lg mb-4">
-                          <img 
+                          <LazyImage 
                             src={getBlogCoverImage(post)}
                             alt={getBlogTitle(post)}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

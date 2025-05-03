@@ -1,7 +1,8 @@
-
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
 import { Document } from '@contentful/rich-text-types';
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import { Link } from 'react-router-dom';
+import LazyImage from '@/components/ui/LazyImage';
 
 // Define render functions separately to avoid esbuild issues with JSX in computed properties
 const renderBold = (text) => <strong className="font-bold">{text}</strong>;
@@ -34,13 +35,30 @@ const renderHeading5 = (node, children) => (
 const renderHeading6 = (node, children) => (
   <h6 className="text-base font-bold mb-2 mt-4">{children}</h6>
 );
-const renderEmbeddedAsset = (node) => (
-  <img
-    src={`https:${node.data.target.fields.file.url}`}
-    alt={node.data.target.fields.description || ''}
-    className="my-8 rounded-lg w-full max-w-3xl mx-auto"
-  />
-);
+const renderEmbeddedAsset = (node) => {
+  const asset = node.data.target;
+  if (!asset || !asset.fields || !asset.fields.file) {
+    return null;
+  }
+  const { url } = asset.fields.file;
+  const { title } = asset.fields;
+  const description = typeof asset.fields.description === 'string' ? asset.fields.description : title;
+  const width = asset.fields.file.details.image?.width;
+  const height = asset.fields.file.details.image?.height;
+
+  // Use LazyImage for embedded assets
+  return (
+    <div className="my-6 flex justify-center"> 
+      <LazyImage 
+        src={`https:${url}`} 
+        alt={description || 'Embedded content image'}
+        className="max-w-full h-auto rounded-md shadow-md" 
+        width={width} // Use dimensions from Contentful if available
+        height={height} // Use dimensions from Contentful if available
+      />
+    </div>
+  );
+};
 const renderUlList = (node, children) => (
   <ul className="list-disc pl-6 mb-6 space-y-2">{children}</ul>
 );

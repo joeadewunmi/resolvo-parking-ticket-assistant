@@ -78,35 +78,30 @@
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z]+-city-council$"]}
 
 [[redirects]]
   from = "/*-council"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z]+-council$"]}
 
 [[redirects]]
   from = "/city-of-*"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/city-of-[a-z]+$"]}
 
 [[redirects]]
   from = "/*-and-*"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z]+-and-[a-z-]+$"]}
 
 [[redirects]]
   from = "/*-upon-*"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z]+-upon-[a-z-]+$"]}
 
 # Add parking company routes to be served by React app first
 [[redirects]]
@@ -114,35 +109,30 @@
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z0-9]+-parking$"]}
 
 [[redirects]]
   from = "/*-car-parks"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z0-9]+-car-parks$"]}
 
 [[redirects]]
   from = "/*-car-park"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/[a-z0-9]+-car-park$"]}
 
 [[redirects]]
   from = "/parking-*"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/parking-[a-z0-9-]+$"]}
 
 [[redirects]]
   from = "/park-*"
   to = "/index.html"
   status = 200
   force = true
-  conditions = {Pattern = ["/park-[a-z0-9-]+$"]}
 
 # Add specific parking company routes
 [[redirects]]
