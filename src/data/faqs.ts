@@ -2,7 +2,7 @@
 export const faqs = [
   {
     question: "What is Resolvo?",
-    answer: "Resolvo is an AI-powered tool designed to help people challenge their parking tickets using the latest UK parking laws. It reviews your specific situation, references the correct laws and regulations, and creates a strong, personalised appeal letter in minutes.\n\nEach year in the UK, millions of parking tickets are issued, often due to unclear signage, technical errors, or confusing rules. Resolvo simplifies the appeals process, helping people fight unfair fines with confidence by creating legally-sound appeals based on current parking regulations.\n\nNote: Resolvo supports appeals for both private parking tickets and council-issued Penalty Charge Notices (PCNs). However, it does not handle Fixed Penalty Notices (FPNs) for moving traffic violations, which typically require a court appeal."
+    answer: "Resolvo is an AI tool designed to help people challenge their parking tickets using the latest UK parking laws. It reviews your specific situation, references the correct laws and regulations, and creates a strong, personalised appeal letter in minutes.\n\nEach year in the UK, millions of parking tickets are issued, often due to unclear signage, technical errors, or confusing rules. Resolvo simplifies the appeals process, helping people fight unfair fines with confidence by creating legally-sound appeals based on current parking regulations.\n\nNote: Resolvo supports appeals for both private parking tickets and council-issued Penalty Charge Notices (PCNs). However, it does not handle Fixed Penalty Notices (FPNs) for moving traffic violations, which typically require a court appeal."
   },
   {
     question: "How do I access Resolvo?",
