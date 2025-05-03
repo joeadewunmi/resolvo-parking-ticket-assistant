@@ -4,6 +4,7 @@
   from = "/"
   to = "/index.html"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/appeal-help"
@@ -59,36 +60,53 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/parking-companies"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/private-parking"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Add council routes to be served by React app first
 [[redirects]]
   from = "/*-city-council"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z]+-city-council$"]}
 
 [[redirects]]
   from = "/*-council"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z]+-council$"]}
 
 [[redirects]]
   from = "/city-of-*"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/city-of-[a-z]+$"]}
 
 [[redirects]]
   from = "/*-and-*"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z]+-and-[a-z-]+$"]}
 
 [[redirects]]
   from = "/*-upon-*"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z]+-upon-[a-z-]+$"]}
 
 # Add parking company routes to be served by React app first
 [[redirects]]
@@ -96,30 +114,35 @@
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z0-9]+-parking$"]}
 
 [[redirects]]
   from = "/*-car-parks"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z0-9]+-car-parks$"]}
 
 [[redirects]]
   from = "/*-car-park"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/[a-z0-9]+-car-park$"]}
 
 [[redirects]]
   from = "/parking-*"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/parking-[a-z0-9-]+$"]}
 
 [[redirects]]
   from = "/park-*"
   to = "/index.html"
   status = 200
   force = true
+  conditions = {Pattern = ["/park-[a-z0-9-]+$"]}
 
 # Add specific parking company routes
 [[redirects]]
@@ -140,6 +163,78 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/ocs"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/pess"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/q-park"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/safe-duty"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/parkmaven"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/p4-parking"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/carparkers"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/parking-eye"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mk1-parking"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/rcp-parking"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/rmc-parking"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/city-permits"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Common static files that should be served directly
 [[redirects]]
   from = "/robots.txt"
@@ -156,69 +251,73 @@
   to = "/favicon.ico"
   status = 200
 
-# COUNCIL REDIRECTS FOR SEO (fallback)
-# These come after the React app routes to act as fallbacks
+# SEO Function Redirects - Only for crawlers/bots
 [[redirects]]
   from = "/*-city-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z]+-city-council$"]}
+  conditions = {Pattern = ["/[a-z]+-city-council$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/*-council"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z]+-council$"]}
+  conditions = {Pattern = ["/[a-z]+-council$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/city-of-*"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Pattern = ["/city-of-[a-z]+$"]}
+  conditions = {Pattern = ["/city-of-[a-z]+$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/*-and-*"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z]+-and-[a-z-]+$"]}
+  conditions = {Pattern = ["/[a-z]+-and-[a-z-]+$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/*-upon-*"
   to = "/.netlify/functions/council-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z]+-upon-[a-z-]+$"]}
+  conditions = {Pattern = ["/[a-z]+-upon-[a-z-]+$"], Crawler = ["1"]}
 
-# PARKING COMPANY REDIRECTS FOR SEO (fallback)
-# These come after the React app routes to act as fallbacks
 [[redirects]]
   from = "/*-parking"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z0-9]+-parking$"]}
+  conditions = {Pattern = ["/[a-z0-9]+-parking$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/*-car-parks"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z0-9]+-car-parks$"]}
+  conditions = {Pattern = ["/[a-z0-9]+-car-parks$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/*-car-park"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  conditions = {Pattern = ["/[a-z0-9]+-car-park$"]}
+  conditions = {Pattern = ["/[a-z0-9]+-car-park$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/parking-*"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  conditions = {Pattern = ["/parking-[a-z0-9-]+$"]}
+  conditions = {Pattern = ["/parking-[a-z0-9-]+$"], Crawler = ["1"]}
 
 [[redirects]]
   from = "/park-*"
   to = "/.netlify/functions/parking-seo"
   status = 200
-  conditions = {Pattern = ["/park-[a-z0-9-]+$"]}
+  conditions = {Pattern = ["/park-[a-z0-9-]+$"], Crawler = ["1"]}
+
+# Catch-all route for the React app - MUST come before 404
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
 
 # Handle all unknown paths with 404 - MUST BE LAST
 [[redirects]]
