@@ -7,6 +7,7 @@ import Faq from "./pages/FAQ";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AppealHelp from "./pages/AppealHub";
+import CouncilList from './pages/CouncilList';
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NotFound from "./pages/NotFound";
@@ -74,7 +75,6 @@ import TotalParkingSolutions from "./pages/TotalParkingSolutions";
 import UniversityOfEdinburgh from "./pages/UniversityOfEdinburgh";
 import UniversityOfKent from "./pages/UniversityOfKent";
 import WorkflowDynamics from "./pages/WorkflowDynamics";
-// Add imports for the missing pages (combined list)
 import FiscParkingSolutions from "./pages/FiscParkingSolutions";
 import FlashPark from "./pages/FlashPark";
 import GBPManagement from "./pages/GBPManagement";
@@ -110,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: "appeal-help",
         element: <AppealHelp />,
+      },
+      {
+        path: "councils",
+        element: <CouncilList />,
       },
       {
         path: "privacy-policy",
@@ -360,7 +364,6 @@ const router = createBrowserRouter([
         path: "workflow-dynamics",
         element: <WorkflowDynamics />,
       },
-      // Add routes for the missing pages (alphabetically)
       {
         path: "fisc-parking-solutions",
         element: <FiscParkingSolutions />,
@@ -397,12 +400,10 @@ const router = createBrowserRouter([
         path: "leeds-teaching-hospitals",
         element: <LeedsTeachingHospitals />,
       },
-      // Move councilSlug route here, just before the catch-all
       {
         path: ":councilSlug",
         element: <CouncilPage />,
       },
-      // Catch-all route - MUST BE LAST
       {
         path: "*", 
         element: <NotFound />,
