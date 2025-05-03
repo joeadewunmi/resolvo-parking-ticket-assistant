@@ -96,10 +96,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: ":councilSlug",
-        element: <CouncilPage />,
-      },
-      {
         path: "faq",
         element: <Faq />,
       },
@@ -400,6 +396,11 @@ const router = createBrowserRouter([
       {
         path: "leeds-teaching-hospitals",
         element: <LeedsTeachingHospitals />,
+      },
+      // Move councilSlug route here, just before the catch-all
+      {
+        path: ":councilSlug",
+        element: <CouncilPage />,
       },
       // Catch-all route - MUST BE LAST
       {

@@ -36,13 +36,25 @@ function isValidCouncil(slug) {
     return false;
   }
   
-  // Direct match
+  // Only allow alphanumeric + hyphen characters in slugs
+  if (!/^[a-z0-9-]+$/.test(slug)) {
+    return false;
+  }
+  
+  // Direct match in our valid councils list
   if (validCouncils.has(slug)) return true;
   
-  // Pattern matches
-  if (slug.endsWith('-council') || 
-      slug.endsWith('-city-council') || 
-      slug.startsWith('city-of-')) {
+  // Valid patterns only (explicitly reject any non-matching pattern)
+  const isCouncilPattern = slug.endsWith('-council') || 
+                          slug.endsWith('-city-council') || 
+                          slug.startsWith('city-of-');
+  
+  if (!isCouncilPattern) {
+    return false;
+  }
+  
+  // For pattern matches, verify the base name exists in our council list
+  if (isCouncilPattern) {
     // Extract the base name
     const baseName = slug
       .replace(/-council$/, '')

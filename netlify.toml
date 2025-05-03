@@ -54,24 +54,34 @@
   status = 200
   force = true
 
-# Dynamic SEO proxy for ALL parking company pages
-# This wildcard pattern matches all common formats of parking company URLs
+# STRICT PATTERNS for parking company pages - only match known formats  
+# The Netlify function will provide additional validation to ensure only legitimate companies are processed
 [[redirects]]
-  from = "/*-parking"
+  from = "/apcoa-parking"
   to = "/.netlify/functions/parking-seo"
   status = 200
 
 [[redirects]]
-  from = "/*-car-park"
+  from = "/euro-car-parks"
   to = "/.netlify/functions/parking-seo"
   status = 200
 
 [[redirects]]
-  from = "/*-car-parks"
+  from = "/parkingeye"
   to = "/.netlify/functions/parking-seo"
   status = 200
 
-# Individual company paths that don't follow the patterns above
+[[redirects]]
+  from = "/smart-parking"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+[[redirects]]
+  from = "/rcp-parking"
+  to = "/.netlify/functions/parking-seo"
+  status = 200
+
+# Individual company paths
 [[redirects]]
   from = "/ukpc"
   to = "/.netlify/functions/parking-seo"
@@ -97,22 +107,25 @@
   to = "/.netlify/functions/parking-seo"
   status = 200
 
-# Known council patterns - STRICT matching only
-# Removed the conditions that excluded hub pages since these are now static files
+# Known council patterns - STRICT matching only with regex conditions
+# This ensures only valid council patterns are processed by the function
 [[redirects]]
   from = "/*-council"
   to = "/.netlify/functions/council-seo"
   status = 200
+  conditions = {Pattern = ["/[a-z]+-council$"]}
 
 [[redirects]]
   from = "/*-city-council"
   to = "/.netlify/functions/council-seo"
   status = 200
+  conditions = {Pattern = ["/[a-z]+-city-council$"]}
 
 [[redirects]]
   from = "/city-of-*"
   to = "/.netlify/functions/council-seo"
   status = 200
+  conditions = {Pattern = ["/city-of-[a-z]+$"]}
 
 # Explicitly listed single-word councils ONLY
 [[redirects]]
@@ -163,6 +176,38 @@
 [[redirects]]
   from = "/plymouth"
   to = "/.netlify/functions/council-seo"
+  status = 200
+
+# Common static files that should be served directly
+[[redirects]]
+  from = "/robots.txt"
+  to = "/robots.txt"
+  status = 200
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.ico"
+  status = 200
+
+# Serve our static HTML pages for the hub pages
+[[redirects]]
+  from = "/local-authorities"
+  to = "/local-authorities.html"
+  status = 200
+
+[[redirects]]
+  from = "/councils"
+  to = "/councils.html"
+  status = 200
+
+[[redirects]]
+  from = "/council-appeal-hub"
+  to = "/council-appeal-hub.html"
   status = 200
 
 # Handle all unknown paths with 404 - MUST BE LAST

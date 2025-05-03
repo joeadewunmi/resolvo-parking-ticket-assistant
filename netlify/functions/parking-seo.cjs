@@ -149,19 +149,17 @@ const knownCompanies = {
  * This is crucial for preventing random URLs from generating landing pages
  */
 function isValidParkingCompany(slug) {
-  // Check if it's in our known companies list
+  // Only allow alphanumeric + hyphen characters in slugs
+  if (!/^[a-z0-9-]+$/.test(slug)) {
+    return false;
+  }
+  
+  // Check if it's in our known companies list - explicit matches only
   if (knownCompanies[slug]) return true;
   
-  // Check if it matches common parking company patterns
-  const validPatterns = [
-    /-parking$/,           // ends with -parking
-    /-car-park$/,          // ends with -car-park
-    /-car-parks$/,         // ends with -car-parks
-    /^park-/,              // starts with park-
-    /-park$/               // ends with -park
-  ];
-  
-  return validPatterns.some(pattern => pattern.test(slug));
+  // We're only accepting explicitly known companies now
+  // We don't want to generate pages for arbitrary patterns
+  return false;
 }
 
 /**
