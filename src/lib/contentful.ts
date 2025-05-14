@@ -26,6 +26,7 @@ const logEnvironmentInfo = () => {
 const client = createClient({
   space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || DEV_SPACE_ID,
   accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN || DEV_ACCESS_TOKEN,
+  environment: 'master' // Ensure we're using the master environment
 });
 
 // Export getClient function for compatibility
@@ -97,11 +98,23 @@ export const richTextOptions = {
 // Fetch all blog posts with better error handling
 export const getBlogPosts = async () => {
   try {
+    console.log('Fetching blog posts from Contentful...');
     const response = await client.getEntries({
       content_type: 'blogPost',
       order: ['-fields.publishDate'],
       include: 2,
     });
+    
+    // Log all posts for debugging
+    response.items.forEach(post => {
+      console.log(`Post "${post.fields.title}":`, {
+        slug: post.fields.slug,
+        publishDate: post.fields.publishDate,
+        id: post.sys.id,
+        contentType: post.sys.contentType?.sys?.id
+      });
+    });
+
     return response.items;
   } catch (error) {
     console.error("Error fetching blog posts:", error);
@@ -121,7 +134,6 @@ export const getBlogPosts = async () => {
                 {
                   nodeType: 'paragraph',
                   content: [{ nodeType: 'text', value: 'Sample content - environment variables might be missing', marks: [] }],
-                  data: {}
                 }
               ],
               data: {}

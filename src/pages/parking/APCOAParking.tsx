@@ -45,7 +45,7 @@ const APCOAParking = () => {
             <div className="block">
               <LazyImage 
                 src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
-                alt={`Parking officer issuing a ticket from APCOA Parking`}
+                alt="Parking officer issuing a ticket from APCOA Parking"
                 className="w-full h-auto rounded-lg shadow-xl"
                 width={600}
                 height={400}
