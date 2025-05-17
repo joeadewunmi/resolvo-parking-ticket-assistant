@@ -14,6 +14,20 @@ interface ParkingCompanyTemplateProps {
 }
 
 const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompanyTemplateProps) => {
+  // Create FAQ Schema based on the faqs prop
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -24,6 +38,12 @@ const ParkingCompanyTemplate = ({ companyName, companySlug, faqs }: ParkingCompa
         <meta property="og:description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
         <meta name="twitter:title" content={`Appeal Your ${companyName} Fine for Free with Resolvo`} />
         <meta name="twitter:description" content={`Got a ${companyName} parking ticket? Resolvo will write a free appeal letter for you based on UK parking laws, so you can fight back`} />
+        {/* Inject FAQ Schema */}
+        {faqs && faqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
       </Helmet>
 
       {/* Hero Section */}

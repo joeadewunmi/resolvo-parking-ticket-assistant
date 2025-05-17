@@ -4,10 +4,50 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
 import { euroCarParksFaqs } from "@/data/faqs";
+import { Helmet } from "react-helmet-async";
 
 const UKParkingControl = () => {
+  // Prepare FAQs for schema, adapting from euroCarParksFaqs
+  const schemaFaqs = euroCarParksFaqs.map(faq => ({
+    question: faq.question.replace("Euro Car Parks", "UKPC"),
+    answer: faq.answer.replace(/Euro Car Parks/g, "UKPC")
+  }));
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": schemaFaqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Appeal Your UKPC Fine | Resolvo</title>
+        <meta name="description" content="Got a UKPC parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <link rel="canonical" href="https://resolvo.uk/ukpc" />
+        <meta property="og:title" content="Appeal Your UKPC Fine | Resolvo" />
+        <meta property="og:description" content="Got a UKPC parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <meta property="og:url" content="https://resolvo.uk/ukpc" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" /> 
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Appeal Your UKPC Fine | Resolvo" />
+        <meta name="twitter:description" content="Got a UKPC parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <meta name="twitter:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
+        {/* Inject FAQ Schema */}
+        {schemaFaqs && schemaFaqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
+      </Helmet>
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">

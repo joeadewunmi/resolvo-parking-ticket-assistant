@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Building, ArrowRight } from 'lucide-react';
@@ -6,6 +5,7 @@ import FAQSection from '@/components/home/FAQSection';
 import { Card, CardContent } from '@/components/ui/card';
 import { Helmet } from 'react-helmet-async';
 import TrackingButton from '@/components/ui/TrackingButton';
+import { faqs } from "@/data/faqs"; // Import faqs
 
 // All parking companies with routes
 const parkingCompanies = [
@@ -105,6 +105,21 @@ const AppealHub = () => {
   // Get sorted letters for alphabetical navigation
   const letters = Object.keys(groupedCompanies).sort();
 
+  // Create FAQ Schema for the first 4 FAQs
+  const limitedFaqs = faqs.slice(0, 4);
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": limitedFaqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <article className="min-h-screen bg-gray-50">
       <Helmet>
@@ -112,6 +127,12 @@ const AppealHub = () => {
         <meta name="description" content="Find the right appeal guide for your parking ticket. Expert guidance for appealing tickets from all major UK parking companies." />
         <meta name="keywords" content="parking ticket appeal, parking fine appeal, PCN appeal guide, parking company appeals" />
         <link rel="canonical" href="https://resolvo.uk/appeal-hub" />
+        {/* Inject FAQ Schema */}
+        {limitedFaqs && limitedFaqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
       </Helmet>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

@@ -14,6 +14,20 @@ interface CouncilTemplateProps {
 }
 
 const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProps) => {
+  // Create FAQ Schema based on the faqs prop
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -36,6 +50,12 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
         <meta name="twitter:title" content={`Appeal Your ${councilName} Parking Ticket Appeal for Free with Resolvo`} />
         <meta name="twitter:description" content={`Got a parking fine from ${councilName}? Get a winning appeal letter for free to help you fight it`} />
         <meta name="twitter:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
+        {/* Inject FAQ Schema */}
+        {faqs && faqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
       </Helmet>
 
       {/* Hero Section */}

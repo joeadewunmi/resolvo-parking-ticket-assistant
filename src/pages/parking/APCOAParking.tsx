@@ -9,8 +9,43 @@ import TrackingButton from "@/components/ui/TrackingButton";
 import LazyImage from '@/components/ui/LazyImage';
 
 const APCOAParking = () => {
+  // Create FAQ Schema based on the imported faqs
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.slice(0, 5).map(faq => ({ // Assuming it uses the first 5 as per its render logic
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Appeal Your APCOA Parking Fine | Resolvo</title>
+        <meta name="description" content="Got an APCOA parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <link rel="canonical" href="https://resolvo.uk/apcoa-parking" />
+        {/* Add other relevant meta tags like Open Graph, Twitter Cards if desired */}
+        <meta property="og:title" content="Appeal Your APCOA Parking Fine | Resolvo" />
+        <meta property="og:description" content="Got an APCOA parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <meta property="og:url" content="https://resolvo.uk/apcoa-parking" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" /> 
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Appeal Your APCOA Parking Fine | Resolvo" />
+        <meta name="twitter:description" content="Got an APCOA parking ticket? Get a free appeal written in minutes to help you fight it." />
+        <meta name="twitter:image" content="https://resolvo.uk/lovable-uploads/cee6d857-8576-462f-ad15-9e908770e483.png" />
+        {/* Inject FAQ Schema */}
+        {faqs && faqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
+      </Helmet>
       {/* Hero Section */}
       <div className="relative bg-[#FFD700] overflow-hidden">
         <div className="absolute inset-0">
