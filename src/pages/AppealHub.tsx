@@ -75,7 +75,7 @@ const parkingCompanies = [
   { name: "Observices Parking Consultancy Appeal Guide", path: "/observices-parking" },
   { name: "OCS Appeal Guide", path: "/ocs" },
   { name: "P4 Parking Appeal Guide", path: "/p4-parking" },
-  { name: "ParkingEye Appeal Guide", path: "/parkingeye" },
+  { name: "Parking Eye Appeal Guide", path: "/parkingeye" },
   { name: "Parking Control Solutions Appeal Guide", path: "/parking-control-solutions" },
   { name: "ParkMaven Appeal Guide", path: "/parkmaven" },
   { name: "Premier Park Appeal Guide", path: "/premier-park" },

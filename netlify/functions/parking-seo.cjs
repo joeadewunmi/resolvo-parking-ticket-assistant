@@ -132,7 +132,7 @@ function generateParkingPageHTML(company) {
 const knownCompanies = {
   'apcoa-parking': 'APCOA Parking',
   'euro-car-parks': 'Euro Car Parks',
-  'parkingeye': 'ParkingEye',
+  'parkingeye': 'Parking Eye',
   'ukpc': 'UKPC',
   'nsl': 'NSL',
   'smart-parking': 'Smart Parking',

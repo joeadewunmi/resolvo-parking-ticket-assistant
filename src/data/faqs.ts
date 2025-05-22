@@ -42,7 +42,7 @@ export const faqs = [
   },
   {
     question: "What types of parking tickets can Resolvo help with?",
-    answer: "Resolvo can help with most types of parking tickets issued in the UK, including:\n\n• Private Parking Charges (issued by private companies like ParkingEye, Euro Car Parks, etc.)\n• Council-issued Penalty Charge Notices (PCNs)\n• Parking tickets from retail parks and supermarkets\n• Hospital parking penalties\n• University and college parking fines\n• Workplace parking enforcement tickets\n\nResolvo cannot help with Fixed Penalty Notices (FPNs) for moving traffic violations like speeding or running red lights, as these follow a different legal process and often require court appearances."
+    answer: "Resolvo can help with most types of parking tickets issued in the UK, including:\n\n• Private Parking Charges (issued by private companies like Parking Eye, Euro Car Parks, etc.)\n• Council-issued Penalty Charge Notices (PCNs)\n• Parking tickets from retail parks and supermarkets\n• Hospital parking penalties\n• University and college parking fines\n• Workplace parking enforcement tickets\n\nResolvo cannot help with Fixed Penalty Notices (FPNs) for moving traffic violations like speeding or running red lights, as these follow a different legal process and often require court appearances."
   },
   {
     question: "How successful are parking ticket appeals?",

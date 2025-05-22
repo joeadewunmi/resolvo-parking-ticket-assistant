@@ -13,7 +13,7 @@ const AppealSection = () => {
             <div className="relative">
               <LazyImage 
                 src="/lovable-uploads/65a99b15-80e2-4483-80cb-824db7613e33.png" 
-                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a ParkingEye charge at an Asda car park" 
+                alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a Parking Eye charge at an Asda car park" 
                 className="rounded-lg shadow-2xl w-full h-auto object-cover object-top"
                 style={{ maxHeight: "600px" }}
                 width={540}
