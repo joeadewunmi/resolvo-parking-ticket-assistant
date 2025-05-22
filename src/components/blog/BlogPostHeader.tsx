@@ -3,6 +3,7 @@ import { formatDate } from '@/lib/utils';
 import { Linkedin, Globe, Calendar, Clock, UserCircle } from 'lucide-react';
 import { SafeContentfulImage, AuthorProp } from '@/pages/BlogPost';
 import LazyImage from '@/components/ui/LazyImage';
+import ShareButton from '@/components/ui/ShareButton';
 
 type Author = {
   name: string;
@@ -37,6 +38,9 @@ const BlogPostHeader = ({
 }: BlogPostHeaderProps) => {
   // Safely access cover image
   const coverImageUrl = coverImage?.url ? `https:${coverImage.url}` : '';
+  
+  // Get current URL for sharing
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
   
   return (
     <div className="mb-10">
@@ -77,44 +81,55 @@ const BlogPostHeader = ({
           <div className="flex-1">
             <div className="flex items-center">
               {author?.name && <p className="font-medium text-lg">{author.name}</p>}
-              {author?.socialLinks && (
-                <div className="flex items-center ml-4 space-x-2">
-                  {author.socialLinks.twitter && (
-                    <a 
-                      href={author.socialLinks.twitter} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-primary transition-colors"
-                    >
-                      <img 
-                        src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
-                        alt="X (formerly Twitter)"
-                        className="w-4 h-4"
-                      />
-                    </a>
-                  )}
-                  {author.socialLinks.linkedin && (
-                    <a 
-                      href={author.socialLinks.linkedin} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-primary transition-colors"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                  )}
-                  {author.socialLinks.website && (
-                    <a 
-                      href={author.socialLinks.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-primary transition-colors"
-                    >
-                      <Globe className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              )}
+              <div className="flex items-center ml-4 space-x-2">
+                {/* Share Button - Always visible */}
+                <ShareButton 
+                  url={currentUrl} 
+                  title={title} 
+                  eventCategory="blog_share"
+                  eventLabel={`blog_${title}`}
+                />
+                
+                {/* Author social links */}
+                {author?.socialLinks && (
+                  <>
+                    {author.socialLinks.twitter && (
+                      <a 
+                        href={author.socialLinks.twitter} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-primary transition-colors"
+                      >
+                        <img 
+                          src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
+                          alt="X (formerly Twitter)"
+                          className="w-4 h-4"
+                        />
+                      </a>
+                    )}
+                    {author.socialLinks.linkedin && (
+                      <a 
+                        href={author.socialLinks.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-primary transition-colors"
+                      >
+                        <Linkedin className="w-4 h-4" />
+                      </a>
+                    )}
+                    {author.socialLinks.website && (
+                      <a 
+                        href={author.socialLinks.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-primary transition-colors"
+                      >
+                        <Globe className="w-4 h-4" />
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
             <div className="flex items-center text-sm text-gray-500">
               <span>{formatDate(date)}</span>
