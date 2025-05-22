@@ -60,12 +60,15 @@ const ShareButton = ({
   return (
     <button
       onClick={handleShare}
-      className={`inline-flex items-center justify-center border border-gray-800 rounded-full p-1 hover:bg-gray-100 transition-colors ${className || ''}`}
+      className={`flex flex-col items-center justify-center rounded-full px-6 py-2 border-2 border-gray-800 hover:bg-gray-100 transition-colors ${className || ''}`}
       aria-label="Share"
       title="Share this page"
       data-tracking="share-button"
     >
-      <Share className="w-4 h-4" />
+      <div className="flex flex-col items-center">
+        <Share className="w-5 h-5 mb-1" />
+        <span className="text-sm font-medium">Share</span>
+      </div>
     </button>
   );
 };
