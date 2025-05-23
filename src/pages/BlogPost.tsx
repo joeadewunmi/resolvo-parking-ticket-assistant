@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { renderRichText } from '@/lib/contentful';
@@ -40,8 +39,9 @@ const getCoverImageData = (post: BlogPost | null): SafeContentfulImage => {
   
   // Type guard to check if it's a resolved Asset
   if (featuredImage && typeof featuredImage === 'object' && 'fields' in featuredImage) {
-    const fileUrl = featuredImage.fields?.file?.url;
-    const title = featuredImage.fields?.title;
+    const asset = featuredImage as any; // Use any to bypass strict typing for now
+    const fileUrl = asset.fields?.file?.url;
+    const title = asset.fields?.title;
 
     if (typeof fileUrl === 'string') {
       return {

@@ -1,4 +1,5 @@
 
+
 import { Entry, EntrySkeletonType, EntryFieldTypes } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
@@ -25,10 +26,3 @@ export type BlogPostSkeleton = EntrySkeletonType<{
 // Use the skeletons to define the Entry types
 export type BlogPost = Entry<BlogPostSkeleton>;
 export type Author = Entry<AuthorSkeleton>;
-
-// Add the missing AuthorFields type for backward compatibility
-export type AuthorFields = {
-  authorName: string;
-  socialLinks?: string;
-  profilePicture?: any;
-};

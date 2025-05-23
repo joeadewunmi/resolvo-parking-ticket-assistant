@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Share } from 'lucide-react';
 
@@ -60,17 +61,17 @@ const ShareButton = ({
   return (
     <button
       onClick={handleShare}
-      className={`flex flex-col items-center justify-center rounded-full px-6 py-2 border-2 border-gray-800 hover:bg-gray-100 transition-colors ${className || ''}`}
-      aria-label="Share"
+      className={`group flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-full border-2 transition-all duration-200 shadow-sm hover:shadow-md ${className || 'border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50'}`}
+      aria-label="Share this page"
       title="Share this page"
       data-tracking="share-button"
     >
-      <div className="flex flex-col items-center">
-        <Share className="w-5 h-5 mb-1" />
-        <span className="text-sm font-medium">Share</span>
-      </div>
+      <Share className="w-4 h-4 text-gray-600 group-hover:text-gray-800 transition-colors duration-200" />
+      <span className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors duration-200 hidden sm:inline">
+        Share
+      </span>
     </button>
   );
 };
 
-export default ShareButton; 
+export default ShareButton;
