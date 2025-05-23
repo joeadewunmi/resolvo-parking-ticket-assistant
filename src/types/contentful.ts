@@ -1,3 +1,4 @@
+
 import { Entry, EntrySkeletonType, EntryFieldTypes } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
@@ -22,9 +23,12 @@ export type BlogPostSkeleton = EntrySkeletonType<{
 }>;
 
 // Use the skeletons to define the Entry types
-// Specify Modifiers for link resolution if needed (e.g., 'WITHOUT_LINK_RESOLUTION', 'WITH_LINK_RESOLUTION')
-// Or omit for default behavior which depends on client configuration/`include` parameter
 export type BlogPost = Entry<BlogPostSkeleton>;
 export type Author = Entry<AuthorSkeleton>;
 
-// Removed old interfaces and confusing type aliases 
+// Add the missing AuthorFields type for backward compatibility
+export type AuthorFields = {
+  authorName: string;
+  socialLinks?: string;
+  profilePicture?: any;
+};

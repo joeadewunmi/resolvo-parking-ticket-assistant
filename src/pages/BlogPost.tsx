@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { renderRichText } from '@/lib/contentful';
@@ -33,18 +34,22 @@ const getEstimatedReadTime = (content: any): number => {
   return Math.ceil(words / wordsPerMinute);
 };
 
-// Helper using the type guard
+// Helper using the type guard - fixed type handling
 const getCoverImageData = (post: BlogPost | null): SafeContentfulImage => {
-  const featuredImage: Asset | undefined = post?.fields?.featuredImage;
-  const fileUrl = featuredImage?.fields?.file?.url;
-  const title = featuredImage?.fields?.title;
+  const featuredImage = post?.fields?.featuredImage;
+  
+  // Type guard to check if it's a resolved Asset
+  if (featuredImage && typeof featuredImage === 'object' && 'fields' in featuredImage) {
+    const fileUrl = featuredImage.fields?.file?.url;
+    const title = featuredImage.fields?.title;
 
-  if (typeof fileUrl === 'string') {
-    return {
-      url: fileUrl, 
-      title: typeof title === 'string' ? title : ''
-    };
-  } 
+    if (typeof fileUrl === 'string') {
+      return {
+        url: fileUrl, 
+        title: typeof title === 'string' ? title : ''
+      };
+    }
+  }
   
   return null;
 };
@@ -212,4 +217,3 @@ const BlogPostPage = () => {
 };
 
 export default BlogPostPage;
-
