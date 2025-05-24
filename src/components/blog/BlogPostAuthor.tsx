@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { Entry } from 'contentful';
-import { AuthorFields } from '@/types/contentful';
 
 interface BlogPostAuthorProps {
-  author: Entry<AuthorFields>;
+  author: any; // Using any for now since AuthorFields is not properly exported
 }
 
 const BlogPostAuthor = ({ author }: BlogPostAuthorProps) => {

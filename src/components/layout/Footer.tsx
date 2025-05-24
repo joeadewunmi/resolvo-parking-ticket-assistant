@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from "react-router-dom";
 import LazyImage from '@/components/ui/LazyImage'; // Import LazyImage
@@ -98,7 +99,7 @@ const Footer = () => {
                 className="inline-flex items-center text-sm hover:text-accent"
               >
                 <LazyImage 
-                  src="/lovable-uploads/208594d9-bfc1-47eb-b8b2-bc5b4c8a57da.png"
+                  src="/lovable-uploads/349f9204-8344-4a31-a6b1-ebb5df84cbc5.png"
                   alt="TikTok"
                   className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
                   width={20}
@@ -126,11 +127,6 @@ const Footer = () => {
           <p className="text-sm text-center">
             © {new Date().getFullYear()} Resolvo. All rights reserved.
           </p>
-        </div>
-        <div className="flex justify-center space-x-4">
-          <LazyImage src="/icons/visa.svg" alt="Visa" className="h-6" width={38} height={24} />
-          <LazyImage src="/icons/mastercard.svg" alt="Mastercard" className="h-6" width={38} height={24} />
-          <LazyImage src="/icons/amex.svg" alt="American Express" className="h-6" width={38} height={24} />
         </div>
       </div>
     </footer>
