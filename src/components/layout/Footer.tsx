@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from "react-router-dom";
 import LazyImage from '@/components/ui/LazyImage'; // Import LazyImage
@@ -16,17 +15,17 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3 mb-4">
               <LazyImage 
                 src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
                 alt="Resolvo Logo" 
-                className="h-8 w-8" 
-                width={32} 
-                height={32}
+                className="h-7 w-7 object-contain filter brightness-0 invert" 
+                width={28} 
+                height={28}
               />
-              <span className="text-xl font-bold text-white">Resolvo</span>
+              <span className="text-xl font-bold text-white leading-none">Resolvo</span>
             </div>
-            <p className="text-sm">
+            <p className="text-sm text-gray-300 leading-relaxed">
               Fight Your Unfair Parking Fine For Free In Minutes
             </p>
           </div>
