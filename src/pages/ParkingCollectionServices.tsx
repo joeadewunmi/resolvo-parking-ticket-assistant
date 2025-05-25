@@ -41,9 +41,11 @@ const ParkingCollectionServices = () => {
             </div>
             <div className="block">
               <img 
-                src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
+                src="/lovable-uploads/0d97120c-83e2-4f9d-9533-49c07caa3cea.png" 
                 alt="Parking officer issuing a ticket from Parking Collection Services" 
-                className="w-full h-auto rounded-lg shadow-xl" 
+                className="w-full h-auto rounded-lg shadow-xl"
+                width={1824}
+                height={1407}
               />
             </div>
           </div>

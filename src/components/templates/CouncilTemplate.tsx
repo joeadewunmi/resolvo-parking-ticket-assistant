@@ -92,11 +92,11 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
             </div>
             <div className="block">
               <LazyImage 
-                src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
+                src="/lovable-uploads/0d97120c-83e2-4f9d-9533-49c07caa3cea.png" 
                 alt={`Parking officer issuing a ticket from ${councilName}`}
                 className="w-full h-auto rounded-lg shadow-xl" 
-                width={600}
-                height={400}
+                width={1824}
+                height={1407}
               />
             </div>
           </div>
@@ -226,4 +226,4 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
   );
 };
 
-export default CouncilTemplate; 
+export default CouncilTemplate;
