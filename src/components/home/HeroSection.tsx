@@ -38,7 +38,7 @@ const HeroSection = () => {
           </div>
           <div className="block">
             <LazyImage 
-              src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
+              src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.webp" 
               alt="Hero image of someone appealing a parking ticket"
               className="w-full h-auto rounded-lg shadow-xl"
               width={600}
