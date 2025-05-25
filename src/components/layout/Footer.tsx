@@ -19,7 +19,7 @@ const Footer = () => {
               <LazyImage 
                 src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
                 alt="Resolvo Logo" 
-                className="h-8 w-8 brightness-0 invert" 
+                className="h-8 w-8 opacity-90 filter brightness-110" 
                 width={32} 
                 height={32}
               />
