@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from "react-router-dom";
 import LazyImage from '@/components/ui/LazyImage'; // Import LazyImage
@@ -20,7 +19,7 @@ const Footer = () => {
               <LazyImage 
                 src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
                 alt="Resolvo Logo" 
-                className="h-8 w-8" 
+                className="h-8 w-8 brightness-0 invert" 
                 width={32} 
                 height={32}
               />
