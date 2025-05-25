@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from "react-router-dom";
 import TrackingButton from "@/components/ui/TrackingButton";
@@ -16,8 +17,8 @@ const AppealSection = () => {
                 alt="Example of an AI-generated parking ticket appeal letter showing a detailed appeal against a Parking Eye charge at an Asda car park" 
                 className="rounded-lg shadow-2xl w-full h-auto object-cover object-top"
                 style={{ maxHeight: "600px" }}
-                width={540}
-                height={720}
+                width={1824}
+                height={1407}
               />
               <p className="text-center mt-4 text-gray-600 text-sm">Written by Resolvo</p>
             </div>
