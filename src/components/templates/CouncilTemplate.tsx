@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -93,7 +92,7 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
             </div>
             <div className="block">
               <LazyImage 
-                src="/lovable-uploads/1ab486b6-667f-45d8-a5bf-a5d55a312a04.png" 
+                src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.png" 
                 alt={`Parking officer issuing a ticket from ${councilName}`}
                 className="w-full h-auto rounded-lg shadow-xl" 
                 width={600}
@@ -227,4 +226,4 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
   );
 };
 
-export default CouncilTemplate;
+export default CouncilTemplate; 
