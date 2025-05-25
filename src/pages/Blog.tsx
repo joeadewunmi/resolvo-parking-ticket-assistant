@@ -6,6 +6,7 @@ import { formatDate } from '@/lib/utils';
 import { Helmet } from 'react-helmet-async';
 import { Loader2 } from 'lucide-react';
 import LazyImage from '@/components/ui/LazyImage';
+import PriorityImage from '@/components/ui/PriorityImage';
 
 // Define the full Entry type using 'any' for fields for simpler access
 // This avoids complex typing issues but relies on careful access below
@@ -86,10 +87,12 @@ const Blog = () => {
                       {/* Image */}
                       {getBlogCoverImage(posts[0]) && (
                         <div className="aspect-[16/9] overflow-hidden rounded-lg">
-                          <LazyImage 
+                          <PriorityImage 
                             src={getBlogCoverImage(posts[0])} 
                             alt={getBlogTitle(posts[0])}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            width={800}
+                            height={450}
                           />
                         </div>
                       )}

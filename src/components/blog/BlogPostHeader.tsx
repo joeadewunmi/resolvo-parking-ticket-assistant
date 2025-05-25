@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { formatDate } from '@/lib/utils';
 import { Linkedin, Globe, Calendar, Clock, UserCircle } from 'lucide-react';
 import { SafeContentfulImage, AuthorProp } from '@/pages/BlogPost';
 import LazyImage from '@/components/ui/LazyImage';
+import PriorityImage from '@/components/ui/PriorityImage';
 import ShareButton from '@/components/ui/ShareButton';
 
 type Author = {
@@ -48,7 +48,7 @@ const BlogPostHeader = ({
       {/* Cover Image */}
       {coverImage && coverImage.url && (
         <div className="my-8 aspect-[16/9] w-full overflow-hidden rounded-lg">
-          <LazyImage 
+          <PriorityImage 
             src={coverImage.url.startsWith('//') ? `https:${coverImage.url}` : coverImage.url}
             alt={coverImage.title || title}
             className="w-full h-full object-cover"
