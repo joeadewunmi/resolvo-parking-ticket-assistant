@@ -20,6 +20,7 @@ const Footer = () => {
                 src="/lovable-uploads/b58acd45-81f6-4d47-b21f-ca0781f07e0c.png" 
                 alt="Resolvo Logo" 
                 className="h-8 w-8 object-contain" 
+                style={{ filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.3))' }}
                 width={32} 
                 height={32}
               />
