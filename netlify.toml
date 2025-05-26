@@ -323,5 +323,6 @@
 # Enable Netlify Functions
 [build]
   functions = "netlify/functions"
-  command = "npm run build:with-sitemap"
+  # Using static sitemap.xml in public directory instead of dynamic generation
+  command = "npm run build"
   publish = "dist"
