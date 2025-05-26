@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { councilNames } from '../../scripts/council-slugs.js';
+import { councilNames } from '../../scripts/council-slugs.cjs';
 import { Library } from 'lucide-react'; // Use an appropriate icon
 
 const CouncilList = () => {
