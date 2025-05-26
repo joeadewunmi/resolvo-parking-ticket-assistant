@@ -1,11 +1,11 @@
 // This is a simple Node.js script that could be run during the build process
 // to generate an updated sitemap.xml file
 
-import fs from 'fs';
-import path from 'path';
-import contentful from 'contentful';
-import { councilNames } from './council-slugs.js';
-import dotenv from 'dotenv';
+const fs = require('fs');
+const path = require('path');
+const contentful = require('contentful');
+const { councilNames } = require('./council-slugs.js');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -297,5 +297,5 @@ process.on('unhandledRejection', (error) => {
   process.exit(0);
 });
 
-// Run the main function
+// Execute the main function
 main();

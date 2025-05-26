@@ -7,7 +7,7 @@
     "dev": "vite",
     "generate-sitemap": "node scripts/generate-sitemap.cjs",
     "build": "vite build",
-    "build:with-sitemap": "npm run generate-sitemap && vite build",
+    "build:with-sitemap": "node scripts/generate-sitemap.cjs && vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
