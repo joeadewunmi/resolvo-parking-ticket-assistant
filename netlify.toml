@@ -49,12 +49,6 @@
   force = true
 
 [[redirects]]
-  from = "/council-appeal-hub"
-  to = "/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/council-list"
   to = "/index.html"
   status = 200
@@ -329,5 +323,5 @@
 # Enable Netlify Functions
 [build]
   functions = "netlify/functions"
-  command = "npm run build"
+  command = "npm run build:with-sitemap"
   publish = "dist"

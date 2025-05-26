@@ -133,22 +133,37 @@ const getCouncilRoutes = () => {
 const getBlogPosts = async () => {
   if (!client) {
     console.warn('Contentful credentials not found. Skipping blog posts in sitemap.');
+    console.log('VITE_CONTENTFUL_SPACE_ID exists:', !!process.env.VITE_CONTENTFUL_SPACE_ID);
+    console.log('VITE_CONTENTFUL_ACCESS_TOKEN exists:', !!process.env.VITE_CONTENTFUL_ACCESS_TOKEN);
     return [];
   }
 
   try {
+    console.log('Fetching blog posts from Contentful...');
     const entries = await client.getEntries({
       content_type: 'blogPost',
       limit: 1000,
-      order: '-sys.createdAt'
+      order: '-sys.createdAt',
+      // Ensure we get published entries only
+      'sys.publishedAt[exists]': true
+    });
+
+    console.log(`Retrieved ${entries.items.length} blog posts from Contentful`);
+    
+    // Debug output for each post
+    entries.items.forEach(post => {
+      console.log(`- Post: "${post.fields.title}", slug: ${post.fields.slug}, status: ${post.sys.status || 'unknown'}`);
     });
 
     // Filter out any entries without slugs and ensure canonical format
-    return entries.items
+    const validPosts = entries.items
       .filter(post => post.fields.slug && typeof post.fields.slug === 'string')
       .map(post => `/blog/${post.fields.slug.toLowerCase().trim()}`)
       .filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
       .sort(); // Sort alphabetically for better maintainability
+      
+    console.log(`Total valid blog posts for sitemap: ${validPosts.length}`);
+    return validPosts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return [];
