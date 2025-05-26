@@ -5,7 +5,7 @@
  */
 
 // Import council data
-const { councilNames } = require('../../scripts/council-slugs.cjs');
+const { councilNames } = require('../../scripts/council-slugs.js');
 
 // Create a Set for O(1) lookup of valid council names
 const validCouncils = new Set(councilNames.map(name => 

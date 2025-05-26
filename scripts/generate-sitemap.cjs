@@ -1,12 +1,11 @@
 // This is a simple Node.js script that could be run during the build process
 // to generate an updated sitemap.xml file
 
-const fs = require('fs');
-const path = require('path');
-const contentful = require('contentful');
-// We'll use dynamic import for the ES module
-// const { councilNames } = require('./council-slugs.js');
-const dotenv = require('dotenv');
+import fs from 'fs';
+import path from 'path';
+import contentful from 'contentful';
+import { councilNames } from './council-slugs.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -105,68 +104,48 @@ const getStaticRoutes = () => {
 };
 
 // Get council routes - ensure only canonical URLs are included
-const getCouncilRoutes = async () => {
-  try {
-    // Use dynamic import to load the ES module
-    const councilSlugs = await import('./council-slugs.cjs');
-    const { councilNames } = councilSlugs;
-    
-    // Define createSlug function here to avoid dependency
-    const createSlug = (name) => {
-      return name
-        .toLowerCase()
-        .replace(/&/g, 'and')
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-') // Replace multiple consecutive hyphens with a single one
-        .replace(/^-|-$/g, ''); // Remove leading and trailing hyphens
-    };
+const getCouncilRoutes = () => {
+  // Use the function from council-slugs to ensure consistent URL format
+  const createSlug = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-') // Replace multiple consecutive hyphens with a single one
+      .replace(/^-|-$/g, ''); // Remove leading and trailing hyphens
+  };
 
-    // Filter out any duplicate council names and ensure canonical format
-    const uniqueCouncils = [...new Set(councilNames)];
-    return uniqueCouncils
-      .map(name => `/${createSlug(name)}`)
-      .filter(route => route !== '/') // Remove empty routes
-      .sort(); // Sort alphabetically for better maintainability
-  } catch (error) {
-    console.error('Error loading council names:', error);
-    return []; // Return empty array in case of error
-  }
+  // Filter out any duplicate council names and ensure canonical format
+  const uniqueCouncils = [...new Set(councilNames)];
+  return uniqueCouncils
+    .map(name => `/${createSlug(name)}`)
+    .filter(route => route !== '/') // Remove empty routes
+    .sort(); // Sort alphabetically for better maintainability
 };
 
 // Get blog posts from Contentful - ensure only canonical URLs
 const getBlogPosts = async () => {
   if (!client) {
     console.warn('Contentful credentials not found. Skipping blog posts in sitemap.');
-    console.log('VITE_CONTENTFUL_SPACE_ID exists:', !!process.env.VITE_CONTENTFUL_SPACE_ID);
-    console.log('VITE_CONTENTFUL_ACCESS_TOKEN exists:', !!process.env.VITE_CONTENTFUL_ACCESS_TOKEN);
     return [];
   }
 
   try {
-    console.log('Fetching blog posts from Contentful...');
     const entries = await client.getEntries({
       content_type: 'blogPost',
       limit: 1000,
-      order: '-sys.createdAt'
-    });
-
-    console.log(`Retrieved ${entries.items.length} blog posts from Contentful`);
-    
-    // Debug output for each post
-    entries.items.forEach(post => {
-      console.log(`- Post: "${post.fields.title}", slug: ${post.fields.slug}`);
+      order: '-sys.createdAt',
+      // Only get published entries
+      'sys.status': 'published'
     });
 
     // Filter out any entries without slugs and ensure canonical format
-    const validPosts = entries.items
+    return entries.items
       .filter(post => post.fields.slug && typeof post.fields.slug === 'string')
       .map(post => `/blog/${post.fields.slug.toLowerCase().trim()}`)
       .filter((value, index, self) => self.indexOf(value) === index) // Remove duplicates
       .sort(); // Sort alphabetically for better maintainability
-      
-    console.log(`Total valid blog posts for sitemap: ${validPosts.length}`);
-    return validPosts;
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return [];
@@ -180,7 +159,7 @@ const generateSitemap = async () => {
     const staticRoutes = getStaticRoutes();
     console.log(`Added ${staticRoutes.length} static routes to sitemap`);
     
-    const councilRoutes = await getCouncilRoutes();
+    const councilRoutes = getCouncilRoutes();
     console.log(`Added ${councilRoutes.length} council routes to sitemap`);
     
     let blogPosts = [];
@@ -318,5 +297,5 @@ process.on('unhandledRejection', (error) => {
   process.exit(0);
 });
 
-// Execute the main function
+// Run the main function
 main();
