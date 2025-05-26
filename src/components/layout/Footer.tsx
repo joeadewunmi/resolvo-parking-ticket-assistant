@@ -17,9 +17,9 @@ const Footer = () => {
           <div>
             <div className="flex items-center space-x-2">
               <LazyImage 
-                src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
+                src="/lovable-uploads/b58acd45-81f6-4d47-b21f-ca0781f07e0c.png" 
                 alt="Resolvo Logo" 
-                className="h-8 w-8 bg-transparent" 
+                className="h-8 w-8 object-contain" 
                 width={32} 
                 height={32}
               />
