@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MessageSquare, Brain, CheckCircle } from "lucide-react";
 import FAQSection from "@/components/home/FAQSection";
 import { euroCarParksFaqs } from "@/data/faqs";
+import PriorityImage from "@/components/ui/PriorityImage";
 
 const UKParkingEnforcement = () => {
   return (
@@ -40,10 +41,12 @@ const UKParkingEnforcement = () => {
               </div>
             </div>
             <div className="block">
-              <img 
+              <PriorityImage 
                 src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.webp" 
                 alt="Parking officer issuing a ticket from UK Parking Enforcement" 
                 className="w-full h-auto rounded-lg shadow-xl" 
+                width={800}
+                height={600}
               />
             </div>
           </div>
