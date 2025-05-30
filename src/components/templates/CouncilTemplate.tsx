@@ -86,7 +86,7 @@ const CouncilTemplate = ({ councilName, councilSlug, faqs }: CouncilTemplateProp
                 >
                   Appeal now
                 </TrackingButton>
-                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 900+ users </p>
+                <p className="mt-2 text-sm text-primary/70 font-bold">Used by 1000+ users </p>
                 <p className="mt-1 text-sm text-primary/70">Requires ChatGPT login</p>
               </div>
             </div>
