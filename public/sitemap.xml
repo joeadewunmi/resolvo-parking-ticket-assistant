@@ -2370,16 +2370,4 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://resolvo.uk/blog/horizon-parking-reviews-and-how-to-fight-back</loc>
-    <lastmod>2024-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://resolvo.uk/blog/school-drop-off-parking-fines-how-to-avoid-or-appeal</loc>
-    <lastmod>2024-03-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
 </urlset>

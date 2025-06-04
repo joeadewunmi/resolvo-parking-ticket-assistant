@@ -122,6 +122,8 @@ const BlogPostHeader = ({
                       src="/lovable-uploads/f7b15328-d45e-4ed4-93bf-99d0604d5560.png"
                       alt="X (formerly Twitter)"
                       className="w-4 h-4 sm:w-5 sm:h-5 opacity-70 group-hover:opacity-100 transition-opacity duration-200"
+                      width={16}
+                      height={16}
                     />
                   </a>
                 )}

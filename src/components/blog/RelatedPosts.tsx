@@ -40,6 +40,8 @@ const RelatedPostCard = ({ post }: { post: BlogPost }) => {
             src={featuredImage.url}
             alt={featuredImage.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            width={480}
+            height={270}
           />
         </div>
       )}

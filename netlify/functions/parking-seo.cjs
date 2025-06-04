@@ -49,6 +49,28 @@ function generateParkingPageHTML(company) {
   }
   </script>
 
+  <style>
+    /* Critical CSS for CLS Prevention */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    * {
+      font-display: swap; /* Ensure this is respected early */
+      box-sizing: border-box;
+    }
+    img {
+      display: block; /* Prevents bottom space under image */
+      max-width: 100%; /* Responsive images by default */
+      aspect-ratio: attr(width) / attr(height); /* Core CLS fix for images with dimensions */
+    }
+    /* Basic header structure if it causes FOUC */
+    /* Example: header { min-height: 64px; } */
+    /* Basic hero structure if it causes FOUC */
+    /* Example: .hero-section { min-height: 300px; } */
+  </style>
+
   <!-- Main app styles -->
   <link rel="stylesheet" href="/assets/index-DJImr23P.css">
   

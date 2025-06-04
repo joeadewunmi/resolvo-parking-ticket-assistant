@@ -12,16 +12,37 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
  * IMPORTANT: Always provide `width` and `height` attributes to prevent layout shifts (CLS).
  */
 const LazyImage: React.FC<LazyImageProps> = ({ ...props }) => {
-  // Check if width and height are provided - log a warning if not in development
-  if (process.env.NODE_ENV === 'development' && (props.width === undefined || props.height === undefined)) {
-    console.warn(`LazyImage component used without explicit 'width' and 'height' props. This can cause layout shifts. Please add them to the image with src: ${props.src}`);
+  // Enforce width and height in both development and production
+  if (props.width === undefined || props.height === undefined) {
+    console.error(`LazyImage component used without explicit 'width' and 'height' props. This will cause layout shifts. Please add them to the image with src: ${props.src}`);
+    // Provide fallback dimensions to prevent extreme CLS
+    props.width = props.width || 800;
+    props.height = props.height || 600;
   }
 
   return (
-    <img
-      {...props} // Spread all passed props (src, alt, className, width, height, etc.)
-      loading="lazy" // Enforce lazy loading
-    />
+    <div 
+      style={{ 
+        width: props.width, 
+        height: props.height,
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
+      <img
+        {...props}
+        loading="lazy"
+        style={{
+          ...props.style,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0
+        }}
+      />
+    </div>
   );
 };
 

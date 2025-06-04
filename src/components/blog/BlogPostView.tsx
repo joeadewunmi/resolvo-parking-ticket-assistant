@@ -1,11 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import BlogPostHeader from '@/components/blog/BlogPostHeader';
 import RelatedPosts from '@/components/blog/RelatedPosts';
 import { Document } from '@contentful/rich-text-types';
 import type { BlogPost } from '@/types/contentful';
 import type { SafeContentfulImage, AuthorProp } from '@/pages/BlogPost'; // Assuming types are exported from BlogPostPage
+import { Skeleton } from "@/components/ui/skeleton";
 
 // Props interface for the BlogPostView component
 interface BlogPostViewProps {
@@ -72,21 +73,45 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
       </Helmet>
 
       <div className="min-h-screen bg-white py-12">
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="h-10 w-10 animate-spin text-primary" />
-          </div>
-        ) : post ? (
-          <>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <button 
-                onClick={onNavigateBack} 
-                className="inline-flex items-center mb-8 text-primary hover:text-primary/80 transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4 mr-1" />
-                <span>Back to Blog</span>
-              </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <button 
+            onClick={onNavigateBack} 
+            className="inline-flex items-center mb-8 text-primary hover:text-primary/80 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" />
+            <span>Back to Blog</span>
+          </button>
+          
+          {loading ? (
+            <div className="space-y-8">
+              {/* Header skeleton */}
+              <div className="space-y-4">
+                <Skeleton className="h-12 w-3/4" />
+                <Skeleton className="h-6 w-1/2" />
+                <div className="flex items-center space-x-4">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                </div>
+              </div>
               
+              {/* Cover image skeleton */}
+              <Skeleton className="w-full h-[400px] rounded-lg" />
+              
+              {/* Content skeleton */}
+              <div className="max-w-3xl mx-auto space-y-4">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-4/6" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-4/6" />
+              </div>
+            </div>
+          ) : post ? (
+            <>
               <BlogPostHeader
                 title={getTitle()}
                 subtitle={getSubtitle()}
@@ -103,13 +128,13 @@ const BlogPostView: React.FC<BlogPostViewProps> = ({
               {relatedPosts.length > 0 && (
                 <RelatedPosts posts={relatedPosts} currentPostId={currentPostId} /> 
               )}
+            </>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-lg text-gray-600">Blog post not found.</p>
             </div>
-          </>
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-lg text-gray-600">Blog post not found.</p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );

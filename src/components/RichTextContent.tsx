@@ -74,6 +74,29 @@ const renderQuote = (node, children) => (
   </blockquote>
 );
 const renderHr = () => <hr className="my-8 border-gray-200" />;
+
+const renderEmbeddedEntry = (node) => {
+  // Check if this is an iframe entry
+  if (node.data.target.sys.contentType.sys.id === 'iframe') {
+    const { url, title, height, width } = node.data.target.fields;
+    
+    return (
+      <div className="my-6">
+        <iframe
+          src={url}
+          title={title || 'Embedded content'}
+          height={height || '400'}
+          width={width || '100%'}
+          className="rounded-lg"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+  return null;
+};
+
 const renderHyperlink = (node, children) => (
   <a
     href={node.data.uri}
@@ -106,6 +129,7 @@ const renderOptions = {
     [BLOCKS.LIST_ITEM]: renderListItem,
     [BLOCKS.QUOTE]: renderQuote,
     [BLOCKS.HR]: renderHr,
+    [BLOCKS.EMBEDDED_ENTRY]: renderEmbeddedEntry,
     [INLINES.HYPERLINK]: renderHyperlink,
   },
 };
