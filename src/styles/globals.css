@@ -1,0 +1,9 @@
+img {
+  display: block; /* Prevents bottom space under image */
+  max-width: 100%; /* Responsive images by default */
+  height: auto; /* Maintain aspect ratio */
+}
+
+img[width][height] {
+  aspect-ratio: attr(width) / attr(height);
+} 

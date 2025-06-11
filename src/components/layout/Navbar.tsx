@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TrackingButton from "@/components/ui/TrackingButton";
-import PriorityImage from '@/components/ui/PriorityImage';
+import Image from '@/components/ui/Image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +15,14 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
-            <PriorityImage 
+            <Image 
               src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
               alt="Resolvo Logo" 
               className="h-10 w-10" 
               width={40} 
               height={40}
+              loading="eager"
+              fetchPriority="high"
             />
             <span className="font-bold text-xl text-primary">Resolvo</span>
           </Link>

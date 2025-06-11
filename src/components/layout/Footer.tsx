@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import LazyImage from '@/components/ui/LazyImage'; // Import LazyImage
+import Image from '@/components/ui/Image';
 
 const Footer = () => {
   const handleWhatsAppShare = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2">
-              <LazyImage 
+              <Image 
                 src="/lovable-uploads/b58acd45-81f6-4d47-b21f-ca0781f07e0c.png" 
                 alt="Resolvo Logo" 
                 className="h-8 w-8 object-contain" 
@@ -83,7 +83,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <LazyImage 
+                <Image 
                   src="/lovable-uploads/77a848da-b43f-40d0-9f27-7a8c2bc58193.png"
                   alt="X (formerly Twitter)"
                   className="h-5 w-5 mr-2 brightness-0 invert"
@@ -98,7 +98,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <LazyImage 
+                <Image 
                   src="/lovable-uploads/349f9204-8344-4a31-a6b1-ebb5df84cbc5.png"
                   alt="TikTok"
                   className="h-5 w-5 mr-2 brightness-0 invert bg-transparent"
@@ -111,7 +111,7 @@ const Footer = () => {
                 onClick={handleWhatsAppShare}
                 className="inline-flex items-center text-sm hover:text-accent"
               >
-                <LazyImage 
+                <Image 
                   src="/lovable-uploads/a67315a3-9a9d-4913-a9f4-231e38b2a42b.png"
                   alt="WhatsApp"
                   className="h-5 w-5 mr-2 brightness-0 invert"

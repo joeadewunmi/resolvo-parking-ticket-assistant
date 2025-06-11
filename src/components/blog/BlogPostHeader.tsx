@@ -2,8 +2,7 @@ import React from 'react';
 import { formatDate } from '@/lib/utils';
 import { Linkedin, Globe, Calendar, Clock, UserCircle } from 'lucide-react';
 import { SafeContentfulImage, AuthorProp } from '@/pages/BlogPost';
-import LazyImage from '@/components/ui/LazyImage';
-import PriorityImage from '@/components/ui/PriorityImage';
+import Image from '@/components/ui/Image';
 import ShareButton from '@/components/ui/ShareButton';
 
 type Author = {
@@ -48,12 +47,14 @@ const BlogPostHeader = ({
       {/* Cover Image */}
       {coverImage && coverImage.url && (
         <div className="my-8 aspect-[16/9] w-full overflow-hidden rounded-lg">
-          <PriorityImage 
+          <Image 
             src={coverImage.url.startsWith('//') ? `https:${coverImage.url}` : coverImage.url}
             alt={coverImage.title || title}
             className="w-full h-full object-cover"
             width={1200}
             height={675}
+            loading="eager"
+            fetchPriority="high"
           />
         </div>
       )}
@@ -68,7 +69,7 @@ const BlogPostHeader = ({
             {/* Author Image */}
             {author?.avatar && (
               <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
-                <LazyImage 
+                <Image 
                   src={author.avatar} 
                   alt={author.name} 
                   className="w-full h-full object-cover" 
@@ -118,7 +119,7 @@ const BlogPostHeader = ({
                     className="group p-2 rounded-full border-2 border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md"
                     title="Follow on X (formerly Twitter)"
                   >
-                    <img 
+                    <Image 
                       src="/lovable-uploads/f7b15328-d45e-4ed4-93bf-99d0604d5560.png"
                       alt="X (formerly Twitter)"
                       className="w-4 h-4 sm:w-5 sm:h-5 opacity-70 group-hover:opacity-100 transition-opacity duration-200"

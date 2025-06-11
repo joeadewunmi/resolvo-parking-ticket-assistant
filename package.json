@@ -10,7 +10,9 @@
     "build:with-sitemap": "npm run generate-sitemap && vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^16.0.1",
@@ -75,6 +77,9 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@tailwindcss/typography": "^0.5.15",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -85,9 +90,12 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "jest": "^30.0.0",
+    "jest-environment-jsdom": "^30.0.0",
     "lovable-tagger": "^1.1.8",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.11",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"

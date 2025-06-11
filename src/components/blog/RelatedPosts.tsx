@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { BlogPost } from '@/types/contentful';
 import { formatDate } from '@/lib/utils';
 import { Asset } from 'contentful';
-import LazyImage from '@/components/ui/LazyImage';
+import Image from '@/components/ui/Image';
 
 // Type for safe contentful image
 type SafeContentfulImage = {
@@ -36,7 +36,7 @@ const RelatedPostCard = ({ post }: { post: BlogPost }) => {
     <Link to={`/blog/${slug}`} className="block group">
       {featuredImage && (
         <div className="aspect-[16/9] overflow-hidden rounded-lg mb-4">
-          <LazyImage 
+          <Image 
             src={featuredImage.url}
             alt={featuredImage.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

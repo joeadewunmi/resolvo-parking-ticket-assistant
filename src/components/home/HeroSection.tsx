@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import TrackingButton from "@/components/ui/TrackingButton";
-import PriorityImage from '@/components/ui/PriorityImage';
+import Image from '@/components/ui/Image';
 
 const HeroSection = () => {
   return (
@@ -37,12 +37,14 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="block">
-            <PriorityImage 
+            <Image 
               src="/lovable-uploads/0df908b2-60ab-48ff-ab80-e651966ad99d.webp" 
               alt="Hero image of someone appealing a parking ticket"
               className="w-full h-auto rounded-lg shadow-xl"
               width={600}
               height={400}
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
         </div>

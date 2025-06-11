@@ -2,7 +2,7 @@ import { documentToReactComponents, Options } from '@contentful/rich-text-react-
 import { Document } from '@contentful/rich-text-types';
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
 import { Link } from 'react-router-dom';
-import LazyImage from '@/components/ui/LazyImage';
+import Image from '@/components/ui/Image';
 
 // Define render functions separately to avoid esbuild issues with JSX in computed properties
 const renderBold = (text) => <strong className="font-bold">{text}</strong>;
@@ -46,10 +46,10 @@ const renderEmbeddedAsset = (node) => {
   const width = asset.fields.file.details.image?.width;
   const height = asset.fields.file.details.image?.height;
 
-  // Use LazyImage for embedded assets
+  // Use Image for embedded assets
   return (
     <div className="my-6 flex justify-center"> 
-      <LazyImage 
+      <Image 
         src={`https:${url}`} 
         alt={description || 'Embedded content image'}
         className="max-w-full h-auto rounded-md shadow-md" 
