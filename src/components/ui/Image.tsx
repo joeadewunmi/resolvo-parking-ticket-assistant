@@ -5,20 +5,38 @@ interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const Image: React.FC<ImageProps> = ({
-  loading = 'lazy',
-  fetchPriority = 'auto',
+  width,
+  height,
+  style,
   ...props
 }) => {
-  if (process.env.NODE_ENV === 'development' && (!props.width || !props.height)) {
-    console.warn(`Image component without explicit 'width' and 'height' props, src: ${props.src}`);
-  }
+  const aspectRatio = width && height ? Number(width) / Number(height) : undefined;
 
   return (
-    <img
-      loading={loading}
-      fetchPriority={fetchPriority}
-      {...props}
-    />
+    <div
+      style={{
+        width,
+        height,
+        aspectRatio,
+        position: 'relative',
+        overflow: 'hidden',
+        ...style,
+      }}
+    >
+      <img
+        width={width}
+        height={height}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
+        {...props}
+      />
+    </div>
   );
 };
 
