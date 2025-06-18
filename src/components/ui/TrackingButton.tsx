@@ -9,6 +9,7 @@ interface TrackingButtonProps {
   href: string;
   target?: string;
   rel?: string;
+  onClick?: () => void;
 }
 
 /**
@@ -23,7 +24,8 @@ const TrackingButton: React.FC<TrackingButtonProps> = ({
   className,
   href,
   target = "_blank",
-  rel = "noopener noreferrer"
+  rel = "noopener noreferrer",
+  onClick
 }) => {
   const handleClick = () => {
     // Check if gtag is available
@@ -34,6 +36,11 @@ const TrackingButton: React.FC<TrackingButtonProps> = ({
         'event_label': eventLabel || href
       });
       console.log(`Analytics event sent: ${eventName} - ${eventCategory} - ${eventLabel || href}`);
+    }
+    
+    // Call additional onClick handler if provided
+    if (onClick) {
+      onClick();
     }
   };
 

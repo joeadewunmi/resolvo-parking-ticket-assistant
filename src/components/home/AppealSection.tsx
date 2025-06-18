@@ -5,11 +5,11 @@ import Image from '@/components/ui/Image';
 
 const AppealSection = () => {
   return (
-    <div className="py-24 bg-white">
+    <div className="py-12 sm:py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="relative order-2 lg:order-1">
+            <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-xl blur-xl"></div>
             <div className="relative">
               <Image 
                 src="/lovable-uploads/20205d8ab3571-d3cc-4f1a-ac1b-f2ef9753fe50.webp" 
@@ -24,23 +24,35 @@ const AppealSection = () => {
               <p className="text-center mt-4 text-gray-600 text-sm">Written by Resolvo</p>
             </div>
           </div>
-          <div>
-            <h2 className="text-3xl font-extrabold text-primary">
-              Don't let a parking ticket ruin your day
+          <div className="order-1 lg:order-2 text-center lg:text-left">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4 sm:mb-6">
+              Get a Professional Appeal Letter in Minutes
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Resolvo is trained on the latest parking regulations such as the Traffic Management Act to help you write an appeal in minutes.
+            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
+              Our AI is trained on UK parking law and has helped thousands of people successfully appeal their parking tickets. 
+              We'll analyze your situation and create a personalized appeal letter that gives you the best chance of winning.
             </p>
-            <div className="mt-8">
-              <TrackingButton
-                href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-                eventName="appeal_click"
-                eventCategory="engagement"
-                eventLabel="home_appeal_section"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300"
-              >
-                Appeal now
-              </TrackingButton>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <TrackingButton
+                  href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+                  eventName="appeal_click"
+                  eventCategory="engagement"
+                  eventLabel="hero_appeal_button"
+                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border border-transparent text-lg sm:text-xl font-medium rounded-lg text-white bg-primary hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                >
+                  Start Your Appeal
+                </TrackingButton>
+                <Link
+                  to="/faq"
+                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border border-gray-300 text-lg sm:text-xl font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
+                >
+                  Learn More
+                </Link>
+              </div>
+              <p className="text-sm text-gray-500">
+                Free to use • No registration required • Instant results
+              </p>
             </div>
           </div>
         </div>

@@ -13,32 +13,32 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex justify-between h-14 sm:h-16 items-center">
           <Link to="/" className="flex items-center gap-2">
             <Image 
               src="/lovable-uploads/0b4c80bb-94c0-4d67-a82c-8bfb773d4500.png" 
               alt="Resolvo Logo" 
-              className="h-10 w-10" 
+              className="h-8 w-8 sm:h-10 sm:w-10" 
               width={40} 
               height={40}
               loading="eager"
               fetchPriority="high"
             />
-            <span className="font-bold text-xl text-primary">Resolvo</span>
+            <span className="font-bold text-lg sm:text-xl text-primary">Resolvo</span>
           </Link>
           
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <div className="flex space-x-4 items-center">
-              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+              <Link to="/" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent transition-colors">
                 Home
               </Link>
-              <Link to="/blog" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+              <Link to="/blog" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent transition-colors">
                 Blog
               </Link>
-              <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+              <Link to="/faq" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent transition-colors">
                 FAQs
               </Link>
-              <Link to="/councils" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent">
+              <Link to="/councils" className="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-accent transition-colors">
                 Councils
               </Link>
               <TrackingButton
@@ -46,7 +46,7 @@ const Navbar = () => {
                 eventName="appeal_click"
                 eventCategory="engagement"
                 eventLabel="navbar_appeal_button"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 transition-all duration-200"
               >
                 Appeal now
               </TrackingButton>
@@ -57,7 +57,7 @@ const Navbar = () => {
             <button
               onClick={toggleMenu}
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 transition-colors"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
             >
@@ -70,28 +70,47 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state */}
       <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`} id="mobile-menu">
-        <div className="pt-2 pb-3 space-y-1">
-          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+        <div className="pt-2 pb-3 space-y-1 border-t border-gray-200">
+          <Link 
+            to="/" 
+            className="block px-3 py-3 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             Home
           </Link>
-          <Link to="/blog" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+          <Link 
+            to="/blog" 
+            className="block px-3 py-3 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             Blog
           </Link>
-          <Link to="/faq" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+          <Link 
+            to="/faq" 
+            className="block px-3 py-3 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             FAQs
           </Link>
-          <Link to="/councils" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50">
+          <Link 
+            to="/councils" 
+            className="block px-3 py-3 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+            onClick={() => setIsOpen(false)}
+          >
             Councils
           </Link>
-          <TrackingButton
-            href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
-            eventName="appeal_click"
-            eventCategory="engagement"
-            eventLabel="mobile_appeal_button"
-            className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-50"
-          >
-            Appeal now
-          </TrackingButton>
+          <div className="px-3 py-3">
+            <TrackingButton
+              href="https://chatgpt.com/g/g-C3KOiAkMB-resolvo"
+              eventName="appeal_click"
+              eventCategory="engagement"
+              eventLabel="mobile_appeal_button"
+              className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-primary hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Appeal now
+            </TrackingButton>
+          </div>
         </div>
       </div>
     </nav>
